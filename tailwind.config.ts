@@ -92,6 +92,7 @@ const config = {
       },
       fontFamily: {
         spoqa: ["var(--font-spoqa)", ...fontFamily.sans],
+        pretendard: ["var(--font-pretendard)", ...fontFamily.sans],
       },
     },
   },

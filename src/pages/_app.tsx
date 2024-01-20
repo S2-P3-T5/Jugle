@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { AppProps } from "next/app";
 import { useState } from "react";
 
+import { cn } from "@/lib/utils";
 import { fontSpoqaHanSansNeo } from "@/styles/fonts";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -26,12 +27,13 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <HydrationBoundary state={pageProps.dehydratedState}>
-        <style jsx global>{`
-          html {
-            font-family: ${fontSpoqaHanSansNeo.style.fontFamily};
-          }
-        `}</style>
-        <Component {...pageProps} />
+        <Component
+          className={cn(
+            "min-h-screen bg-background font-spoqa antialiased",
+            fontSpoqaHanSansNeo.variable,
+          )}
+          {...pageProps}
+        />
       </HydrationBoundary>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
