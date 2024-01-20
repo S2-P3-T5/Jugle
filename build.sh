@@ -1,5 +1,5 @@
 #!/bin/sh
 cd ../
 mkdir output
-cp -R ./[your-repository-name]/* ./output
-cp -R ./output ./[your-repository-name]/
+cp -R ./Julge/* ./output
+cp -R ./output ./Julge/
