@@ -31,6 +31,9 @@ export default function Page() {
           <FormField
             control={form.control}
             name="email"
+            rules={{
+              required: true,
+            }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>이메일</FormLabel>
@@ -44,6 +47,9 @@ export default function Page() {
           <FormField
             control={form.control}
             name="password"
+            rules={{
+              required: true,
+            }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>비밀번호</FormLabel>
@@ -57,6 +63,9 @@ export default function Page() {
           <FormField
             control={form.control}
             name="passwordConfirm"
+            rules={{
+              required: true,
+            }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>비밀번호 확인</FormLabel>
@@ -73,6 +82,9 @@ export default function Page() {
           <FormField
             control={form.control}
             name="type"
+            rules={{
+              required: true,
+            }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>회원 유형</FormLabel>
@@ -99,7 +111,9 @@ export default function Page() {
               </FormItem>
             )}
           />
-          <Button type="submit">가입하기</Button>
+          <Button type="submit" disabled={!form.formState.isValid}>
+            가입하기
+          </Button>
         </form>
       </Form>
     </section>
