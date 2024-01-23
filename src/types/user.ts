@@ -5,7 +5,7 @@ export type User = {
 
 export type UserType = "employee" | "employer";
 
-export type SignupForm = {
+export type SignupFormField = {
   email: string;
   password: string;
   passwordConfirm: string;
