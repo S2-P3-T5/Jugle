@@ -75,7 +75,7 @@ function NoticeRegister() {
                   />
                 </form>
               </div>
-              <div>
+              <div className="flex items-center">
                 <button
                   className="flex h-[2rem] items-center justify-center gap-[0.8rem] self-stretch rounded-md bg-[#EA3C12] px-[13.6rem] py-[1.4rem]"
                   onClick={handleRegisterButtonClick}
