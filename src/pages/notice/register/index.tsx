@@ -1,9 +1,12 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 import { Input } from "@/components/ui/noticeRegisterInput";
 import { Label } from "@/components/ui/noticeRegisterLabel";
+import Modal from "@/components/ui/registerModal";
 
 function NoticeRegister() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
 
   const handleLogoButtonClick = () => {
@@ -11,8 +14,18 @@ function NoticeRegister() {
     router.push("/notices");
   };
 
+  const handleRegisterButtonClick = () => {
+    // 모달 열기
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    // 모달 닫기
+    setIsModalOpen(false);
+  };
+
   return (
-    <>
+    <div className="flex h-screen items-center justify-center">
       <div className="w-[37.5rem] gap-[0.8rem] bg-[#FAFAFA]">
         <div className="flex flex-col items-center justify-center">
           <div className="flex w-[35.1rem] flex-col items-start gap-[0.8rem] px-[1.2rem] pb-[8rem] pt-[4rem]">
@@ -63,7 +76,10 @@ function NoticeRegister() {
                 </form>
               </div>
               <div>
-                <button className="flex h-[2rem] items-center justify-center gap-[0.8rem] self-stretch rounded-md bg-[#EA3C12] px-[13.6rem] py-[1.4rem]">
+                <button
+                  className="flex h-[2rem] items-center justify-center gap-[0.8rem] self-stretch rounded-md bg-[#EA3C12] px-[13.6rem] py-[1.4rem]"
+                  onClick={handleRegisterButtonClick}
+                >
                   <span className="text-center text-lg font-bold leading-5 text-white">
                     등록하기
                   </span>
@@ -73,7 +89,8 @@ function NoticeRegister() {
           </div>
         </div>
       </div>
-    </>
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
+    </div>
   );
 }
 
