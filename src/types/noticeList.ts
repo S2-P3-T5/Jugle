@@ -22,3 +22,8 @@ export type Shop = {
   item: ShopItem;
   href: string;
 };
+
+export type Items = {
+  item: Item;
+  shop: Shop;
+};
