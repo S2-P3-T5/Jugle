@@ -1,5 +1,10 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 
+import {
+  MESSAGE_INVALID_EMAIL_FORMAT,
+  MESSAGE_REQUIRED_EMAIL,
+} from "@/helpers/error";
+import { REGEX_EMAIL } from "@/lib/constants";
 import { useSignup } from "@/queries/user";
 import { FormRules } from "@/types/form";
 import { SignupFormField } from "@/types/user";
@@ -20,7 +25,14 @@ export default function useSignupForm() {
 
   const rules: FormRules<SignupFormField> = {
     email: {
-      required: true,
+      required: {
+        value: true,
+        message: MESSAGE_REQUIRED_EMAIL,
+      },
+      pattern: {
+        value: REGEX_EMAIL,
+        message: MESSAGE_INVALID_EMAIL_FORMAT,
+      },
     },
     password: {
       required: true,
@@ -33,5 +45,13 @@ export default function useSignupForm() {
     },
   };
 
-  return { form, onSubmit, rules };
+  const handlers = {
+    email: {
+      onBlur: () => {
+        form.trigger("email");
+      },
+    },
+  };
+
+  return { form, onSubmit, rules, handlers };
 }

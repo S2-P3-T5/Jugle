@@ -12,7 +12,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useSignupForm from "@/hooks/useSignupForm";
 
 export default function SignupForm() {
-  const { form, onSubmit, rules } = useSignupForm();
+  const { form, onSubmit, rules, handlers } = useSignupForm();
 
   return (
     <Form {...form}>
@@ -25,7 +25,11 @@ export default function SignupForm() {
             <FormItem>
               <FormLabel>이메일</FormLabel>
               <FormControl>
-                <Input placeholder="이메일을 입력해주세요." {...field} />
+                <Input
+                  placeholder="이메일을 입력해주세요."
+                  {...field}
+                  onBlur={handlers.email.onBlur}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
