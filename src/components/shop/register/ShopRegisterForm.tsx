@@ -98,18 +98,20 @@ export default function ShopRegisterForm() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
+            rules={{ required: true }}
             name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>가게 이름*</FormLabel>
                 <FormControl>
-                  <Input placeholder="입력" {...field} required />
+                  <Input placeholder="입력" {...field} />
                 </FormControl>
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
+            rules={{ required: true }}
             name="category"
             render={({ field }) => (
               <FormItem>
@@ -138,6 +140,7 @@ export default function ShopRegisterForm() {
           />
           <FormField
             control={form.control}
+            rules={{ required: true }}
             name="address1"
             render={({ field }) => (
               <FormItem>
@@ -152,13 +155,12 @@ export default function ShopRegisterForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {ADDRESS.map((item) => {
-                      return (
-                        <SelectItem key={item} value={item}>
-                          {item}
-                        </SelectItem>
-                      );
-                    })}
+                    {ADDRESS.map((item) => (
+                      <SelectItem key={item} value={item}>
+                        {item}
+                      </SelectItem>
+                    ))}
+                    )
                   </SelectContent>
                 </Select>
               </FormItem>
@@ -166,30 +168,26 @@ export default function ShopRegisterForm() {
           />
           <FormField
             control={form.control}
+            rules={{ required: true }}
             name="address2"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>상세 주소*</FormLabel>
                 <FormControl>
-                  <Input placeholder="입력" {...field} required />
+                  <Input placeholder="입력" {...field} />
                 </FormControl>
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
+            rules={{ required: true }}
             name="originalHourlyPay"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>기본 시급*</FormLabel>
                 <FormControl>
-                  <Input
-                    type="number"
-                    min={0}
-                    placeholder="입력"
-                    {...field}
-                    required
-                  />
+                  <Input type="number" min={0} placeholder="입력" {...field} />
                 </FormControl>
               </FormItem>
             )}
