@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import {
   MESSAGE_INVALID_EMAIL_FORMAT,
   MESSAGE_MIN_LENGTH_PASSWORD,
+  MESSAGE_NOT_EQUAL_PASSWORD_CONFIRM,
   MESSAGE_REQUIRED_EMAIL,
   MESSAGE_REQUIRED_PASSWORD,
   PASSWORD_MIN_LENGTH,
@@ -48,7 +49,8 @@ export default function useSignupForm() {
       },
     },
     passwordConfirm: {
-      required: true,
+      validate: (passwordConfirm, { password }) =>
+        passwordConfirm === password || MESSAGE_NOT_EQUAL_PASSWORD_CONFIRM,
     },
     type: {
       required: true,
@@ -63,7 +65,12 @@ export default function useSignupForm() {
     },
     password: {
       onBlur: () => {
-        form.trigger("password");
+        form.trigger(["password", "passwordConfirm"]);
+      },
+    },
+    passwordConfirm: {
+      onBlur: () => {
+        form.trigger("passwordConfirm");
       },
     },
   };
