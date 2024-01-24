@@ -1,13 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import {
-  MESSAGE_INVALID_EMAIL_FORMAT,
-  MESSAGE_MIN_LENGTH_PASSWORD,
-  MESSAGE_NOT_EQUAL_PASSWORD_CONFIRM,
-  MESSAGE_REQUIRED_EMAIL,
-  MESSAGE_REQUIRED_PASSWORD,
-  PASSWORD_MIN_LENGTH,
-} from "@/helpers/error";
+import { errorMessage, PASSWORD_MIN_LENGTH } from "@/helpers/validation";
 import { REGEX_EMAIL } from "@/lib/constants";
 import { useSignup } from "@/queries/user";
 import { FormRules } from "@/types/form";
@@ -31,26 +24,26 @@ export default function useSignupForm() {
     email: {
       required: {
         value: true,
-        message: MESSAGE_REQUIRED_EMAIL,
+        message: errorMessage.REQUIRED_EMAIL,
       },
       pattern: {
         value: REGEX_EMAIL,
-        message: MESSAGE_INVALID_EMAIL_FORMAT,
+        message: errorMessage.INVALID_EMAIL_FORMAT,
       },
     },
     password: {
       required: {
         value: true,
-        message: MESSAGE_REQUIRED_PASSWORD,
+        message: errorMessage.REQUIRED_PASSWORD,
       },
       minLength: {
         value: PASSWORD_MIN_LENGTH,
-        message: MESSAGE_MIN_LENGTH_PASSWORD,
+        message: errorMessage.MIN_LENGTH_PASSWORD,
       },
     },
     passwordConfirm: {
       validate: (passwordConfirm, { password }) =>
-        passwordConfirm === password || MESSAGE_NOT_EQUAL_PASSWORD_CONFIRM,
+        passwordConfirm === password || errorMessage.NOT_EQUAL_PASSWORD_CONFIRM,
     },
     type: {
       required: true,
