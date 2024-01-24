@@ -7,10 +7,10 @@ import { Label } from "@/components/noticeRegister/Label";
 function NoticeRegister() {
   const router = useRouter();
 
-  const handleLogoButtonClick = () => {
-    // 공고 리스트 페이지로 이동하는 코드
-    router.push("/notices");
-  };
+  // 공고 리스트 페이지로 이동하는 함수 - 추후 gnb 컴포넌트 생성 후 적용할 예정
+  // const handleLogoButtonClick = () => {
+  //   router.push("/notices");
+  // };
 
   return (
     <>
@@ -22,11 +22,14 @@ function NoticeRegister() {
                 <h3 className="text-[2rem] font-bold not-italic leading-normal text-black">
                   공고 등록
                 </h3>
-                <Image
-                  src={"/icons/close.svg"}
-                  className="h-[2.4rem] w-[2.4rem]"
-                  alt="닫기이미지"
-                />
+                <div className="relative h-[2.4rem] w-[2.4rem]">
+                  <Image
+                    src="/icons/close.svg"
+                    layout="fill"
+                    objectFit="contain"
+                    alt="닫기이미지"
+                  />
+                </div>
               </div>
               <div className="flex h-[52.3rem] w-full flex-col justify-end gap-[2rem]">
                 <form>
