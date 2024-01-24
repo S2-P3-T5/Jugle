@@ -15,38 +15,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  /* styles.css */
-  // .modal-overlay {
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   width: 100%;
-  //   height: 100%;
-  //   background-color: rgba(0, 0, 0, 0.5);
-  //   z-index: 9999;
-  // }
-
-  // .modal-container {
-  //   display: inline-flex;
-  //   padding: 32px 40px;
-  //   flex-direction: column;
-  //   position: relative;
-  //   justify-content: center;
-  //   align-items: center;
-  //   gap: 24px;
-  //   width: 32.7rem;
-  //   height: 22rem;
-  //   background-color: white;
-  //   padding: 20px;
-  //   border-radius: 8px;
-  //   border: 1px solid #ccd5e3;
-  //   background: #fff;
-  //   z-index: 10000;
-  // }
-
   return (
     <div
       className="z-9999 fixed left-0 top-0 flex h-full w-full items-center justify-center bg-gray-950 bg-opacity-70"
