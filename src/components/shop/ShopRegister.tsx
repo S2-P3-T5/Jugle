@@ -10,7 +10,7 @@ export default function ShopRegister() {
         </span>
         {/* href 링크 수정 예정  */}
         <Link
-          className="inlineblock font-700 h-[3.7rem] w-[12.1rem] rounded-[6px] bg-primary px-[2rem] py-[1rem] text-center text-[1.4rem] leading-normal text-white"
+          className="inlineblock h-[3.7rem] w-[12.1rem] rounded-[6px] bg-primary px-[2rem] py-[1rem] text-center text-[1.4rem] font-bold leading-normal text-white"
           href="/shop/register"
         >
           가게 등록하기
