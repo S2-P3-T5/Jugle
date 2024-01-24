@@ -1,7 +1,7 @@
-import NoticeListButton from "@/components/notices/NoticeListButton";
 import NoticeListCard from "@/components/notices/NoticeListCard";
 import NoticeListComboBox from "@/components/notices/NoticeListComboBox";
 import NoticeListPagination from "@/components/notices/NoticeListPagination";
+import NoticeListPopover from "@/components/notices/NoticeListPopover";
 
 export default function notices() {
   return (
@@ -18,7 +18,7 @@ export default function notices() {
           <h1 className="text-[2rem] font-[700]">전체 공고</h1>
           <div className="flex gap-[1rem]">
             <NoticeListComboBox />
-            <NoticeListButton />
+            <NoticeListPopover />
           </div>
         </div>
         <div className="grid grid-cols-2 grid-rows-3  gap-[1rem]">
