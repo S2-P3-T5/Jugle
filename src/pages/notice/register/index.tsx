@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Label } from "@/components/noticeRegister/Label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 function NoticeRegister() {
   return (
@@ -41,7 +41,12 @@ function NoticeRegister() {
                 </div>
                 <div className="flex h-[52.3rem] w-full flex-col justify-end gap-[2rem]">
                   <div className="flex h-[9.2rem] w-full flex-col items-start gap-[0.8rem]">
-                    <Label htmlFor="hourly wage">시급*</Label>
+                    <Label
+                      className="text--black text-[1.6rem] font-normal not-italic leading-[2.6rem]"
+                      htmlFor="hourly wage"
+                    >
+                      시급*
+                    </Label>
                     <div className="relative inline-block w-full">
                       <Input
                         className="h-[2.6rem] items-center self-stretch rounded-md border border-input bg-white px-[2rem] py-[1.6rem] disabled:cursor-not-allowed disabled:opacity-50"
@@ -55,7 +60,12 @@ function NoticeRegister() {
                     </div>
                   </div>
                   <div className="flex h-[9.2rem] w-full flex-col items-start gap-[0.8rem]">
-                    <Label htmlFor="begin">시작 일시*</Label>
+                    <Label
+                      className="text--black text-[1.6rem] font-normal not-italic leading-[2.6rem]"
+                      htmlFor="begin"
+                    >
+                      시작 일시*
+                    </Label>
                     <Input
                       className="h-[2.6rem] items-center self-stretch rounded-md border border-input bg-white px-[2rem] py-[1.6rem] disabled:cursor-not-allowed disabled:opacity-50"
                       type="text"
@@ -64,7 +74,12 @@ function NoticeRegister() {
                     />
                   </div>
                   <div className="flex h-[9.2rem] w-full flex-col items-start gap-[0.8rem]">
-                    <Label htmlFor="business hours">업무 시간*</Label>
+                    <Label
+                      className="text--black text-[1.6rem] font-normal not-italic leading-[2.6rem]"
+                      htmlFor="business hours"
+                    >
+                      업무 시간*
+                    </Label>
                     <div className="relative inline-block w-full">
                       <Input
                         className="h-[2.6rem] items-center self-stretch rounded-md border border-input bg-white px-[2rem] py-[1.6rem] disabled:cursor-not-allowed disabled:opacity-50"
@@ -78,7 +93,12 @@ function NoticeRegister() {
                     </div>
                   </div>
                   <div className="flex h-[18.7rem] w-full flex-col items-start gap-[0.8rem]">
-                    <Label htmlFor="explanation">공고 설명</Label>
+                    <Label
+                      className="text--black text-[1.6rem] font-normal not-italic leading-[2.6rem]"
+                      htmlFor="explanation"
+                    >
+                      공고 설명
+                    </Label>
                     <Input
                       className="h-[15.3rem] w-full items-center self-stretch overflow-auto rounded-md border border-input px-[2rem] py-[1.6rem] text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       type="text"
