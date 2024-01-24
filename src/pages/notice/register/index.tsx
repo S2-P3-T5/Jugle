@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Input } from "@/components/noticeRegister/Input";
 import { Label } from "@/components/noticeRegister/Label";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 function NoticeRegister() {
   return (
@@ -41,25 +41,36 @@ function NoticeRegister() {
                 </div>
                 <div className="flex h-[52.3rem] w-full flex-col justify-end gap-[2rem]">
                   <div className="flex h-[9.2rem] w-full flex-col items-start gap-[0.8rem]">
-                    <Label htmlFor="시급">시급*</Label>
+                    <Label htmlFor="hourly wage">시급*</Label>
                     <div className="relative inline-block w-full">
-                      <Input type="text" id="hourly wage" />
+                      <Input
+                        className="h-[2.6rem] items-center self-stretch rounded-md border border-input bg-white px-[2rem] py-[1.6rem] disabled:cursor-not-allowed disabled:opacity-50"
+                        type="text"
+                        id="hourly wage"
+                        name="hourly wage"
+                      />
                       <span className="absolute inset-y-0 right-0 flex items-center pr-[2rem] text-[1.6rem] font-normal not-italic leading-[2.6rem] text-black">
                         원
                       </span>
                     </div>
                   </div>
                   <div className="flex h-[9.2rem] w-full flex-col items-start gap-[0.8rem]">
-                    <Label htmlFor="시작 일시">시작 일시*</Label>
-                    <Input type="text" id="begin" />
+                    <Label htmlFor="begin">시작 일시*</Label>
+                    <Input
+                      className="h-[2.6rem] items-center self-stretch rounded-md border border-input bg-white px-[2rem] py-[1.6rem] disabled:cursor-not-allowed disabled:opacity-50"
+                      type="text"
+                      id="begin"
+                      name="begin"
+                    />
                   </div>
                   <div className="flex h-[9.2rem] w-full flex-col items-start gap-[0.8rem]">
-                    <Label htmlFor="업무 시간">업무 시간*</Label>
+                    <Label htmlFor="business hours">업무 시간*</Label>
                     <div className="relative inline-block w-full">
                       <Input
+                        className="h-[2.6rem] items-center self-stretch rounded-md border border-input bg-white px-[2rem] py-[1.6rem] disabled:cursor-not-allowed disabled:opacity-50"
                         type="text"
-                        className="placeholder:italic"
                         id="business hours"
+                        name="business hours"
                       />
                       <span className="absolute inset-y-0 right-0 flex items-center pr-[2rem] text-[1.6rem] font-normal not-italic leading-[2.6rem] text-black">
                         시간
@@ -67,16 +78,17 @@ function NoticeRegister() {
                     </div>
                   </div>
                   <div className="flex h-[18.7rem] w-full flex-col items-start gap-[0.8rem]">
-                    <Label htmlFor="업무 시간">공고 설명</Label>
+                    <Label htmlFor="explanation">공고 설명</Label>
                     <Input
+                      className="h-[15.3rem] w-full items-center self-stretch overflow-auto rounded-md border border-input px-[2rem] py-[1.6rem] text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                       type="text"
                       id="explanation"
-                      className="flex h-[15.3rem] w-full items-center self-stretch overflow-auto rounded-md border border-input px-[2rem] py-[1.6rem] text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      name="explanation"
                     />
                   </div>
                 </div>
                 <div>
-                  <Button className="flex h-[2rem] items-center justify-center gap-[0.8rem] self-stretch rounded-md bg-[#EA3C12] px-[13.6rem] py-[1.4rem]">
+                  <Button className="flex h-[2rem] items-center justify-center gap-[0.8rem] self-stretch rounded-md bg-primary px-[13.6rem] py-[1.4rem]">
                     <span className="text-center text-lg font-bold leading-5 text-white">
                       등록하기
                     </span>
