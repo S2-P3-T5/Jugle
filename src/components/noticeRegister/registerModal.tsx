@@ -9,9 +9,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
-    // 모달 외부를 클릭하여 모달을 닫을 때
     if (e.target === e.currentTarget) {
-      onClose(); // onClose 함수 호출하여 모달 닫기
+      onClose();
     }
   };
 
