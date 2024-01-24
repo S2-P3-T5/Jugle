@@ -1,5 +1,5 @@
-import { Input } from "@/components/ui/noticeRegisterInput";
-import { Label } from "@/components/ui/noticeRegisterLabel";
+import { Input } from "@/components/NoticeRegister/noticeRegisterInput";
+import { Label } from "@/components/NoticeRegister/noticeRegisterLabel";
 
 function NoticeRegister() {
   return (
