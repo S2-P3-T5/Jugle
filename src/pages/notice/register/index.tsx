@@ -1,19 +1,23 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 import { Input } from "@/components/noticeRegister/Input";
 import { Label } from "@/components/noticeRegister/Label";
+import { Button } from "@/components/ui/button";
 
 function NoticeRegister() {
-  const router = useRouter();
-
-  // 공고 리스트 페이지로 이동하는 함수 - 추후 gnb 컴포넌트 생성 후 적용할 예정
-  // const handleLogoButtonClick = () => {
-  //   router.push("/notices");
-  // };
-
   return (
     <>
+      <Link href={"/notices"}>
+        <div className="relative h-[2rem] w-[10.8rem]">
+          <Image
+            src="/icons/logo.svg"
+            layout="fill"
+            objectFit="contain"
+            alt="로고이미지"
+          />
+        </div>
+      </Link>
       <div className="w-[37.5rem] gap-[0.8rem] bg-[#FAFAFA]">
         <div className="flex flex-col items-center justify-center">
           <div className="flex w-[35.1rem] flex-col items-start gap-[0.8rem] px-[1.2rem] pb-[8rem] pt-[4rem]">
@@ -70,11 +74,11 @@ function NoticeRegister() {
                 </form>
               </div>
               <div>
-                <button className="flex h-[2rem] items-center justify-center gap-[0.8rem] self-stretch rounded-md bg-[#EA3C12] px-[13.6rem] py-[1.4rem]">
+                <Button className="flex h-[2rem] items-center justify-center gap-[0.8rem] self-stretch rounded-md bg-[#EA3C12] px-[13.6rem] py-[1.4rem]">
                   <span className="text-center text-lg font-bold leading-5 text-white">
                     등록하기
                   </span>
-                </button>
+                </Button>
               </div>
             </div>
           </div>
