@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 import { Input } from "@/components/NoticeRegister/noticeRegisterInput";
@@ -21,9 +22,10 @@ function NoticeRegister() {
                 <h3 className="text-[2rem] font-bold not-italic leading-normal text-black">
                   공고 등록
                 </h3>
-                <img
+                <Image
                   src={"/icons/close.svg"}
                   className="h-[2.4rem] w-[2.4rem]"
+                  alt="닫기이미지"
                 />
               </div>
               <div className="flex h-[52.3rem] w-full flex-col justify-end gap-[2rem]">
@@ -55,7 +57,7 @@ function NoticeRegister() {
                 </form>
                 <form className="flex h-[18.7rem] w-full flex-col items-start gap-[0.8rem]">
                   <Label htmlFor="업무 시간">공고 설명</Label>
-                  <input
+                  <Input
                     type="text"
                     id="explanation"
                     className="flex h-[15.3rem] w-full items-center self-stretch overflow-auto rounded-md border border-input px-[2rem] py-[1.6rem] text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
