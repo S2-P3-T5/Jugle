@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+// props 추가
 export default function NoticeListCard() {
   const test = true ? "text-red-40" : "text-red-20";
   return (
