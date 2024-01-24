@@ -15,30 +15,20 @@ export default function NoticeListCard() {
     <>
       <Card className="w-auto max-w-[37.5rem]">
         <CardHeader>
-          <Image src="/icons/logo.svg" alt="" width={162} height={148}></Image>
+          <Image src="/icons/logo.svg" alt="" width={162} height={148} />
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-[1rem]">
             <CardTitle>물망개맛집식당</CardTitle>
             <div className="flex items-start gap-[0.5rem]">
-              <Image
-                src="/icons/clock.svg"
-                alt=""
-                width={16}
-                height={16}
-              ></Image>
+              <Image src="/icons/clock.svg" alt="" width={16} height={16} />
               <div>
                 <CardDescription>2024-01-01</CardDescription>
                 <CardDescription>15:00~18:00(3시간)</CardDescription>
               </div>
             </div>
             <div className="flex items-center gap-[0.5rem]">
-              <Image
-                src="/icons/point.svg"
-                alt=""
-                width={16}
-                height={16}
-              ></Image>
+              <Image src="/icons/point.svg" alt="" width={16} height={16} />
               <CardDescription>서울시 강남구</CardDescription>
             </div>
           </div>
@@ -57,7 +47,7 @@ export default function NoticeListCard() {
                 alt=""
                 width={16}
                 height={16}
-              ></Image>
+              />
             </div>
           </div>
         </CardFooter>
