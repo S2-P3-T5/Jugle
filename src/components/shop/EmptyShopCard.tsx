@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function ShopRegister() {
+export default function EmptyShopCard() {
   return (
     <div className="mx-auto flex w-[35.1rem] flex-col  gap-[1.6rem]  py-[4rem]">
       <span className="text-[2rem] font-bold text-black">내 가게</span>
