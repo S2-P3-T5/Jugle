@@ -1,10 +1,9 @@
 import { useState } from "react";
 
+import FilterModal from "@/components/notices/FilterModal";
 import { Button } from "@/components/ui/button";
 
-import FilterModal from "./FilterModal";
-
-export default function UseButton() {
+export default function NoticeListButton() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openModal = () => {
