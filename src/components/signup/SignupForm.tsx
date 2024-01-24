@@ -43,7 +43,11 @@ export default function SignupForm() {
             <FormItem>
               <FormLabel>비밀번호</FormLabel>
               <FormControl>
-                <Input placeholder="비밀번호를 입력해주세요." {...field} />
+                <Input
+                  placeholder="비밀번호를 입력해주세요."
+                  {...field}
+                  onBlur={handlers.password.onBlur}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
