@@ -27,14 +27,17 @@ function NoticeRegister() {
                   <h3 className="text-[2rem] font-bold not-italic leading-normal text-black">
                     공고 등록
                   </h3>
-                  <div className="relative h-[2.4rem] w-[2.4rem]">
+                  <Button
+                    variant="ghost"
+                    className="relative h-[2.4rem] w-[2.4rem]"
+                  >
                     <Image
                       src="/icons/close.svg"
                       layout="fill"
                       objectFit="contain"
                       alt="닫기이미지"
                     />
-                  </div>
+                  </Button>
                 </div>
                 <div className="flex h-[52.3rem] w-full flex-col justify-end gap-[2rem]">
                   <div className="flex h-[9.2rem] w-full flex-col items-start gap-[0.8rem]">
