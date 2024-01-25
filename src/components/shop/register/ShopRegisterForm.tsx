@@ -1,11 +1,12 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { fetcher } from "@/apis/fetcher";
+import { ShopRegisterFormModal } from "@/components/shop/register/ShopRegisterFormModal";
+import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -74,6 +75,7 @@ const formSchema = z.object({
 });
 
 export default function ShopRegisterForm() {
+  const [responseResult, setResponseResult] = useState("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -82,7 +84,7 @@ export default function ShopRegisterForm() {
       address1: "",
       address2: "",
       description: "",
-      imageUrl: "",
+      imageUrl: "https://i.ibb.co/s9ZGXVd/202312223572.png",
       originalHourlyPay: "",
     },
   });
@@ -97,12 +99,12 @@ export default function ShopRegisterForm() {
           Authorization: `Bearer ${token}`,
         },
       });
+      setResponseResult("200");
     } catch (e: any) {
       if (e.response.status === 401) {
-        //로그인 정보가 필요할 때
+        setResponseResult("401");
       } else if (e.response.status === 409) {
-        //가게 정보가 이미 있을 때
-      } else {
+        setResponseResult("409");
       }
     }
   }
@@ -113,7 +115,6 @@ export default function ShopRegisterForm() {
         <span>가게 정보</span>
         <Image src="/icons/close.svg" width="10" height="10" alt="종료이미지" />
       </div>
-
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -211,7 +212,8 @@ export default function ShopRegisterForm() {
               </FormItem>
             )}
           />
-          <FormField
+          {/* 이미지 기본값 설정으로 인한 오류 발생, 임시 주석처리 */}
+          {/* <FormField
             control={form.control}
             name="imageUrl"
             render={({ field }) => (
@@ -222,7 +224,7 @@ export default function ShopRegisterForm() {
                 </FormControl>
               </FormItem>
             )}
-          />
+          /> */}
           <FormField
             control={form.control}
             name="description"
@@ -239,8 +241,12 @@ export default function ShopRegisterForm() {
               </FormItem>
             )}
           />
-
-          <Button type="submit">등록하기</Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button type="submit">등록하기</Button>
+            </AlertDialogTrigger>
+            <ShopRegisterFormModal responseResult={responseResult} />
+          </AlertDialog>
         </form>
       </Form>
     </>
