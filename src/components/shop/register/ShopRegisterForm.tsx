@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import { fetcher } from "@/apis/fetcher";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { apiRouteUtils } from "@/routes";
 
 const CATEGORY = [
   "한식",
@@ -85,7 +87,25 @@ export default function ShopRegisterForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {}
+  const token = null; // 임시값
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await fetcher.post(apiRouteUtils.SHOPS, {
+        json: values,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (e: any) {
+      if (e.response.status === 401) {
+        //로그인 정보가 필요할 때
+      } else if (e.response.status === 409) {
+        //가게 정보가 이미 있을 때
+      } else {
+      }
+    }
+  }
 
   return (
     <>
@@ -160,7 +180,6 @@ export default function ShopRegisterForm() {
                         {item}
                       </SelectItem>
                     ))}
-                    )
                   </SelectContent>
                 </Select>
               </FormItem>
