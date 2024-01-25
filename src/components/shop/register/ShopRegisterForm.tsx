@@ -93,7 +93,7 @@ export default function ShopRegisterForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await fetcher.post(apiRouteUtils.SHOPS, {
+      await fetcher.post(apiRouteUtils.SHOPS, {
         json: values,
         headers: {
           Authorization: `Bearer ${token}`,
@@ -212,19 +212,7 @@ export default function ShopRegisterForm() {
               </FormItem>
             )}
           />
-          {/* 이미지 기본값 설정으로 인한 오류 발생, 임시 주석처리 */}
-          {/* <FormField
-            control={form.control}
-            name="imageUrl"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>가게 이미지</FormLabel>
-                <FormControl>
-                  <Input type="file" {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          /> */}
+          {/* TODO: Input Type : file 추가 예정 */}
           <FormField
             control={form.control}
             name="description"
