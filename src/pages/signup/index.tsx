@@ -18,6 +18,9 @@ export default function Page() {
           />
         </Link>
         <SignupForm />
+        <div>
+          이미 가입하셨나요? <Link href={PAGE_ROUTES.SIGNIN}>로그인하기</Link>
+        </div>
       </section>
     </DialogProvider>
   );
