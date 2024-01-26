@@ -13,26 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import useNoticeRegistForm from "@/hooks/useNoticeRegistForm";
 
-// const formSchema = z.object({
-//   hourlyPay: z.string(),
-//   startsAt: z.string(),
-//   workhour: z.string(),
-//   description: z.string(),
-// });
-
 function NoticeRegister() {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // const handleRegisterButtonClick = () => {
-  //   // 모달 열기
-  //   setIsModalOpen(true);
-  // };
-
-  // const handleCloseModal = () => {
-  //   // 모달 닫기
-  //   setIsModalOpen(false);
-  // };
-
   const { form, onSubmit } = useNoticeRegistForm();
 
   return (
