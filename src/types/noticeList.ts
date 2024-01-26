@@ -1,12 +1,3 @@
-export type Item = {
-  id: string;
-  hourlyPay: number;
-  startsAt: string;
-  workhour: number;
-  description: string;
-  closed: boolean;
-};
-
 export type ShopItem = {
   id: string;
   name: string;
@@ -23,7 +14,16 @@ export type Shop = {
   href: string;
 };
 
-export type Items = {
-  item: Item;
+export type Item = {
+  id: string;
+  hourlyPay: number;
+  startsAt: string;
+  workhour: number;
+  description: string;
+  closed: boolean;
   shop: Shop;
+};
+
+export type ApiResponse = {
+  items: Item;
 };

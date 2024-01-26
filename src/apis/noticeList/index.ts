@@ -1,26 +1,14 @@
+import { HTTPError } from "ky";
+
 import { fetcher } from "@/apis/fetcher";
+import { apiResponseSchema } from "@/apis/noticeList/schema";
 import { apiRouteUtils } from "@/routes";
 
-export const getNoticeList = async ({}: any): Promise<any> =>
-  await fetcher.get(apiRouteUtils.NOTICES);
-
-// export const getNoticeList = async ({
-//   email,
-//   password,
-//   type,
-// }: any): Promise<any> =>
-//   await fetcher
-//     .get(apiRouteUtils.NOTICES, {
-//       json: {
-//         email,
-//         password,
-//         type,
-//       },
-//     })
-//     .json()
-//     .then(usersResponseSchema.parse)
-//     .then()
-//     .then((res) => res.item)
-//     .catch((err: HTTPError) => {
-//       throw err;
-//     });
+export const getNoticeList = async () =>
+  await fetcher
+    .get(apiRouteUtils.NOTICES)
+    .json()
+    .then(apiResponseSchema.parse)
+    .catch((err: HTTPError) => {
+      throw err;
+    });

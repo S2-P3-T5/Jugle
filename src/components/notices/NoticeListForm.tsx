@@ -8,11 +8,15 @@ import NoticeListPopover from "@/components/notices/NoticeListPopover";
 import { useNoticeList } from "@/queries/noticeList";
 
 export default function NoticeListForm() {
-  const noticeListMutation = useNoticeList();
+  const noticeList = useNoticeList();
+
+  const { data, error, isLoading } = noticeList;
 
   useEffect(() => {
-    noticeListMutation.mutate({});
-  }, []);
+    if (noticeList) {
+      alert(data);
+    }
+  }, [noticeList]);
 
   return (
     <>

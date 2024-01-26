@@ -1,14 +1,12 @@
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { getNoticeList } from "@/apis/noticeList";
 
 export const useNoticeList = () => {
-  const mutation = useMutation({
-    mutationFn: ({}: any) => getNoticeList({}),
-    onSuccess: () => {
-      alert("test");
-    },
+  const { data, error, isLoading } = useQuery({
+    queryFn: () => getNoticeList(),
+    queryKey: ["NoticeList"],
   });
 
-  return mutation;
+  return { data, error, isLoading };
 };
