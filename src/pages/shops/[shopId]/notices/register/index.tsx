@@ -66,7 +66,6 @@ function NoticeRegister() {
                             <div className="relative inline-block w-full">
                               <FormControl className="w-full">
                                 <Input
-                                  className="h-[2.6rem] w-full items-center self-stretch rounded-md border border-input bg-white px-[2rem] py-[1.6rem] disabled:cursor-not-allowed disabled:opacity-50"
                                   {...field}
                                   id="hourlyPay"
                                   name="hourlyPay"
@@ -95,7 +94,6 @@ function NoticeRegister() {
                             <div className="relative inline-block w-full">
                               <FormControl className="w-full">
                                 <Input
-                                  className="h-[2.6rem] w-full items-center self-stretch rounded-md border border-input bg-white px-[2rem] py-[1.6rem] disabled:cursor-not-allowed disabled:opacity-50"
                                   {...field}
                                   id="startsAt"
                                   name="startsAt"
@@ -121,7 +119,6 @@ function NoticeRegister() {
                             <div className="relative inline-block w-full">
                               <FormControl className="w-full">
                                 <Input
-                                  className="h-[2.6rem] w-full items-center self-stretch rounded-md border border-input bg-white px-[2rem] py-[1.6rem] disabled:cursor-not-allowed disabled:opacity-50"
                                   {...field}
                                   id="workhour"
                                   name="workhour"
@@ -150,7 +147,6 @@ function NoticeRegister() {
                             <div className="relative inline-block w-full">
                               <FormControl className="w-full">
                                 <Input
-                                  className="h-[15.3rem] w-full items-center self-stretch overflow-auto rounded-md border border-input px-[2rem] py-[1.6rem] text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                   {...field}
                                   id="description"
                                   name="description"
