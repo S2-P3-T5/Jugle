@@ -25,7 +25,7 @@ export function ShopRegisterFormModal({
   const RESPONSE: RESPONSETYPE = {
     "200": {
       MSG: "등록이 완료되었습니다.",
-      PATH: PAGE_ROUTES.SHOPS(shopId),
+      PATH: PAGE_ROUTES.parseShopsURL(shopId),
     },
     "401": {
       MSG: "로그인이 필요합니다.",
@@ -33,7 +33,7 @@ export function ShopRegisterFormModal({
     },
     "409": {
       MSG: "이미 등록한 가게가 있습니다.",
-      PATH: PAGE_ROUTES.SHOPS(shopId),
+      PATH: PAGE_ROUTES.parseShopsURL(shopId),
     },
   };
 

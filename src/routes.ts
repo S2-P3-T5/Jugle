@@ -3,7 +3,7 @@ export const PAGE_ROUTES = {
   SIGNIN: "/signin",
   NOTICES: "/notices",
   SHOPS_REGISTER: "/shops/register",
-  SHOPS: (shopId: string) => `/shops/${shopId}`,
+  parseShopsURL: (shopId: string) => `/shops/${shopId}`,
 };
 
 export const API_ROUTE = process.env.NEXT_PUBLIC_API_ENDPOINT;
