@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import HighHourlyWageButton from "@/components/noticeDetail/HighHourlyWageButton";
+import HighHourlyWageBadge from "@/components/noticeDetail/HighHourlyWageBadge";
 import NoticeDetailPagination from "@/components/noticeDetail/NoticeDetailPagination";
 import { Button } from "@/components/ui/button";
 function NoticeDetail() {
@@ -43,7 +43,7 @@ function NoticeDetail() {
                     <span className="text-[2.4rem] font-bold not-italic leading-normal tracking-[0.048rem] text-black">
                       {"15,000원"}
                     </span>
-                    <HighHourlyWageButton />
+                    <HighHourlyWageBadge />
                   </div>
                 </div>
                 <div className="flex items-center gap-[0.6rem]">
