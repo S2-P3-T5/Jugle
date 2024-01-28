@@ -1,3 +1,5 @@
+import ky from "ky";
+
 import { fetcher } from "@/apis/fetcher";
 import { apiRouteUtils } from "@/routes";
 
@@ -19,8 +21,5 @@ export const postImages = async (token: string, name: string) => {
 
 // TODO: 에러처리
 export const putPresignedURL = async (presignedURL: string, img: File) => {
-  await fetch(presignedURL, {
-    method: "PUT",
-    body: img,
-  });
+  await ky.put(presignedURL, { body: img });
 };
