@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { ApproveButton, RejectButton } from "@/components/noticeDetail/Buttons";
 import HighHourlyWageBadge from "@/components/noticeDetail/HighHourlyWageBadge";
 import NoticeDetailPagination from "@/components/noticeDetail/NoticeDetailPagination";
 import { Button } from "@/components/ui/button";
@@ -120,7 +121,10 @@ function NoticeDetail() {
                 {"최선을 다하겠습니다"}
               </span>
             </div>
-            <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-t-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]"></div>
+            <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-t-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]">
+              <RejectButton />
+              <ApproveButton />
+            </div>
             <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-r-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]">
               <span className="text-black-50 scroll-auto text-[1.4rem] font-normal not-italic leading-[2.2rem]">
                 {"서혜진"}
