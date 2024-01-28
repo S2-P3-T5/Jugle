@@ -1,9 +1,13 @@
 import Image from "next/image";
 
-import { ApproveButton, RejectButton } from "@/components/noticeDetail/Buttons";
+import {
+  ApproveButton,
+  EditNoticeButton,
+  RejectButton,
+} from "@/components/noticeDetail/Buttons";
 import HighHourlyWageBadge from "@/components/noticeDetail/HighHourlyWageBadge";
 import NoticeDetailPagination from "@/components/noticeDetail/NoticeDetailPagination";
-import { Button } from "@/components/ui/button";
+
 function NoticeDetail() {
   return (
     <div className="flex flex-col items-center justify-start">
@@ -77,11 +81,7 @@ function NoticeDetail() {
                   {"용준좌가 적극 추천한 돈까스집"}
                 </span>
               </div>
-              <Button className="h-[3.8rem] w-full rounded-[0.6rem] border-[0.1rem] border-primary bg-white px-[2rem] py-[1rem]">
-                <span className="text-center text-[1.4rem] font-bold not-italic leading-normal text-primary">
-                  공고 편집하기
-                </span>
-              </Button>
+              <EditNoticeButton />
             </div>
           </div>
         </div>
