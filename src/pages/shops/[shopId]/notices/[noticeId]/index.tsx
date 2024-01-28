@@ -50,7 +50,7 @@ function NoticeDetail() {
                   <div className="relative flex h-[1.6rem] w-[1.6rem] items-center justify-center">
                     <Image
                       src="/icons/clock.svg"
-                      alt="윗방향 화살표 이미지"
+                      alt="시간 아이콘"
                       layout="fill"
                       objectFit="contain"
                     />
@@ -63,7 +63,7 @@ function NoticeDetail() {
                   <div className="relative flex h-[1.6rem] w-[1.6rem] items-center justify-center">
                     <Image
                       src="/icons/point.svg"
-                      alt="윗방향 화살표 이미지"
+                      alt="장소 아이콘"
                       layout="fill"
                       objectFit="contain"
                     />
