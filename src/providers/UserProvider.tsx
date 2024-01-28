@@ -2,8 +2,8 @@ import { createContext, PropsWithChildren, useState } from "react";
 
 import { User } from "@/types/user";
 
-const UserContext = createContext<User | null>(null);
-const UserActionContext = createContext({
+export const UserContext = createContext<User | null>(null);
+export const UserActionContext = createContext({
   login: (user: User) => {},
   logout: () => {},
 });
