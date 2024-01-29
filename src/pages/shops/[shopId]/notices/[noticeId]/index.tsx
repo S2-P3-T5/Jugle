@@ -1,11 +1,15 @@
 import Image from "next/image";
 
 import {
+  ApproveBadge,
+  HighHourlyWageBadge,
+  RejectBadge,
+} from "@/components/noticeDetail/Badge";
+import {
   ApproveButton,
   EditNoticeButton,
   RejectButton,
 } from "@/components/noticeDetail/Buttons";
-import HighHourlyWageBadge from "@/components/noticeDetail/HighHourlyWageBadge";
 import NoticeDetailPagination from "@/components/noticeDetail/NoticeDetailPagination";
 
 function NoticeDetail() {
@@ -130,18 +134,27 @@ function NoticeDetail() {
                 {"서혜진"}
               </span>
             </div>
-            <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]"></div>
             <div className="md:col-span-1 md:block hidden items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-r-[0.1rem] bg-white px-[0.8rem] py-[1.2rem]">
               <span className="text-black-50 scroll-auto truncate text-[1.6rem] font-normal not-italic leading-[2.6rem]">
                 {"최선을 다하겠습니다"}
               </span>
+            </div>
+            <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]">
+              <ApproveBadge />
             </div>
             <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-r-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]">
               <span className="text-black-50 scroll-auto text-[1.4rem] font-normal not-italic leading-[2.2rem]">
                 {"주진혁"}
               </span>
             </div>
-            <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]"></div>
+            <div className="md:col-span-1 md:block hidden items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-r-[0.1rem] bg-white px-[0.8rem] py-[1.2rem]">
+              <span className="text-black-50 scroll-auto truncate text-[1.6rem] font-normal not-italic leading-[2.6rem]">
+                {"최선을 다하겠습니다"}
+              </span>
+            </div>
+            <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]">
+              <RejectBadge />
+            </div>
             <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-r-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]">
               <span className="text-black-50 scroll-auto text-[1.4rem] font-normal not-italic leading-[2.2rem]">
                 {"장민혁"}
