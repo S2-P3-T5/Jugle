@@ -29,6 +29,7 @@ type dataType = {
 };
 
 export default function Shop() {
+  const [isLoading, setIsLoading] = useState(true);
   const [shopData, setShopData] = useState<dataType | null>(null);
   const hasNotice = false; //기능 구현 전 임시 설정
   const router = useRouter();
@@ -40,11 +41,15 @@ export default function Shop() {
         // TODO : result type 재설정
         const result: any = await getShopsData(shopId);
         setShopData(result.item);
+        setIsLoading(false);
       })();
     }
   }, [shopId]);
 
-  return shopData ? (
+  return isLoading ? (
+    //TODO : loading 차후 구현
+    <div className="text-[60px]">로딩중</div>
+  ) : shopData ? (
     <div>
       <ShopDataCard shopId={shopId} shopData={shopData} />
       {hasNotice ? <div>공고 리스트</div> : <div>공고 등록하기 카드</div>}
