@@ -1,4 +1,5 @@
 import { TokenDTO, TokenResponse, UserDTO } from "@/apis/auth/schema";
+import { fetcher } from "@/apis/fetcher";
 import { User } from "@/types/user";
 
 export const extractTokenDTOFromResponse = (res: TokenResponse): TokenDTO => {
@@ -18,3 +19,19 @@ export const mapUserDTOToUser = (udto: UserDTO): User => ({
   email: udto.email,
   type: udto.type,
 });
+
+export const setAccessTokenInHeader = (token: string) => {
+  fetcher.extend({
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const removeAccessToken = () => {
+  fetcher.extend({
+    headers: {
+      Authorization: undefined,
+    },
+  });
+};

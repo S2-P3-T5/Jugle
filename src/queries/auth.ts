@@ -4,7 +4,7 @@ import { useContext } from "react";
 
 import { postToken } from "@/apis/auth";
 import { TokenRequestBody } from "@/apis/auth/schema";
-import { mapUserDTOToUser } from "@/helpers/auth";
+import { mapUserDTOToUser, setAccessTokenInHeader } from "@/helpers/auth";
 import { NotFoundRequestError } from "@/helpers/error";
 import { DialogActionContext } from "@/providers/DialogProvider";
 import { UserActionContext } from "@/providers/UserProvider";
@@ -18,9 +18,10 @@ export const useSignin = () => {
   const mutation = useMutation({
     mutationFn: ({ email, password }: TokenRequestBody) =>
       postToken({ email, password }),
-    onSuccess: ({ user: userDTO }) => {
+    onSuccess: ({ token, user: userDTO }) => {
       const user = mapUserDTOToUser(userDTO);
       login(user);
+      setAccessTokenInHeader(token);
       router.push(PAGE_ROUTES.NOTICES);
     },
     onError: (err) => {
