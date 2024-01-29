@@ -13,42 +13,34 @@ import {
 import { PAGE_ROUTES } from "@/routes";
 
 interface ShopDataCardProps {
-  name: string;
-  address1: string;
-  description: string;
-  imageUrl: string;
+  shopId: string | string[] | undefined;
+  shopData: {
+    name: string;
+    address1: string;
+    description: string;
+    imageUrl: string;
+  };
 }
 
 // TODO : props 재설정
-export default function ShopDataCard({
-  shopId,
-}: {
-  shopId: string | string[] | undefined;
-}) {
-  const mockData = {
-    name: "도토리 식당",
-    address1: "서울시 송파구",
-    description: "도토리 없는 도토리 식당입니다.",
-    imageUrl: "https://i.ibb.co/0V2PH9f/default.jpg",
-  };
-
+export default function ShopDataCard({ shopId, shopData }: ShopDataCardProps) {
   return (
     <>
       {typeof shopId === "string" && (
         <Card className="w-[350px] p-[20px]">
           <Image
-            src={mockData.imageUrl}
+            src={shopData.imageUrl}
             width="311"
             height="178"
             alt="가게이미지"
           />
           <CardHeader>
             <div>식당</div>
-            <CardTitle>{mockData.name}</CardTitle>
+            <CardTitle>{shopData.name}</CardTitle>
           </CardHeader>
           <CardContent>
-            <span>{mockData.address1}</span>
-            <p>{mockData.description}</p>
+            <span>{shopData.address1}</span>
+            <p>{shopData.description}</p>
           </CardContent>
           <CardFooter className="flex gap-[10px]">
             <Button>편집하기</Button>
