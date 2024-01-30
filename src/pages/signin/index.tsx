@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import ErrorDialog from "@/components/common/ErrorDialog";
 import SigninForm from "@/components/signin/SigninForm";
 import ErrorDialogProvider from "@/providers/ErrorDialogProvider";
 import { PAGE_ROUTES } from "@/routes";
@@ -32,6 +33,7 @@ export default function Page() {
             </div>
           </div>
         </section>
+        <ErrorDialog />
       </div>
     </ErrorDialogProvider>
   );
