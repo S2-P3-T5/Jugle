@@ -2,8 +2,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { getShopsData } from "@/apis/shops";
-import EmptyShopCard from "@/components/shop/EmptyShopCard";
+import EmptyDataCard from "@/components/shop/EmptyDataCard";
 import ShopDataCard from "@/components/shop/ShopDataCard";
+import { PAGE_ROUTES } from "@/routes";
 
 type dataType = {
   id: "string";
@@ -52,9 +53,23 @@ export default function Shop() {
   ) : shopData ? (
     <div>
       <ShopDataCard shopId={shopId} shopData={shopData} />
-      {hasNotice ? <div>공고 리스트</div> : <div>공고 등록하기 카드</div>}
+      {hasNotice ? (
+        <div>공고 리스트</div>
+      ) : (
+        <EmptyDataCard
+          title="등록한 공고"
+          description="공고를 등록해 보세요."
+          buttonText="공고 등록하기"
+          buttonLink={PAGE_ROUTES.parseNoticeRegisterURL(shopId as string)}
+        />
+      )}
     </div>
   ) : (
-    <EmptyShopCard />
+    <EmptyDataCard
+      title="내 가게"
+      description="내 가게를 소개하고 공고도 등록해 보세요."
+      buttonText="가게 등록하기"
+      buttonLink={PAGE_ROUTES.SHOPS_REGISTER}
+    />
   );
 }
