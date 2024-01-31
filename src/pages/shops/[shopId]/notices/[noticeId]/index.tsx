@@ -33,16 +33,18 @@ function NoticeDetail() {
       return response.json();
     },
   });
-  const shopOriginalData = data?.item?.shop?.item;
-  const shopNoticeData = data?.item;
+  const shopOriginalData = data?.item?.shop?.item ?? {};
+  const shopNoticeData = data?.item ?? {};
+  const startsAt = shopNoticeData.startsAt;
+  const workhour = shopNoticeData.workhour;
 
   const [startDay, startTime, minute, endTime] = useTimeCalculate(
-    data && shopNoticeData.startsAt,
-    data && shopNoticeData.workhour,
+    startsAt,
+    workhour,
   );
 
-  const originalHourlyPay = data && shopOriginalData.originalHourlyPay;
-  const hourlyPay = data && shopNoticeData.hourlyPay;
+  const originalHourlyPay = shopOriginalData.originalHourlyPay;
+  const hourlyPay = shopNoticeData.hourlyPay;
 
   let increasePercentage: number | undefined;
   if (hourlyPay > originalHourlyPay) {
