@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import ArrowUpIconCustom from "@/components/ui/ArrowUpIconCustom";
 import {
   Card,
   CardContent,
@@ -33,6 +34,19 @@ const colorCalculate = (num: number) => {
   else return "red-10";
 };
 
+const timeCalculate = (time: string, workhour: number) => {
+  const startDay = time.split("T")[0];
+  const startTime = time.split("T")[1].split(":")[0];
+  const minute = time.split("T")[1].split(":")[1];
+  const endTimeCal =
+    +startTime + +workhour >= 24
+      ? +startTime + +workhour - 24
+      : +startTime + +workhour;
+  const endTime = 10 > endTimeCal ? "0" + endTimeCal : endTimeCal;
+
+  return [startDay, startTime, minute, endTime];
+};
+
 export default function ShopsNoticesListItem({
   item,
   shopData,
@@ -40,14 +54,10 @@ export default function ShopsNoticesListItem({
   const riseRate = Math.floor(
     (item.hourlyPay / shopData.originalHourlyPay - 1) * 100,
   );
-  const startDay = item.startsAt.split("T")[0];
-  const startTime = item.startsAt.split("T")[1].split(":")[0];
-  const minute = item.startsAt.split("T")[1].split(":")[1];
-  const endTimeCal =
-    +startTime + +item.workhour >= 24
-      ? +startTime + +item.workhour - 24
-      : +startTime + +item.workhour;
-  const endTime = 10 > endTimeCal ? "0" + endTimeCal : endTimeCal;
+  const [startDay, startTime, minute, endTime] = timeCalculate(
+    item.startsAt,
+    item.workhour,
+  );
   const color = colorCalculate(riseRate);
 
   return (
@@ -84,15 +94,7 @@ export default function ShopsNoticesListItem({
               <span className={`text-[1.2rem] font-[400] text-${color}`}>
                 기존 시급보다 {riseRate}%
               </span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="17"
-                viewBox="0 0 16 17"
-                className={`fill-${color}`}
-              >
-                <path d="M10.0001 13.5483H6.0001V8.21495H2.77344L8.0001 2.98828L13.2268 8.21495H10.0001V13.5483Z" />
-              </svg>
+              <ArrowUpIconCustom color={color} />
             </div>
           </div>
         </CardFooter>
