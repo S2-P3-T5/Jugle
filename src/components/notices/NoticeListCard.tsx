@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import { colorCalculate, riseRate } from "@/components/notices/util";
 import { timeCalculate } from "@/components/shop/ShopsNoticesListItem";
@@ -10,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { PAGE_ROUTES } from "@/routes";
 
 // TODO : 타입수정, 미사용 변수 제거
 export default function NoticeListCard({ item }: any) {
@@ -32,11 +34,22 @@ export default function NoticeListCard({ item }: any) {
   );
 
   const rate = riseRate(hourlyPay, originalHourlyPay);
+
   const color = colorCalculate(rate);
+
+  const router = useRouter();
+
+  function imgClickHandler() {
+    router.push(PAGE_ROUTES.NOTICES_DETAIL(id));
+  }
 
   return (
     <>
-      <Card className="w-auto max-w-[37.5rem]">
+      <Card
+        className="w-auto max-w-[37.5rem]"
+        onClick={imgClickHandler}
+        style={{ cursor: "pointer" }}
+      >
         <CardHeader>
           <Image
             src={imageUrl}
