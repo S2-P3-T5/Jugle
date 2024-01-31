@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { colorCalculate, riseRate } from "@/components/notices/util";
+import { timeCalculate } from "@/components/shop/ShopsNoticesListItem";
 import {
   Card,
   CardContent,
@@ -22,9 +24,16 @@ export default function NoticeListCard({ item }: any) {
     originalHourlyPay,
   }: any = item.shop.item;
 
-  const { startsAt }: any = item;
+  const { startsAt, workhour, hourlyPay }: any = item;
 
-  const test = true ? "text-red-40" : "text-red-20";
+  const [startDay, startTime, minute, endTime] = timeCalculate(
+    startsAt,
+    workhour,
+  );
+
+  const rate = riseRate(hourlyPay, originalHourlyPay);
+  const color = colorCalculate(rate);
+
   return (
     <>
       <Card className="w-auto max-w-[37.5rem]">
@@ -49,8 +58,10 @@ export default function NoticeListCard({ item }: any) {
                 style={{ maxWidth: 16 }}
               />
               <div>
-                <CardDescription>{startsAt}2024-01-01</CardDescription>
-                <CardDescription>{startsAt}15:00~18:00(3시간)</CardDescription>
+                <CardDescription>{startDay}</CardDescription>
+                <CardDescription>
+                  {startTime}:{minute} ~ {endTime}:{minute} ({workhour}시간)
+                </CardDescription>
               </div>
             </div>
             <div className="flex items-center gap-[0.5rem]">
@@ -68,12 +79,13 @@ export default function NoticeListCard({ item }: any) {
         <CardFooter>
           <div className="flex flex-col">
             <span className="text-[1.8rem] font-[700] text-black">
-              {/* {hourlyPay} */}
+              {originalHourlyPay}
             </span>
             <div className="flex ">
-              <span className={`text-[1.2rem] font-[400] ${test}`}>
-                기존 시급보다 50%
+              <span className={`text-[1.2rem] font-[400] ${color}`}>
+                기존 시급보다 {rate}%
               </span>
+              {/* TODO : arrow svg 색상적용 안되어 확인 필요 */}
               <Image
                 src="/icons/arrow_up_bold.svg"
                 alt=""
