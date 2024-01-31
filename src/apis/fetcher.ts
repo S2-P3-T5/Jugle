@@ -2,9 +2,7 @@ import ky, { Input, KyInstance, Options } from "ky";
 
 import { API_ROUTE } from "@/routes";
 
-interface Fetcher extends Omit<KyInstance, "extend" | "create" | "stop"> {
-  extend: (options: Options) => void;
-}
+interface Fetcher extends Omit<KyInstance, "extend" | "create" | "stop"> {}
 
 class KyAdapter implements Fetcher {
   #fetcher: KyInstance;
@@ -37,11 +35,18 @@ class KyAdapter implements Fetcher {
     return this.#fetcher.head(url, options);
   }
 
-  extend(options: Options) {
+  setAccessToken(token?: string | null) {
+    if (!token) return;
+
+    this.#extend({
+      headers: {
+        Authorization: token,
+      },
+    });
+  }
+
+  #extend(options: Options) {
     this.#fetcher = this.#fetcher.extend(options);
-    if (process.env.NODE_ENV === "development")
-      // eslint-disable-next-line no-console
-      console.log("ky options extended: ", options);
   }
 }
 

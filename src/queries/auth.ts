@@ -4,7 +4,8 @@ import { useContext } from "react";
 
 import { postToken } from "@/apis/auth";
 import { TokenRequestBody } from "@/apis/auth/schema";
-import { mapUserDTOToUser, setAccessTokenInHeader } from "@/helpers/auth";
+import { fetcher } from "@/apis/fetcher";
+import { mapUserDTOToUser, setAccessTokenInStorage } from "@/helpers/auth";
 import { NotFoundRequestError } from "@/helpers/error";
 import { DialogActionContext } from "@/providers/DialogProvider";
 import { UserActionContext } from "@/providers/UserProvider";
@@ -20,8 +21,9 @@ export const useSignin = () => {
       postToken({ email, password }),
     onSuccess: ({ token, user: userDTO }) => {
       const user = mapUserDTOToUser(userDTO);
+      setAccessTokenInStorage(token);
+      fetcher.setAccessToken(token);
       login(user);
-      setAccessTokenInHeader(token);
       router.push(PAGE_ROUTES.NOTICES);
     },
     onError: (err) => {
