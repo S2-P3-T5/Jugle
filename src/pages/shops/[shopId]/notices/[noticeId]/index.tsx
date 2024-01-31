@@ -12,6 +12,7 @@ import {
   EditNoticeButton,
   RejectButton,
 } from "@/components/noticeDetail/Buttons";
+import { useTimeCalculate } from "@/components/noticeDetail/Hooks";
 import NoticeDetailPagination from "@/components/noticeDetail/NoticeDetailPagination";
 import { apiRouteUtils } from "@/routes";
 
@@ -33,6 +34,32 @@ function NoticeDetail() {
   });
   const shopOriginalData = data?.item?.shop?.item;
   const shopNoticeData = data?.item;
+
+  const [startDay, startTime, minute, endTime] = useTimeCalculate(
+    data && shopNoticeData.startsAt,
+    data && shopNoticeData.workhour,
+  );
+
+  const originalHourlyPay = data && shopOriginalData.originalHourlyPay;
+  const hourlyPay = data && shopNoticeData.hourlyPay;
+
+  let increasePercentage: number | undefined;
+  if (hourlyPay > originalHourlyPay) {
+    increasePercentage =
+      ((hourlyPay - originalHourlyPay) / originalHourlyPay) * 100;
+  }
+  let badgeProps = {};
+  if (increasePercentage !== undefined) {
+    if (increasePercentage >= 50) {
+      badgeProps = { className: "bg-red-50", increasePercentage };
+    } else if (increasePercentage >= 40) {
+      badgeProps = { className: "bg-red-40", increasePercentage };
+    } else if (increasePercentage >= 30) {
+      badgeProps = { className: "bg-red-30", increasePercentage };
+    } else if (increasePercentage > 20) {
+      badgeProps = { className: "bg-red-20", increasePercentage };
+    }
+  }
 
   return (
     <div className="flex flex-col items-center justify-start">
@@ -73,7 +100,13 @@ function NoticeDetail() {
                     <span className="text-[2.4rem] font-bold not-italic leading-normal tracking-[0.048rem] text-black">
                       {data && shopNoticeData.hourlyPay}원
                     </span>
-                    <HighHourlyWageBadge />
+                    {hourlyPay > originalHourlyPay && (
+                      <HighHourlyWageBadge
+                        className={""}
+                        increasePercentage={0}
+                        {...badgeProps}
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="flex items-center gap-[0.6rem]">
@@ -86,8 +119,9 @@ function NoticeDetail() {
                     />
                   </div>
                   <span className="text-[1.4rem] font-normal not-italic leading-[2.2rem] text-gray-50">
-                    {data && shopNoticeData.startsAt}(
-                    {data && shopNoticeData.workhour}시간)
+                    {startDay} {startTime}:{minute}~{endTime}:{minute}(
+                    {data && shopOriginalData.workhour}
+                    시간)
                   </span>
                 </div>
                 <div className="flex items-center gap-[0.6rem]">

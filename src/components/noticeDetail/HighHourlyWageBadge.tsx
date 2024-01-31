@@ -1,10 +1,16 @@
 import Image from "next/image";
 
-function HighHourlyWageBadge() {
+function HighHourlyWageBadge(props: {
+  className: string;
+  increasePercentage: number;
+}) {
+  const { className, increasePercentage } = props;
   return (
-    <div className="flex h-[2.4rem] w-[13.1rem] items-center gap-[0.2rem] rounded-[2rem] bg-primary px-[0.8rem] py-[0.4rem]">
+    <div
+      className={`flex h-[2.4rem] w-[13.1rem] items-center gap-[0.2rem] rounded-[2rem] ${className} px-[0.8rem] py-[0.4rem]`}
+    >
       <span className="items-center text-[1.2rem] font-normal not-italic leading-[1.6rem] text-white">
-        기존 시급보다 50%
+        기존 시급보다 {increasePercentage}%
       </span>
       <div className="relative flex h-[1.6rem] w-[1.6rem] items-center justify-center">
         <Image
