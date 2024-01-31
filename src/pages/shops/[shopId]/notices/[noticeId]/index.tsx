@@ -64,17 +64,16 @@ function NoticeDetail() {
     }
   }
 
-//TODO: 가게의 특정 공고의 지원 목록 조회하는 api를 구성하면 username과 status를 수정할 예정
-const initialApplicants = [
-  { name: "김강현", status: "pending" },
-  { name: "서혜진", status: "pending" },
-  { name: "주진혁", status: "pending" },
-  { name: "서혜진", status: "pending" },
-  { name: "장민혁", status: "pending" },
-  { name: "고기훈", status: "pending" },
-];
+  //TODO: 가게의 특정 공고의 지원 목록 조회하는 api를 구성하면 username과 status를 수정할 예정
+  const initialApplicants = [
+    { name: "김강현", status: "pending" },
+    { name: "서혜진", status: "pending" },
+    { name: "주진혁", status: "pending" },
+    { name: "서혜진", status: "pending" },
+    { name: "장민혁", status: "pending" },
+    { name: "고기훈", status: "pending" },
+  ];
 
-function NoticeDetail() {
   const [applicants, setApplicants] = useState(initialApplicants);
 
   const handleApprove = (index: number) => {
@@ -90,7 +89,7 @@ function NoticeDetail() {
     setApplicants(updatedApplicants);
     alert("신청을 거절했습니다.");
   };
-  
+
   return (
     <div className="flex flex-col items-center justify-start">
       <div className="relative h-[1.5rem] w-[8.1rem]">
