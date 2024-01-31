@@ -1,6 +1,8 @@
-import { MouseEventHandler } from "react";
-
 import { Button } from "@/components/ui/button";
+
+interface RejectButtonProps {
+  onClick: () => void;
+}
 
 export const EditNoticeButton = () => {
   return (
@@ -12,7 +14,7 @@ export const EditNoticeButton = () => {
   );
 };
 
-export const RejectButton: React.FC<applyReplyButtonProps> = ({ onClick }) => {
+export const RejectButton = ({ onClick }: RejectButtonProps) => {
   return (
     <Button
       onClick={onClick}
@@ -25,7 +27,7 @@ export const RejectButton: React.FC<applyReplyButtonProps> = ({ onClick }) => {
   );
 };
 
-export const ApproveButton: React.FC<applyReplyButtonProps> = ({ onClick }) => {
+export const ApproveButton = ({ onClick }: RejectButtonProps) => {
   return (
     <Button
       onClick={onClick}
@@ -36,10 +38,4 @@ export const ApproveButton: React.FC<applyReplyButtonProps> = ({ onClick }) => {
       </span>
     </Button>
   );
-};
-
-//button type
-
-type applyReplyButtonProps = {
-  onClick: MouseEventHandler<HTMLButtonElement>;
 };
