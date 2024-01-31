@@ -105,16 +105,16 @@ function NoticeDetail() {
         <div className="flex h-[54.4rem] w-[35.1rem] flex-col gap-[1.6rem]">
           <div className="inline-flex flex-col items-start gap-[0.8rem]">
             <span className="text-[1.4rem] font-bold not-italic leading-normal text-primary	">
-              {data && shopOriginalData.category}
+              {shopOriginalData?.category}
             </span>
             <span className="text-[2rem] font-bold not-italic leading-normal text-black">
-              {data && shopOriginalData.name}
+              {shopOriginalData?.name}
             </span>
           </div>
           <div className="flex w-[35.1rem] flex-col items-start gap-[1.2rem] rounded-[1.2rem] border border-gray-20 bg-white p-[2rem]">
             <div className="relative flex h-[15.8rem] w-[31.1rem] items-center justify-center">
               <Image
-                src={data && shopOriginalData.imageUrl}
+                src={shopOriginalData?.imageUrl}
                 layout="fill"
                 objectFit="contain"
                 alt="로고이미지"
@@ -128,7 +128,7 @@ function NoticeDetail() {
                   </span>
                   <div className="flex w-full items-center gap-[0.4rem]">
                     <span className="text-[2.4rem] font-bold not-italic leading-normal tracking-[0.048rem] text-black">
-                      {data && shopNoticeData.hourlyPay}원
+                      {shopNoticeData?.hourlyPay}원
                     </span>
                     {hourlyPay > originalHourlyPay && (
                       <HighHourlyWageBadge
@@ -150,7 +150,7 @@ function NoticeDetail() {
                   </div>
                   <span className="text-[1.4rem] font-normal not-italic leading-[2.2rem] text-gray-50">
                     {startDay} {startTime}:{minute}~{endTime}:{minute}(
-                    {data && shopOriginalData.workhour}
+                    {shopOriginalData?.workhour}
                     시간)
                   </span>
                 </div>
@@ -164,12 +164,11 @@ function NoticeDetail() {
                     />
                   </div>
                   <span className="text-[1.4rem] font-normal not-italic leading-[2.2rem] text-gray-50">
-                    {data && shopOriginalData.address1}{" "}
-                    {data && shopOriginalData.address2}
+                    {shopOriginalData?.address1} {shopOriginalData?.address2}
                   </span>
                 </div>
                 <span className="text-black-50 h-[6.6rem] scroll-auto text-[1.4rem] font-normal not-italic leading-[2.2rem]">
-                  {data && shopOriginalData.description}
+                  {shopOriginalData?.description}
                 </span>
               </div>
               <EditNoticeButton />
@@ -181,7 +180,7 @@ function NoticeDetail() {
             공고 설명
           </span>
           <span className="text-black-50 scroll-auto text-[1.4rem] font-normal not-italic leading-[2.2rem]">
-            {data && shopNoticeData.description}
+            {shopNoticeData?.description}
           </span>
         </div>
       </div>
