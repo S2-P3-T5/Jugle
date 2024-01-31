@@ -45,6 +45,14 @@ class KyAdapter implements Fetcher {
     });
   }
 
+  removeAccessToken() {
+    this.#extend({
+      headers: {
+        Authorization: undefined,
+      },
+    });
+  }
+
   #extend(options: Options) {
     this.#fetcher = this.#fetcher.extend(options);
   }

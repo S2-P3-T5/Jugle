@@ -1,15 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
 import { jwtDecode } from "jwt-decode";
 import { createContext, PropsWithChildren, useEffect, useState } from "react";
 
 import { fetcher } from "@/apis/fetcher";
 import { getUser } from "@/apis/user";
-import { getAccessTokenInStorage } from "@/helpers/auth";
+import {
+  getAccessTokenInStorage,
+  removeAccessTokenInStorage,
+  setAccessTokenInStorage,
+} from "@/helpers/auth";
 import { User } from "@/types/user";
 
 export const UserContext = createContext<User | null>(null);
 export const UserActionContext = createContext({
-  login: (user: User) => {},
+  login: (_token: string, _user: User) => {},
   logout: () => {},
 });
 
@@ -25,25 +28,29 @@ export default function UserProvider({ children }: PropsWithChildren) {
   try {
     userId = jwtDecode<JWTPayload>(token ?? "").userId;
   } catch (err) {}
-  const { data } = useQuery({
-    queryKey: ["user", userId],
-    queryFn: () => getUser(userId),
-    enabled: !!userId,
-  });
 
-  const login = (user: User) => {
+  useEffect(() => {
+    if (!userId) return;
+
+    const fetchUser = async () => {
+      const { user } = await getUser(userId);
+      setUser(user);
+    };
+
+    fetchUser();
+  }, [userId]);
+
+  const login = (token: string, user: User) => {
+    setAccessTokenInStorage(token);
+    fetcher.setAccessToken(token);
     setUser(user);
   };
 
   const logout = () => {
+    removeAccessTokenInStorage();
+    fetcher.removeAccessToken();
     setUser(null);
   };
-
-  useEffect(() => {
-    if (!data) return;
-
-    login(data.user);
-  }, [userId, data]);
 
   return (
     <UserContext.Provider value={user}>
