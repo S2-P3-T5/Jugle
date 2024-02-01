@@ -1,6 +1,7 @@
 export const PAGE_ROUTES = {
   SIGNUP: "/signup",
   SIGNIN: "/signin",
+  SHOPS: "/shops",
   NOTICES: "/notices",
   SHOPS_REGISTER: "/shops/register",
   parseShopsURL: (shopId: string) => `/shops/${shopId}`,
