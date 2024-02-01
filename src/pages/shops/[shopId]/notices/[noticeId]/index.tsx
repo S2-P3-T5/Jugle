@@ -102,7 +102,13 @@ function NoticeDetail() {
 
   useEffect(() => {
     if (router.query.offset) {
-      setOffset(parseInt(router.query.offset));
+      if (Array.isArray(router.query.offset)) {
+        // 배열인 경우 첫 번째 값을 선택하여 문자열로 변환
+        setOffset(parseInt(router.query.offset[0]));
+      } else {
+        // 문자열인 경우 바로 숫자로 변환
+        setOffset(parseInt(router.query.offset));
+      }
     }
   }, [router.query.offset]);
 
