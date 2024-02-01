@@ -66,13 +66,15 @@ export const getNewNoticesListData = async (
 // TODO: 에러처리
 export const postShopRegistData = async (token: string, values: any) => {
   try {
-    await fetcher.post(apiRouteUtils.SHOPS, {
+    const res = await fetcher.post(apiRouteUtils.SHOPS, {
       json: values,
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-  } catch (e: any) {}
+  } catch (err: any) {
+    throw err;
+  }
 };
 
 // TODO: 에러처리
@@ -82,11 +84,15 @@ export const putShopEditData = async (
   shopId: string,
 ) => {
   try {
-    await fetcher.put(apiRouteUtils.parseShopsURL(shopId), {
+    const res = await fetcher.put(apiRouteUtils.parseShopsURL(shopId), {
       json: values,
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-  } catch {}
+    const result: any = await res.json();
+    return result.item.id;
+  } catch (err: any) {
+    throw err;
+  }
 };
