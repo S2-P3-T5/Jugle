@@ -6,7 +6,7 @@ export default function EmployerLayout({ children }: PropsWithChildren) {
   return (
     <>
       <EmployerHeader />
-      {children}
+      <main className="h-[calc(100dvh-64px)]">{children}</main>
     </>
   );
 }
