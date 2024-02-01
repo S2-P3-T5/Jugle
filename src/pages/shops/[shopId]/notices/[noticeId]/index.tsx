@@ -240,8 +240,16 @@ function NoticeDetail() {
                   <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-t-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]">
                     {applicant.status === "pending" && (
                       <>
-                        <ApproveButton onClick={() => handleApprove(index)} />
-                        <RejectButton onClick={() => handleReject(index)} />
+                        <ApproveButton
+                          onClick={() =>
+                            index !== undefined && handleApprove(index)
+                          }
+                        />
+                        <RejectButton
+                          onClick={() =>
+                            index !== undefined && handleReject(index)
+                          }
+                        />
                       </>
                     )}
                     {applicant.status === "accepted" && <ApproveBadge />}
@@ -258,7 +266,7 @@ function NoticeDetail() {
                 variant="outlined"
                 color="primary"
                 className="pagination"
-                offset={offset}
+                page={offset + 1}
                 onChange={handlePaginationChange}
                 hidePrevButton
                 hideNextButton
