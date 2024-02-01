@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import ShopImageCard from "@/components/shop/register/ShopImageCard";
+import ShopImageCard from "@/components/shop/ShopImageCard";
 import {
   AlertDialogAction,
   AlertDialogContent,
