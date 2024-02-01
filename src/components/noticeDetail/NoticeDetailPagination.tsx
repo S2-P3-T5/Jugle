@@ -1,38 +1,29 @@
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+// import { Button } from "@/components/ui/button";
+// import {
+//   Pagination,
+//   PaginationContent,
+//   PaginationItem,
+//   PaginationLink,
+// } from "@/components/ui/pagination";
 
-export default function NoticeDetailPagination() {
-  return (
-    <Pagination>
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious href="#" />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">1</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#" isActive>
-            2
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">3</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext href="#" />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
-  );
-}
+// export default function NoticeDetailPagination(
+//   { handlePrevPage }: any,
+//   { handleNextPage }: any,
+// ) {
+//   return (
+//     <Pagination>
+//       <PaginationContent>
+//         <PaginationItem>
+//           <Button className="bg-yellow-200" onClick={handlePrevPage} />
+//         </PaginationItem>
+//         <PaginationItem>
+//           <PaginationLink href="#">1</PaginationLink>
+//         </PaginationItem>
+//         <PaginationItem></PaginationItem>
+//         <PaginationItem>
+//           <Button className="bg-yellow-200" onClick={handleNextPage} />
+//         </PaginationItem>
+//       </PaginationContent>
+//     </Pagination>
+//   );
+// }
