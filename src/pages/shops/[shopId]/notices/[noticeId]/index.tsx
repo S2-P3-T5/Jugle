@@ -260,20 +260,16 @@ function NoticeDetail() {
             )}
           </div>
           <div className="flex h-[5.6rem] w-full items-center justify-center">
-            {applicantData ? (
-              <Pagination
-                count={data?.info ? data.info.pages : offset + 1}
-                variant="outlined"
-                color="primary"
-                className="pagination"
-                page={offset + 1}
-                onChange={handlePaginationChange}
-                hidePrevButton
-                hideNextButton
-              />
-            ) : (
-              <div>신청자가 없습니다.</div>
-            )}
+            <Pagination
+              count={data?.info ? data.info.pages : offset + 1}
+              variant="outlined"
+              color="primary"
+              className="pagination"
+              page={offset}
+              onChange={handlePaginationChange}
+              hidePrevButton
+              hideNextButton
+            />
           </div>
         </div>
       </div>
