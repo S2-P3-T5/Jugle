@@ -66,14 +66,12 @@ export const putShopEditData = async (
   shopId: string,
 ) => {
   try {
-    const res = await fetcher.put(apiRouteUtils.parseShopsURL(shopId), {
+    await fetcher.put(apiRouteUtils.parseShopsURL(shopId), {
       json: values,
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    const result: any = await res.json();
-    return result.item.id;
   } catch (err: any) {
     throw err;
   }

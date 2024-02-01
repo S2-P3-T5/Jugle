@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { postImages, postShopRegistData, putPresignedURL } from "@/apis/shops";
+import { postImages, putPresignedURL, putShopEditData } from "@/apis/shops";
 import ShopDataForm from "@/components/shop/ShopDataForm";
 import { PAGE_ROUTES } from "@/routes";
 
@@ -22,21 +22,37 @@ type ModalDataType = {
   path: string;
 };
 
-export default function ShopRegister() {
+interface ShopEditorProps {
+  shopId: string;
+  shopData: {
+    id: string;
+    name: string;
+    category: string;
+    address1: string;
+    address2: string;
+    description: string;
+    imageUrl: string;
+    originalHourlyPay: string;
+  };
+}
+
+export default function ShopEditor({ shopId, shopData }: ShopEditorProps) {
   const [modalData, setModalData] = useState<null | ModalDataType>(null);
-  const [imgURL, setImgURL] = useState("");
+  const [imgURL, setImgURL] = useState(shopData.imageUrl);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      category: "",
-      address1: "",
-      address2: "",
-      description: "",
-      imageUrl: "https://i.ibb.co/0V2PH9f/default.jpg",
-      originalHourlyPay: "",
+      name: shopData.name,
+      category: shopData.category,
+      address1: shopData.address1,
+      address2: shopData.address2,
+      description: shopData.description,
+      imageUrl: shopData.imageUrl,
+      originalHourlyPay: shopData.originalHourlyPay,
     },
   });
+
   const handleInputImgFile = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -52,10 +68,10 @@ export default function ShopRegister() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     values.imageUrl = imgURL;
     try {
-      await postShopRegistData(token, values);
+      await putShopEditData(token, values, shopId);
       setModalData({
-        msg: "등록이 완료되었습니다.",
-        path: PAGE_ROUTES.SHOPS,
+        msg: "수정이 완료되었습니다.",
+        path: PAGE_ROUTES.parseShopsURL(shopId),
       });
     } catch (err: any) {
       if (err.response.status === 401) {
@@ -63,9 +79,9 @@ export default function ShopRegister() {
           msg: "로그인이 필요합니다.",
           path: PAGE_ROUTES.SIGNIN,
         });
-      } else if (err.response.status === 409) {
+      } else if (err.response.status === 404) {
         setModalData({
-          msg: "이미 등록한 가게가 있습니다.",
+          msg: "존재하지 않는 가게입니다.",
           path: PAGE_ROUTES.SHOPS,
         });
       }
@@ -78,7 +94,7 @@ export default function ShopRegister() {
       onSubmit={onSubmit}
       imgURL={imgURL}
       handleInputImgFile={handleInputImgFile}
-      buttonText="등록하기"
+      buttonText="수정하기"
       modalData={modalData}
     />
   );
