@@ -44,3 +44,31 @@ export const getNoticesListData = async (shopId: string) => {
     return result;
   } catch {}
 };
+
+// TODO: 에러처리
+export const postShopRegistData = async (token: string, values: any) => {
+  try {
+    await fetcher.post(apiRouteUtils.SHOPS, {
+      json: values,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (e: any) {}
+};
+
+// TODO: 에러처리
+export const putShopEditData = async (
+  token: string,
+  values: any,
+  shopId: string,
+) => {
+  try {
+    await fetcher.put(apiRouteUtils.parseShopsURL(shopId), {
+      json: values,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch {}
+};
