@@ -4,8 +4,7 @@ import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { fetcher } from "@/apis/fetcher";
-import { postImages, putPresignedURL } from "@/apis/shops";
+import { postImages, postShopRegistData, putPresignedURL } from "@/apis/shops";
 import ShopImageCard from "@/components/shop/register/ShopImageCard";
 import { ShopRegisterFormModal } from "@/components/shop/register/ShopRegisterFormModal";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -26,7 +25,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { apiRouteUtils } from "@/routes";
 
 const CATEGORY = [
   "한식",
@@ -106,12 +104,7 @@ export default function ShopRegisterForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await fetcher.post(apiRouteUtils.SHOPS, {
-        json: values,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      postShopRegistData(token, values);
       setResponseResult("200");
     } catch (e: any) {
       if (e.response.status === 401) {
