@@ -4,11 +4,12 @@ import { useContext } from "react";
 
 import SearchBar from "@/components/common/SearchBar";
 import { Button } from "@/components/ui/button";
-import { UserContext } from "@/providers/UserProvider";
+import { UserActionContext, UserContext } from "@/providers/UserProvider";
 import { PAGE_ROUTES } from "@/routes";
 
 export default function EmployerHeader() {
   const user = useContext(UserContext);
+  const { logout } = useContext(UserActionContext);
 
   return (
     <header className="m-auto flex max-w-[1088px] flex-wrap items-center justify-between gap-x-[32px] px-[20px] py-[12px]">
@@ -38,6 +39,7 @@ export default function EmployerHeader() {
             <Button
               variant="ghost"
               className="h-max rounded-[8px] px-[12px] py-[12px] text-[1.4rem] font-bold text-gray-600"
+              onClick={() => logout()}
             >
               로그아웃
             </Button>
