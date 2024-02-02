@@ -6,7 +6,7 @@ export default function EmployeeLayout({ children }: PropsWithChildren) {
   return (
     <>
       <EmployeeHeader />
-      <main className="h-[calc(100dvh-64px)]">{children}</main>
+      <main className="min-h-[calc(100dvh-64px)]">{children}</main>
     </>
   );
 }
