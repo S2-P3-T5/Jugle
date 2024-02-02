@@ -17,6 +17,17 @@ import {
   RejectButton,
 } from "@/components/noticeDetail/Buttons";
 import { useTimeCalculate } from "@/components/noticeDetail/Hooks";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { apiRouteUtils } from "@/routes";
 
 //TODO: 추후 shopId는 가게 등록 페이지에서 전달받고 noticeId는 쿼리값으로 적용할 예정
@@ -84,20 +95,17 @@ function NoticeDetail() {
       status: item.status,
     }),
   );
-  const applicantData = applicationData?.items?.[0]?.item;
   const [applicants, setApplicants] = useState(initialApplicants);
   const handleApprove = (index: number) => {
     const updatedApplicants = [...applicants];
     updatedApplicants[index].status = "accepted";
     setApplicants(updatedApplicants);
-    alert("신청을 승인했습니다.");
   };
 
   const handleReject = (index: number) => {
     const updatedApplicants = [...applicants];
     updatedApplicants[index].status = "rejected";
     setApplicants(updatedApplicants);
-    alert("신청을 거절했습니다.");
   };
 
   useEffect(() => {
@@ -240,16 +248,112 @@ function NoticeDetail() {
                   <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-t-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]">
                     {applicant.status === "pending" && (
                       <>
-                        <ApproveButton
-                          onClick={() =>
-                            index !== undefined && handleApprove(index)
-                          }
-                        />
-                        <RejectButton
-                          onClick={() =>
-                            index !== undefined && handleReject(index)
-                          }
-                        />
+                        {
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <ApproveButton />
+                            </AlertDialogTrigger>
+                            <AlertDialogContent className="h-[18.4rem] w-[29.8rem] rounded-[1.2rem] border-[0.1rem] p-[2.4rem]">
+                              <AlertDialogHeader>
+                                <AlertDialogTitle className="flex items-center justify-center">
+                                  <div className="relative h-[2.4rem] w-[2.4rem]">
+                                    <Image
+                                      className="z-0"
+                                      src="/icons/approve_notification.svg"
+                                      layout="fill"
+                                      objectFit="contain"
+                                      alt="승인모달창이미지"
+                                    />
+                                    <Image
+                                      className="z-1"
+                                      src="/icons/check.svg"
+                                      layout="fill"
+                                      objectFit="contain"
+                                      alt="체크이미지"
+                                    />
+                                  </div>
+                                </AlertDialogTitle>
+                              </AlertDialogHeader>
+                              <div className="flex items-center justify-center">
+                                <AlertDialogDescription>
+                                  <span className="text-[1.6rem] font-normal not-italic leading-[2.6rem] text-black">
+                                    신청을 승인하시겠어요?
+                                  </span>
+                                </AlertDialogDescription>
+                              </div>
+                              <AlertDialogFooter className="flex flex-row items-center justify-center gap-[0.8rem]">
+                                <AlertDialogCancel className="mt-0 h-[3.8rem] w-[8rem] rounded-[0.6rem] border-[0.1rem] border-primary px-[2rem] py-[1rem]">
+                                  <span className="text-[1.4rem] font-bold not-italic leading-normal text-primary">
+                                    아니오
+                                  </span>
+                                </AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() =>
+                                    index !== undefined && handleApprove(index)
+                                  }
+                                  className="h-[3.8rem] w-[8rem] rounded-[0.6rem] border-[0.1rem] border-primary bg-primary px-[2rem] py-[1rem]"
+                                >
+                                  <span className="text-[1.4rem] font-bold not-italic leading-normal text-white">
+                                    예
+                                  </span>
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        }
+                        {
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <RejectButton />
+                            </AlertDialogTrigger>
+                            <AlertDialogContent className="h-[18.4rem] w-[29.8rem] rounded-[1.2rem] border-[0.1rem] p-[2.4rem]">
+                              <AlertDialogHeader>
+                                <AlertDialogTitle className="flex items-center justify-center">
+                                  <div className="relative h-[2.4rem] w-[2.4rem]">
+                                    <Image
+                                      className="z-0"
+                                      src="/icons/deny_notification.svg"
+                                      layout="fill"
+                                      objectFit="contain"
+                                      alt="거절모달창이미지"
+                                    />
+                                    <Image
+                                      className="z-1"
+                                      src="/icons/check.svg"
+                                      layout="fill"
+                                      objectFit="contain"
+                                      alt="체크이미지"
+                                    />
+                                  </div>
+                                </AlertDialogTitle>
+                              </AlertDialogHeader>
+                              <div className="flex items-center justify-center">
+                                <AlertDialogDescription>
+                                  <span className="text-[1.6rem] font-normal not-italic leading-[2.6rem] text-black">
+                                    신청을 거절하시겠어요?
+                                  </span>
+                                </AlertDialogDescription>
+                              </div>
+                              <AlertDialogFooter className="flex flex-row items-center justify-center gap-[0.8rem]">
+                                <AlertDialogCancel className="mt-0 h-[3.8rem] w-[8rem] rounded-[0.6rem] border-[0.1rem] border-primary px-[2rem] py-[1rem]">
+                                  <span className="text-[1.4rem] font-bold not-italic leading-normal text-primary">
+                                    아니오
+                                  </span>
+                                </AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() =>
+                                    index !== undefined && handleReject(index)
+                                  }
+                                  className="h-[3.8rem] w-[8rem] rounded-[0.6rem] border-[0.1rem] border-primary bg-primary px-[2rem] py-[1rem]"
+                                >
+                                  <span className="text-[1.4rem] font-bold not-italic leading-normal text-white">
+                                    예
+                                  </span>
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        }
                       </>
                     )}
                     {applicant.status === "accepted" && <ApproveBadge />}
