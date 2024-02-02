@@ -52,11 +52,10 @@ export default function ShopsNoticesList({
   const fetchMoreItems = async () => {
     if (newNoticesListData.hasNext) {
       const nextPage = newNoticesListData.offset + newNoticesListData.limit;
-      const newData: any = await getNewNoticesListData(
-        shopData.id,
-        nextPage,
-        newNoticesListData.limit,
-      );
+      const newData: any = await getNewNoticesListData(shopData.id, {
+        offset: nextPage,
+        limit: newNoticesListData.limit,
+      });
       setNewNoticesListData(newData);
       const items = newNoticesListData.items.concat(newData.items);
       setitemList(items);

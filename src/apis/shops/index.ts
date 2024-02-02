@@ -45,14 +45,18 @@ export const getNoticesListData = async (shopId: string) => {
   } catch {}
 };
 
+type OptionsType = {
+  offset: number;
+  limit: number;
+};
+
 export const getNewNoticesListData = async (
   shopId: string,
-  offset: number,
-  limit: number,
+  options: OptionsType,
 ) => {
   try {
     const res = await fetcher.get(
-      apiRouteUtils.parseShopNewNoticesURL(shopId, offset, limit),
+      apiRouteUtils.parseShopNewNoticesURL(shopId, options),
     );
     const result = await res.json();
     return result;
