@@ -44,7 +44,6 @@ export const getNoticesListData = async (shopId: string) => {
     return result;
   } catch {}
 };
-
 type OptionsType = {
   offset: number;
   limit: number;
