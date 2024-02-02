@@ -4,7 +4,10 @@ export const PAGE_ROUTES = {
   NOTICES: "/notices",
   NOTICES_DETAIL: (shopId: string) => `/shops/${shopId}/notices`,
   SHOPS_REGISTER: "/shops/register",
+  SHOPS: "/shops",
+  PROFILE: "/profile",
   parseShopsURL: (shopId: string) => `/shops/${shopId}`,
+  parseShopsEditURL: (shopId: string) => `/shops/edit/${shopId}`,
   parseNoticeRegisterURL: (shopId: string) =>
     `/shops/${shopId}/notices/register`,
 };
@@ -19,4 +22,19 @@ export const apiRouteUtils = {
   parseShopNoticesURL: (shopId: string) => `shops/${shopId}/notices`,
   parseShopsURL: (shopId: string) => `shops/${shopId}`,
   NOTICES: "notices?offset=0&limit=10",
+  parseShopNoticeDetail: (shopId: string, noticeId: string) =>
+    `shops/${shopId}/notices/${noticeId}`,
+  parseShopNoticeApplications: (
+    shopId: string,
+    noticeId: string,
+    offset: number,
+  ) =>
+    `shops/${shopId}/notices/${noticeId}/applications?limit=6&offset=${offset}`,
+  parseShopNewNoticesURL: (shopId: string, options: OptionsType) =>
+    `shops/${shopId}/notices?offset=${options.offset}&limit=${options.limit}`,
+};
+
+type OptionsType = {
+  offset: number;
+  limit: number;
 };

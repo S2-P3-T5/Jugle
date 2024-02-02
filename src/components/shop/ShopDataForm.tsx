@@ -1,14 +1,15 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
-import { ChangeEvent, useState } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import Link from "next/link";
 
-import { fetcher } from "@/apis/fetcher";
-import { postImages, putPresignedURL } from "@/apis/shops";
-import ShopImageCard from "@/components/shop/register/ShopImageCard";
-import { ShopRegisterFormModal } from "@/components/shop/register/ShopRegisterFormModal";
+import ShopImageCard from "@/components/shop/ShopImageCard";
+import {
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import BackPageButton from "@/components/ui/BackPageButton";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,6 +17,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -26,7 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { apiRouteUtils } from "@/routes";
+import { errorMessage } from "@/helpers/validation";
 
 const CATEGORY = [
   "한식",
@@ -66,86 +68,67 @@ const ADDRESS = [
   "서울시 강동구",
 ];
 
-const formSchema = z.object({
-  name: z.string(),
-  category: z.string(),
-  address1: z.string(),
-  address2: z.string(),
-  description: z.string(),
-  imageUrl: z.string(),
-  originalHourlyPay: z.string(),
-});
+interface ShopDataFormProps {
+  form: any;
+  onSubmit: (values: any) => void;
+  imgURL: string;
+  handleInputImgFile: (value: any) => void;
+  buttonText: string;
+  modalData: {
+    msg: string;
+    path: string;
+  } | null;
+}
 
-export default function ShopRegisterForm() {
-  const [responseResult, setResponseResult] = useState("");
-  const [imgURL, setImgURL] = useState("");
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      category: "",
-      address1: "",
-      address2: "",
-      description: "",
-      imageUrl: "https://i.ibb.co/0V2PH9f/default.jpg",
-      originalHourlyPay: "",
-    },
-  });
-  const handleInputImgFile = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const presignedURL = await postImages(token, file.name);
-      await putPresignedURL(presignedURL, file);
-      const nonQueryPresignedURL = presignedURL.split("?")[0];
-      setImgURL(nonQueryPresignedURL);
-      form.setValue("imageUrl", imgURL);
-    }
-  };
-
-  const token = ""; // 임시값
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      await fetcher.post(apiRouteUtils.SHOPS, {
-        json: values,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setResponseResult("200");
-    } catch (e: any) {
-      if (e.response.status === 401) {
-        setResponseResult("401");
-      } else if (e.response.status === 409) {
-        setResponseResult("409");
-      }
-    }
-  }
+export default function ShopDataForm({
+  form,
+  onSubmit,
+  imgURL,
+  handleInputImgFile,
+  buttonText,
+  modalData,
+}: ShopDataFormProps) {
+  const NUM_REGEX = /^\d+$/;
 
   return (
     <>
       <div className="flex justify-between">
         <span>가게 정보</span>
-        <Image src="/icons/close.svg" width="10" height="10" alt="종료이미지" />
+        <BackPageButton />
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
-            rules={{ required: true }}
+            rules={{
+              required: {
+                value: true,
+                message: errorMessage.REQUIRED_SHOPNAME,
+              },
+            }}
             name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>가게 이름*</FormLabel>
                 <FormControl>
-                  <Input placeholder="입력" {...field} />
+                  <Input
+                    placeholder="입력"
+                    {...field}
+                    onBlur={() => form.trigger("name")}
+                  />
                 </FormControl>
+                <FormMessage className="absolute text-[1.2rem]" />
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            rules={{ required: true }}
+            rules={{
+              required: {
+                value: true,
+                message: errorMessage.REQUIRED_SHOPCATEGORY,
+              },
+            }}
             name="category"
             render={({ field }) => (
               <FormItem>
@@ -159,6 +142,7 @@ export default function ShopRegisterForm() {
                       <SelectValue placeholder="입력" />
                     </SelectTrigger>
                   </FormControl>
+                  <FormMessage className="absolute text-[1.2rem]" />
                   <SelectContent>
                     {CATEGORY.map((item) => {
                       return (
@@ -174,7 +158,12 @@ export default function ShopRegisterForm() {
           />
           <FormField
             control={form.control}
-            rules={{ required: true }}
+            rules={{
+              required: {
+                value: true,
+                message: errorMessage.REQUIRED_ADDRESS,
+              },
+            }}
             name="address1"
             render={({ field }) => (
               <FormItem>
@@ -188,6 +177,7 @@ export default function ShopRegisterForm() {
                       <SelectValue placeholder="입력" />
                     </SelectTrigger>
                   </FormControl>
+                  <FormMessage className="absolute text-[1.2rem]" />
                   <SelectContent>
                     {ADDRESS.map((item) => (
                       <SelectItem key={item} value={item}>
@@ -201,27 +191,55 @@ export default function ShopRegisterForm() {
           />
           <FormField
             control={form.control}
-            rules={{ required: true }}
+            rules={{
+              required: {
+                value: true,
+                message: errorMessage.REQUIRED_DETAILED_ADDRESS,
+              },
+            }}
             name="address2"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>상세 주소*</FormLabel>
                 <FormControl>
-                  <Input placeholder="입력" {...field} />
+                  <Input
+                    placeholder="입력"
+                    {...field}
+                    onBlur={() => form.trigger("address2")}
+                  />
                 </FormControl>
+                <FormMessage className="absolute text-[1.2rem]" />
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            rules={{ required: true }}
+            rules={{
+              required: {
+                value: true,
+                message: errorMessage.REQUIRED_HOURLYPAY,
+              },
+              pattern: {
+                value: NUM_REGEX,
+                message: errorMessage.REQUIRED_NUMBER,
+              },
+              min: {
+                value: 9860,
+                message: errorMessage.INVALID_HOURLYPAY,
+              },
+            }}
             name="originalHourlyPay"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>기본 시급*</FormLabel>
                 <FormControl>
-                  <Input type="number" min={0} placeholder="입력" {...field} />
+                  <Input
+                    placeholder="입력"
+                    {...field}
+                    onBlur={() => form.trigger("originalHourlyPay")}
+                  />
                 </FormControl>
+                <FormMessage className="absolute text-[1.2rem]" />
               </FormItem>
             )}
           />
@@ -258,9 +276,22 @@ export default function ShopRegisterForm() {
           />
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button type="submit">등록하기</Button>
+              <Button disabled={!form.formState.isValid} type="submit">
+                {buttonText}
+              </Button>
             </AlertDialogTrigger>
-            <ShopRegisterFormModal responseResult={responseResult} />
+            {modalData && (
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>{modalData.msg}</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <Link href={modalData.path}>
+                    <AlertDialogAction>확인</AlertDialogAction>
+                  </Link>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            )}
           </AlertDialog>
         </form>
       </Form>
