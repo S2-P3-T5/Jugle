@@ -9,7 +9,7 @@ export default function BackPageButton() {
 
   return (
     <div className="cursor-pointer" onClick={handleBackPage}>
-      <Image src="/icons/close.svg" width="24" height="24" alt="종료이미지" />
+      <Image src="/icons/close.svg" width="24" height="24" alt="" />
     </div>
   );
 }
