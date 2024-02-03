@@ -1,4 +1,3 @@
-import Pagination from "@mui/material/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -17,6 +16,7 @@ import {
   RejectButton,
 } from "@/components/noticeDetail/Buttons";
 import { useTimeCalculate } from "@/components/noticeDetail/Hooks";
+import ApplyListPagination from "@/components/noticeDetail/Pagination";
 import { apiRouteUtils } from "@/routes";
 
 //TODO: 추후 shopId는 가게 등록 페이지에서 전달받고 noticeId는 쿼리값으로 적용할 예정
@@ -69,13 +69,6 @@ function NoticeDetail() {
     }
   }
 
-  function handlePaginationChange(e: any, value: React.SetStateAction<number>) {
-    setOffset(value);
-    router.push(`pagination/?limit=6&offset=${value}`, undefined, {
-      shallow: true,
-    });
-  }
-
   //TODO: 가게의 특정 공고의 지원 목록 조회하는 api를 구성하면 username과 status를 수정할 예정
   //신청자 이름, 상태 data
   const initialApplicants = applicationData?.items?.[0]?.item?.map(
@@ -84,7 +77,6 @@ function NoticeDetail() {
       status: item.status,
     }),
   );
-  const applicantData = applicationData?.items?.[0]?.item;
   const [applicants, setApplicants] = useState(initialApplicants);
   const handleApprove = (index: number) => {
     const updatedApplicants = [...applicants];
@@ -260,15 +252,10 @@ function NoticeDetail() {
             )}
           </div>
           <div className="flex h-[5.6rem] w-full items-center justify-center">
-            <Pagination
-              count={data?.info ? data.info.pages : offset + 1}
-              variant="outlined"
-              color="primary"
-              className="pagination"
-              page={offset}
-              onChange={handlePaginationChange}
-              hidePrevButton
-              hideNextButton
+            <ApplyListPagination
+              offset={offset}
+              shopId={shopId}
+              noticeId={noticeId}
             />
           </div>
         </div>
