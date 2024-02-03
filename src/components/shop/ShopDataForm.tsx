@@ -147,7 +147,7 @@ export default function ShopDataForm({
                   >
                     <FormControl>
                       <SelectTrigger className="text-[1.6rem] leading-[2.6rem]">
-                        <SelectValue placeholder="입력" />
+                        <SelectValue placeholder="선택" />
                       </SelectTrigger>
                     </FormControl>
                     <FormMessage className="absolute bottom-[-2rem] text-[1.2rem]" />
@@ -184,7 +184,7 @@ export default function ShopDataForm({
                   >
                     <FormControl>
                       <SelectTrigger className="text-[1.6rem] leading-[2.6rem]">
-                        <SelectValue placeholder="입력" />
+                        <SelectValue placeholder="선택" />
                       </SelectTrigger>
                     </FormControl>
                     <FormMessage className="absolute bottom-[-2rem] text-[1.2rem]" />
@@ -247,14 +247,19 @@ export default function ShopDataForm({
                   <FormLabel className="text-[1.6rem] leading-[2.6rem] tablet:w-[33rem] desktop:w-[47.2rem]">
                     기본 시급*
                   </FormLabel>
-                  <FormControl>
-                    <Input
-                      className="text-[1.6rem] leading-[2.6rem]"
-                      placeholder="입력"
-                      {...field}
-                      onBlur={() => form.trigger("originalHourlyPay")}
-                    />
-                  </FormControl>
+                  <div className="relative">
+                    <FormControl>
+                      <Input
+                        className="text-[1.6rem] leading-[2.6rem]"
+                        placeholder="입력"
+                        {...field}
+                        onBlur={() => form.trigger("originalHourlyPay")}
+                      />
+                    </FormControl>
+                    <span className="absolute right-[2rem] top-[1.6rem] text-[1.6rem]">
+                      원
+                    </span>
+                  </div>
                   <FormMessage className="absolute bottom-[-2rem] text-[1.2rem]" />
                 </FormItem>
               )}
