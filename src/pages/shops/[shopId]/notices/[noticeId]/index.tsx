@@ -1,4 +1,3 @@
-import Pagination from "@mui/material/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -250,18 +249,7 @@ function NoticeDetail() {
               ),
             )}
           </div>
-          <div className="flex h-[5.6rem] w-full items-center justify-center">
-            <Pagination
-              count={data?.info ? data.info.pages : offset + 1}
-              variant="outlined"
-              color="primary"
-              className="pagination"
-              page={offset}
-              onChange={handlePaginationChange}
-              hidePrevButton
-              hideNextButton
-            />
-          </div>
+          <div className="flex h-[5.6rem] w-full items-center justify-center"></div>
         </div>
       </div>
     </div>
