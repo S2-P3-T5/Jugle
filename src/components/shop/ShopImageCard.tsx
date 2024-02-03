@@ -6,9 +6,9 @@ interface ShopImageCardProps {
 export default function ShopImageCard({ imgURL }: ShopImageCardProps) {
   return (
     <>
-      <div className="mt-[0.8rem] flex h-[20rem] w-[35.1rem] flex-col items-center justify-center rounded-[1.2rem] bg-gray-10">
+      <div className="mt-[0.8rem] flex h-[20rem] w-[35.1rem] flex-col items-center justify-center rounded-[1.2rem] bg-gray-10 tablet:h-[27.6rem] tablet:w-[48.3rem]">
         {imgURL ? (
-          <div className="h-[20rem] w-[35.1rem] overflow-hidden">
+          <div className="h-[20rem] w-[35.1rem] overflow-hidden tablet:h-[27.6rem] tablet:w-[48.3rem]">
             <Image
               src={imgURL}
               height="200"
@@ -17,7 +17,7 @@ export default function ShopImageCard({ imgURL }: ShopImageCardProps) {
             />
           </div>
         ) : (
-          <div className="flex h-[20rem] w-[35.1rem] cursor-pointer flex-col items-center justify-center gap-[11px]">
+          <div className="flex h-[20rem] w-[35.1rem] cursor-pointer flex-col items-center justify-center gap-[11px] tablet:h-[27.6rem] tablet:w-[48.3rem]">
             <Image src="/icons/camera.svg" width="32" height="32" alt="" />
             <span className="text-[1.6rem] font-bold leading-[2rem] text-gray-40">
               이미지 추가하기
