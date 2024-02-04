@@ -71,9 +71,11 @@ export default function ShopsNoticesList({
 
   return (
     <div>
-      <ul className="flex flex-col gap-[1.6rem] px-[1.2rem] pb-[8rem] pt-[4rem]">
-        <span className="text-[2rem] font-bold">내가 등록한 공고</span>
-        <div className="flex w-[35.1rem] flex-wrap justify-between gap-x-[0.9rem] gap-y-[1.6rem]">
+      <ul className="mx-auto flex w-[35.1rem] flex-col gap-[1.6rem] pb-[8rem] pt-[4rem] tablet:w-[67.8rem] tablet:gap-[3.2rem] tablet:pb-[12rem] tablet:pt-[6rem] desktop:w-[96.4rem]">
+        <span className="text-[2rem] font-bold tablet:text-[2.8rem]">
+          내가 등록한 공고
+        </span>
+        <div className="flex w-[35.1rem] flex-wrap justify-between gap-x-[0.9rem] gap-y-[1.6rem] tablet:w-[67.8rem] tablet:gap-y-[3.2rem] desktop:w-[96.4rem]">
           {itemList.map((item: any) => (
             <li key={item.item.id}>
               <ShopsNoticesListItem item={item.item} shopData={shopData} />
