@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getNewNoticesListData } from "@/apis/shops";
+import { getNewNoticesListData } from "@/apis/shop";
 import ShopsNoticesListItem from "@/components/shop/ShopsNoticesListItem";
 
 interface ShopsNoticesListProps {

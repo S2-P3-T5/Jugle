@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { postImages, putPresignedURL, putShopEditData } from "@/apis/shops";
+import { postImages, putPresignedURL, putShopEditData } from "@/apis/shop";
 import ShopDataForm from "@/components/shop/ShopDataForm";
 import { PAGE_ROUTES } from "@/routes";
 
