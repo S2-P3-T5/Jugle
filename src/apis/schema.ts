@@ -4,10 +4,10 @@ export const userSchema = z.object({
   id: z.string(),
   email: z.string().email(),
   type: z.enum(["employee", "employer"]),
-  name: z.optional(z.string()),
-  phone: z.optional(z.string()),
-  address: z.optional(z.string()),
-  bio: z.optional(z.string()),
+  name: z.string().optional(),
+  phone: z.string().optional(),
+  address: z.string().optional(),
+  bio: z.string().optional(),
 });
 export type User = z.infer<typeof userSchema>;
 
@@ -59,7 +59,6 @@ export const errorSchema = z.object({
 export type Error = z.infer<typeof errorSchema>;
 
 // utils
-
 const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
 type Literal = z.infer<typeof literalSchema>;
 
@@ -83,8 +82,8 @@ export const linksSchema = z.object({
       description: z.string(),
       method: z.enum(["GET", "POST", "PUT", "DELETE"]),
       href: z.string(),
-      body: z.optional(z.record(jsonSchema)),
-      query: z.optional(z.record(z.union([z.string(), z.number()]))),
+      body: z.record(jsonSchema).optional(),
+      query: z.record(z.union([z.string(), z.number()])).optional(),
     }),
   ),
 });
