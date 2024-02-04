@@ -15,12 +15,12 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface ApproveDialogProps {
-  index: number | undefined;
-  handleApprove: (index: number) => void;
+  applicationId: number | undefined;
+  handleApprove: (applicationId: number) => void;
 }
 
 const ApproveDialog: React.FC<ApproveDialogProps> = ({
-  index,
+  applicationId,
   handleApprove,
 }) => {
   return (
@@ -63,7 +63,9 @@ const ApproveDialog: React.FC<ApproveDialogProps> = ({
             </span>
           </AlertDialogCancel>
           <AlertDialogAction
-            onClick={() => index !== undefined && handleApprove(index)}
+            onClick={() =>
+              applicationId !== undefined && handleApprove(applicationId)
+            }
             className="h-[3.8rem] w-[8rem] rounded-[0.6rem] border-[0.1rem] border-primary bg-primary px-[2rem] py-[1rem]"
           >
             <span className="text-[1.4rem] font-bold not-italic leading-normal text-white">

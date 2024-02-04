@@ -82,15 +82,15 @@ function NoticeDetail() {
     }),
   );
   const [applicants, setApplicants] = useState(initialApplicants);
-  const handleApprove = (index: number) => {
+  const handleApprove = (applicationId: number) => {
     const updatedApplicants = [...applicants];
-    updatedApplicants[index].status = "accepted";
+    updatedApplicants[applicationId].status = "accepted";
     setApplicants(updatedApplicants);
   };
 
-  const handleReject = (index: number) => {
+  const handleReject = (applicationId: number) => {
     const updatedApplicants = [...applicants];
-    updatedApplicants[index].status = "rejected";
+    updatedApplicants[applicationId].status = "rejected";
     setApplicants(updatedApplicants);
   };
 
@@ -218,9 +218,9 @@ function NoticeDetail() {
             {applicants?.map(
               (
                 applicant: { name: string | undefined; status: string },
-                index: number | undefined,
+                applicationId: number | undefined,
               ) => (
-                <React.Fragment key={index}>
+                <React.Fragment key={applicationId}>
                   <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-r-[0.1rem] border-t-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]">
                     <span className="text-black-50 scroll-auto text-[1.4rem] font-normal not-italic leading-[2.2rem]">
                       {applicant.name}
@@ -234,12 +234,15 @@ function NoticeDetail() {
                   <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-t-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]">
                     {applicant.status === "pending" && (
                       <ApproveDialog
-                        index={index}
+                        applicationId={applicationId}
                         handleApprove={handleApprove}
                       />
                     )}
                     {applicant.status === "pending" && (
-                      <RejectDialog index={index} handleReject={handleReject} />
+                      <RejectDialog
+                        applicationId={applicationId}
+                        handleReject={handleReject}
+                      />
                     )}
 
                     {applicant.status === "accepted" && <ApproveBadge />}
