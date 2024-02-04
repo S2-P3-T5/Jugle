@@ -2,9 +2,9 @@ import { HTTPError } from "ky";
 
 import { fetcher } from "@/apis/fetcher";
 import {
-  type NoticeRegistrationDTO,
-  type NoticeRegistrationRequestBody,
-  noticeRegistrationResponseSchema,
+  NoticesPostRequestBody,
+  NoticesPostResponse,
+  noticesPostResponseSchema,
 } from "@/apis/shop/schema";
 import { apiRouteUtils } from "@/routes";
 
@@ -13,7 +13,7 @@ export const postNoticeRegistration = async ({
   startsAt,
   workhour,
   description,
-}: NoticeRegistrationRequestBody): Promise<NoticeRegistrationDTO> =>
+}: NoticesPostRequestBody): Promise<NoticesPostResponse["item"]> =>
   await fetcher
     .post(
       apiRouteUtils.parseShopNoticesURL("c90e94dd-556b-4fad-9bef-f6c81cc4f242"),
@@ -27,8 +27,7 @@ export const postNoticeRegistration = async ({
       },
     )
     .json()
-    .then(noticeRegistrationResponseSchema.parse)
-    .then()
+    .then(noticesPostResponseSchema.parse)
     .then((res) => res.item)
     .catch((err: HTTPError) => {
       throw err;
