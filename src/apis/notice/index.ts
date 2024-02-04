@@ -2,10 +2,12 @@ import { HTTPError } from "ky";
 
 import { fetcher } from "@/apis/fetcher";
 import {
+  NoticesGetResponse,
+  noticesGetResponseSchema,
   NoticesPostRequestBody,
   NoticesPostResponse,
   noticesPostResponseSchema,
-} from "@/apis/shop/schema";
+} from "@/apis/notice/schema";
 import { apiRouteUtils } from "@/routes";
 
 export const postNoticeRegistration = async ({
@@ -29,6 +31,15 @@ export const postNoticeRegistration = async ({
     .json()
     .then(noticesPostResponseSchema.parse)
     .then((res) => res.item)
+    .catch((err: HTTPError) => {
+      throw err;
+    });
+
+export const getNoticeList = async (): Promise<NoticesGetResponse> =>
+  await fetcher
+    .get(apiRouteUtils.NOTICES)
+    .json()
+    .then(noticesGetResponseSchema.parse)
     .catch((err: HTTPError) => {
       throw err;
     });
