@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { getUsersData } from "@/apis/shop";
 import EmployerLayout from "@/components/common/EmployerLayout";
@@ -11,6 +11,7 @@ import { PAGE_ROUTES } from "@/routes";
 export default function ShopRegist() {
   const user = useContext(UserContext);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!getAccessTokenInStorage()) {
@@ -28,6 +29,7 @@ export default function ShopRegist() {
           router.push(PAGE_ROUTES.parseShopsURL(response.item.shop.id));
           return;
         }
+        setIsLoading(false);
       };
       getUserData();
     }
@@ -35,7 +37,7 @@ export default function ShopRegist() {
 
   return (
     <EmployerLayout>
-      <ShopRegister />;
+      {isLoading ? <div>임시 로딩</div> : <ShopRegister />}
     </EmployerLayout>
   );
 }

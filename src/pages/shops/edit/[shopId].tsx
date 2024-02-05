@@ -32,8 +32,8 @@ export default function ShopEdit() {
         if (!response.item.shop) {
           router.push(PAGE_ROUTES.SHOPS);
           return;
-        } else if (response.item.shop.id !== shopId) {
-          router.push(PAGE_ROUTES.parseShopsEditURL(response.item.shop.id));
+        } else if (response.item.shop.item.id !== shopId) {
+          router.push(PAGE_ROUTES.SHOPS);
           return;
         }
         setIsLoading(false);

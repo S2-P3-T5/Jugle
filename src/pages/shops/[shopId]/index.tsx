@@ -75,11 +75,8 @@ export default function Shop() {
     if (user) {
       const getUserData = async () => {
         const response: any = await getUsersData(user.id);
-        if (!response.item.shop) {
+        if (!response.item.shop || response.item.shop.item.id !== shopId) {
           router.push(PAGE_ROUTES.SHOPS);
-          return;
-        } else if (response.item.shop.id !== shopId) {
-          router.push(PAGE_ROUTES.parseShopsURL(response.item.shop.id));
           return;
         }
         setIsAccessChecking(false);
