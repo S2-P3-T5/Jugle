@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 
 import { getUsersData } from "@/apis/shop";
-import EmployerHeader from "@/components/common/EmployerHeader";
+import EmployerLayout from "@/components/common/EmployerLayout";
 import EmptyDataCard from "@/components/shop/EmptyDataCard";
 import { getAccessTokenInStorage } from "@/helpers/auth";
 import { UserContext } from "@/providers/UserProvider";
@@ -39,13 +39,14 @@ export default function ShopsDefaultPage() {
     <div>임시로딩중</div>
   ) : (
     <>
-      <EmployerHeader></EmployerHeader>
-      <EmptyDataCard
-        title="내 가게"
-        description="내 가게를 소개하고 공고도 등록해 보세요."
-        buttonText="가게 등록하기"
-        buttonLink={PAGE_ROUTES.SHOPS_REGISTER}
-      />
+      <EmployerLayout>
+        <EmptyDataCard
+          title="내 가게"
+          description="내 가게를 소개하고 공고도 등록해 보세요."
+          buttonText="가게 등록하기"
+          buttonLink={PAGE_ROUTES.SHOPS_REGISTER}
+        />
+      </EmployerLayout>
     </>
   );
 }
