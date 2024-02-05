@@ -103,7 +103,7 @@ export default function Shop() {
 
   return (
     <EmployerLayout>
-      {isLoading && isAccessChecking ? (
+      {isLoading || isAccessChecking ? (
         //TODO : loading 차후 구현
         <div className="text-[60px]">로딩중</div>
       ) : (
