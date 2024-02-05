@@ -171,7 +171,7 @@ function NoticeRegister() {
                         />
                       </div>
                     </div>
-                    <RegisterModal form={form} shopId={shopId} />
+                    <RegisterModal form={form} parsedShopId={parsedShopId} />
                   </div>
                 </div>
               </div>
