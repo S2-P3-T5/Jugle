@@ -12,10 +12,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { useNoticeRegistration } from "@/queries/shop";
 
-function RegisterModal({ form }: any) {
-  const shopId = "c90e94dd-556b-4fad-9bef-f6c81cc4f242";
+function RegisterModal({ form }: any, shopId: string) {
   const noticeId = "e3d12108-044e-410b-9092-1184300d79f2";
-  const noticeRegistrationMutation = useNoticeRegistration();
+  const noticeRegistrationMutation = useNoticeRegistration(shopId);
 
   if (noticeRegistrationMutation.isSuccess) {
     return (
