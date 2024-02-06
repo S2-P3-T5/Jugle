@@ -1,6 +1,6 @@
 import NoticeListForm from "@/components/notices/NoticeListForm";
 
-export default function notices() {
+export default function Notices() {
   return (
     <>
       <NoticeListForm />
