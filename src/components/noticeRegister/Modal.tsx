@@ -10,12 +10,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { useNoticeRegistration } from "@/queries/shop";
 
-function RegisterModal({ form }: any, shopId: string) {
-  const noticeId = "e3d12108-044e-410b-9092-1184300d79f2";
-  const noticeRegistrationMutation = useNoticeRegistration(shopId);
-
+function RegisterModal({ form }: any) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

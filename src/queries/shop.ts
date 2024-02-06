@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
-import { postNoticeRegistration } from "@/apis/notice";
+import { postNoticeRegistration, putNoticeRegistration } from "@/apis/notice";
 import { NoticesPostRequestBody } from "@/apis/notice/schema";
 
 export const useNoticeRegistration = (shopId: string) => {
@@ -26,6 +26,37 @@ export const useNoticeRegistration = (shopId: string) => {
           description,
         },
         shopId,
+      );
+    },
+    onSuccess: () => {},
+  });
+
+  return { mutate };
+};
+
+export const useNoticeEdit = (shopId: string, noticeId: string) => {
+  const router = useRouter();
+  const { mutate } = useMutation({
+    mutationFn: ({
+      hourlyPay,
+      startsAt,
+      workhour,
+      description,
+    }: NoticesPostRequestBody) => {
+      // hourlyPay와 workhour를 숫자형으로 변환
+      const hourlyPayNumber = Number(hourlyPay);
+      const workhourNumber = Number(workhour);
+
+      // 변환된 값을 사용하여 API 호출
+      return putNoticeRegistration(
+        {
+          hourlyPay: hourlyPayNumber,
+          startsAt,
+          workhour: workhourNumber,
+          description,
+        },
+        shopId,
+        noticeId,
       );
     },
     onSuccess: () => {},

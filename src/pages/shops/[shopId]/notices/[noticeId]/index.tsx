@@ -18,14 +18,12 @@ import ApplyListPagination from "@/components/noticeDetail/Pagination";
 import RejectDialog from "@/components/noticeDetail/RejectDialog";
 import { apiRouteUtils } from "@/routes";
 
-//TODO: 추후 shopId는 가게 등록 페이지에서 전달받고 noticeId는 쿼리값으로 적용할 예정
 function NoticeDetail() {
   const router = useRouter();
   const [offset, setOffset] = useState(1);
   const { shopId, noticeId } = router.query;
   const normalizedShopId = String(shopId);
   const normalizedNoticeId = String(noticeId);
-
   const { data } = useQuery<any>({
     queryKey: ["notice", noticeId],
     queryFn: async () => {
@@ -41,6 +39,7 @@ function NoticeDetail() {
       return response.json();
     },
   });
+
   const shopOriginalData = data?.item?.shop?.item ?? {};
   const shopNoticeData = data?.item ?? {};
   const startsAt = shopNoticeData.startsAt;
@@ -188,7 +187,10 @@ function NoticeDetail() {
                     {shopOriginalData?.description}
                   </span>
                 </div>
-                <EditNoticeButton />
+                <EditNoticeButton
+                  shopId={normalizedShopId}
+                  noticeId={normalizedNoticeId}
+                />
               </div>
             </div>
             <div className="flex h-[15.3rem] w-full flex-col items-start gap-[0.8rem] rounded-[1.2rem] bg-gray-10 p-[2rem] tablet:h-[14.8rem]">
