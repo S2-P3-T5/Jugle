@@ -5,7 +5,7 @@ export const PAGE_ROUTES = {
   NOTICES_DETAIL: (shopId: string) => `/shops/${shopId}/notices`,
   SHOPS_REGISTER: "/shops/register",
   SHOPS: "/shops",
-  PROFILE: "/profile",
+  MY: "/my",
   parseShopsURL: (shopId: string) => `/shops/${shopId}`,
   parseShopsEditURL: (shopId: string) => `/shops/edit/${shopId}`,
   parseShopNoticeEditURL: (shopId: string, noticeId: string) =>
@@ -25,7 +25,7 @@ export const apiRouteUtils = {
   IMAGES: "images",
   parseShopNoticesURL: (shopId: string) => `shops/${shopId}/notices`,
   parseShopsURL: (shopId: string) => `shops/${shopId}`,
-  NOTICES: "notices?offset=0&limit=10",
+  NOTICES: "notices",
   parseShopNoticeDetail: (shopId: string, noticeId: string) =>
     `shops/${shopId}/notices/${noticeId}`,
   parseShopNoticeApplications: (
