@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
 import { postNoticeRegistration, putNoticeRegistration } from "@/apis/notice";
@@ -35,6 +35,7 @@ export const useNoticeRegistration = (shopId: string) => {
 };
 
 export const useNoticeEdit = (shopId: string, noticeId: string) => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { mutate } = useMutation({
     mutationFn: ({
@@ -59,7 +60,9 @@ export const useNoticeEdit = (shopId: string, noticeId: string) => {
         noticeId,
       );
     },
-    onSuccess: () => {},
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notice", noticeId] });
+    },
   });
 
   return { mutate };
