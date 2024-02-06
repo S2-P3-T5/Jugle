@@ -2,8 +2,6 @@ import { HTTPError } from "ky";
 
 import { fetcher } from "@/apis/fetcher";
 import {
-  NoticesGetResponse,
-  noticesGetResponseSchema,
   NoticesPostRequestBody,
   NoticesPostResponse,
   noticesPostResponseSchema,
@@ -40,11 +38,14 @@ export const postNoticeRegistration = async (
     });
 };
 
-export const getNoticeList = async (): Promise<NoticesGetResponse> =>
-  await fetcher
-    .get(apiRouteUtils.NOTICES)
-    .json()
-    .then(noticesGetResponseSchema.parse)
-    .catch((err: HTTPError) => {
-      throw err;
-    });
+export const getAllNoticesListData = async () => {
+  try {
+    const response = await fetcher.get(
+      `${apiRouteUtils.NOTICES}` + "?offset=0&limit=6",
+    );
+    const result = await response.json();
+    return result;
+  } catch (err: any) {
+    throw err;
+  }
+};
