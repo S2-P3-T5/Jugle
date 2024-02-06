@@ -49,7 +49,7 @@ function NoticeRegister() {
                       </Button>
                     </div>
                     <div className="flex w-full flex-col justify-end gap-[2rem]">
-                      <div className="desktop:flex desktop:w-full desktop:flex-row desktop:gap-[2rem]">
+                      <div className="flex flex-col gap-[2rem] gap-x-[2.4rem] desktop:flex desktop:w-full desktop:flex-row desktop:gap-y-[2rem]">
                         <div className="flex flex-col gap-[2rem] tablet:flex tablet:w-full tablet:flex-row tablet:gap-[2rem] desktop:w-2/3">
                           <div className="flex w-full flex-col items-start gap-[0.8rem] tablet:w-1/2 desktop:w-1/2">
                             <FormField
