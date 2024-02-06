@@ -40,8 +40,22 @@ export const postNoticeRegistration = async (
 
 export const getAllNoticesListData = async () => {
   try {
+    //TODO: 페이지네이션에 맞게 offset 변경예정
     const response = await fetcher.get(
-      `${apiRouteUtils.NOTICES}` + "?offset=0&limit=6",
+      apiRouteUtils.NOTICES + "?offset=46&limit=6",
+    );
+    const result = await response.json();
+    return result;
+  } catch (err: any) {
+    throw err;
+  }
+};
+
+export const getCustomNoticesListData = async () => {
+  try {
+    //TODO : query 사용자의 주소에 맞게 수정 해야함
+    const response = await fetcher.get(
+      apiRouteUtils.NOTICES + `?offset=0&limit=6&address=${"서울시 중구"}`,
     );
     const result = await response.json();
     return result;
