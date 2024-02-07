@@ -1,17 +1,12 @@
-import { Fragment } from "react";
-
 import {
   Pagination,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-
-function generateArray(n: number) {
-  return Array.from({ length: n }, (_, index) => index + 1);
-}
 
 interface NoticeListPagination {
   count: number;
@@ -25,11 +20,7 @@ export default function NoticeListPagination({
   page,
 }: NoticeListPagination) {
   const pageCount = Math.ceil(count / 6);
-  const pageArr: number[] = generateArray(pageCount);
 
-  const handlePageClick = (p: number) => {
-    handlePage(p);
-  };
   const handlePrePageClick = () => {
     if (page > 1) {
       handlePage(page - 1);
@@ -41,25 +32,17 @@ export default function NoticeListPagination({
     }
   };
 
-  //TODO: 표시되는 페이지 숫자 수정
   return (
-    <Pagination>
+    <Pagination className="mb-[6rem]">
       <PaginationContent>
         <PaginationItem className="cursor-pointer" onClick={handlePrePageClick}>
           <PaginationPrevious />
         </PaginationItem>
-        {pageArr.map((p) => {
-          return (
-            <Fragment key={p}>
-              <PaginationItem
-                onClick={() => handlePageClick(p)}
-                className="cursor-pointer"
-              >
-                <PaginationLink isActive={p === page}>{p}</PaginationLink>
-              </PaginationItem>
-            </Fragment>
-          );
-        })}
+        {page > 1 && <PaginationEllipsis />}
+        <PaginationItem className="cursor-pointer">
+          <PaginationLink isActive>{page}</PaginationLink>
+        </PaginationItem>
+        {page < pageCount && <PaginationEllipsis />}
         <PaginationItem
           className="cursor-pointer"
           onClick={handleNextPageClick}
