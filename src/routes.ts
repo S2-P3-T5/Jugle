@@ -13,8 +13,10 @@ export const PAGE_ROUTES = {
     `/shops/${shopId}/notices/${noticeId}/edit`,
   parseNoticeRegisterURL: (shopId: string) =>
     `/shops/${shopId}/notices/register`,
-  parseShopNoticeApplicationsURL: (shopId: string, noticeId: string) =>
+  parseShopNoticeDetailsURL: (shopId: string, noticeId: string) =>
     `/shops/${shopId}/notices/${noticeId}`,
+  parseShopNoticeApplicationsURL: (shopId: string, noticeId: string) =>
+    `/notices/${noticeId}/apply`,
 };
 
 export const API_ROUTE = process.env.NEXT_PUBLIC_API_ENDPOINT;
