@@ -15,6 +15,7 @@ export const PAGE_ROUTES = {
     `/shops/${shopId}/notices/register`,
   parseShopNoticeApplicationsURL: (shopId: string, noticeId: string) =>
     `/shops/${shopId}/notices/${noticeId}`,
+  parseNotciesApplyURL: (noticeId: string) => `/notices/${noticeId}/apply`,
 };
 
 export const API_ROUTE = process.env.NEXT_PUBLIC_API_ENDPOINT;
