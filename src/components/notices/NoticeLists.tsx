@@ -5,6 +5,13 @@ import NoticeListDropdownMenu from "@/components/notices/NoticeListDropDownMenu"
 import NoticeListPagination from "@/components/notices/NoticeListPagination";
 import NoticeListPopover from "@/components/notices/NoticeListPopover";
 import ShopsNoticesListItem from "@/components/shop/ShopsNoticesListItem";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { UserContext } from "@/providers/UserProvider";
 
 export default function NoticesLists() {
@@ -24,7 +31,7 @@ export default function NoticesLists() {
     const getData = async () => {
       const resultAllNotices: any = await getNoticesListData();
       const resultCustomNotices: any = await getCustomNoticesListData(
-        user.address,
+        user?.address,
       );
       setCustomNoticesList(resultCustomNotices.items);
       setNoticesList(resultAllNotices.items);
@@ -52,7 +59,6 @@ export default function NoticesLists() {
     setPage(num);
   };
 
-  // TODO : 타입수정, items 분리 ?, 로딩처리
   return (
     <>
       <div className="bg-red-10">
@@ -60,17 +66,27 @@ export default function NoticesLists() {
           <span className="text-[2rem] font-bold tablet:text-[2.8rem]">
             맞춤 공고
           </span>
-          <div className="flex w-[37.1rem] justify-between gap-x-[0.9rem] gap-y-[1.6rem] overflow-scroll scrollbar-hide tablet:w-[69.8rem] tablet:gap-y-[3.2rem] desktop:w-[98.4rem]">
-            {customNoticesList &&
-              customNoticesList.map((data: any) => (
-                <li key={data.item.id}>
-                  <ShopsNoticesListItem
-                    item={data.item}
-                    shopData={data.item.shop.item}
-                  />
-                </li>
-              ))}
-          </div>
+          <Carousel>
+            <div className="flex w-[35.1rem] flex-wrap justify-between gap-x-[0.9rem] gap-y-[1.6rem] tablet:w-[67.8rem] tablet:gap-y-[3.2rem] desktop:w-[96.4rem]">
+              <CarouselContent>
+                {customNoticesList &&
+                  customNoticesList.map((data: any) => (
+                    <>
+                      <CarouselItem className="basis-100">
+                        <li key={data.item.id}>
+                          <ShopsNoticesListItem
+                            item={data.item}
+                            shopData={data.item.shop.item}
+                          />
+                        </li>
+                      </CarouselItem>
+                    </>
+                  ))}
+              </CarouselContent>
+              <CarouselPrevious className="h-[24px] w-[24px]" />
+              <CarouselNext className="h-[24px] w-[24px]" />
+            </div>
+          </Carousel>
         </ul>
       </div>
 
