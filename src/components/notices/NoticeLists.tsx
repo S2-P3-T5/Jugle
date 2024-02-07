@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { getCustomNoticesListData, getNoticesListData } from "@/apis/notice";
 import NoticeListDropdownMenu from "@/components/notices/NoticeListDropDownMenu";
 import NoticeListPagination from "@/components/notices/NoticeListPagination";
 import NoticeListPopover from "@/components/notices/NoticeListPopover";
 import ShopsNoticesListItem from "@/components/shop/ShopsNoticesListItem";
+import { UserContext } from "@/providers/UserProvider";
 
 export default function NoticesLists() {
+  const user = useContext<any>(UserContext);
   const [page, setPage] = useState(1);
   const [noticesList, setNoticesList] = useState([]);
   const [options, setOptions] = useState({
@@ -16,13 +18,15 @@ export default function NoticesLists() {
     limit: 6,
     offset: 0,
   });
-  const [customNoticesList, setCustomNoticesList] = useState<any>("");
+  const [customNoticesList, setCustomNoticesList] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
       const resultAllNotices: any = await getNoticesListData();
-      const resultCustomNotices: any = await getCustomNoticesListData();
-      setCustomNoticesList(resultCustomNotices);
+      const resultCustomNotices: any = await getCustomNoticesListData(
+        user.address,
+      );
+      setCustomNoticesList(resultCustomNotices.items);
       setNoticesList(resultAllNotices.items);
       setOptions({
         address: resultAllNotices.address,
@@ -58,11 +62,11 @@ export default function NoticesLists() {
           </span>
           <div className="flex w-[37.1rem] justify-between gap-x-[0.9rem] gap-y-[1.6rem] overflow-scroll scrollbar-hide tablet:w-[69.8rem] tablet:gap-y-[3.2rem] desktop:w-[98.4rem]">
             {customNoticesList &&
-              customNoticesList.items.map((item: any) => (
-                <li key={item.item.id}>
+              customNoticesList.map((data: any) => (
+                <li key={data.item.id}>
                   <ShopsNoticesListItem
-                    item={item.item}
-                    shopData={item.item.shop.item}
+                    item={data.item}
+                    shopData={data.item.shop.item}
                   />
                 </li>
               ))}
