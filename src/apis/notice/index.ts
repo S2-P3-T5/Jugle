@@ -38,6 +38,39 @@ export const postNoticeRegistration = async (
     });
 };
 
+export const putNoticeRegistration = async (
+  { hourlyPay, startsAt, workhour, description }: NoticesPostRequestBody,
+  shopId: string,
+  noticeId: string,
+): Promise<NoticesPostResponse["item"]> => {
+  const token = getAccessTokenInStorage();
+  if (!token) {
+    throw new Error("Token not found");
+  }
+
+  return await fetcher
+    .put(
+      apiRouteUtils.parseShopNoticeDetail(shopId as string, noticeId as string),
+      {
+        json: {
+          hourlyPay,
+          startsAt,
+          workhour,
+          description,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    .json()
+    .then(noticesPostResponseSchema.parse)
+    .then((res) => res.item)
+    .catch((err: HTTPError) => {
+      throw err;
+    });
+};
+
 export const getNoticesListData = async (offset = 0) => {
   try {
     const response = await fetcher.get(
