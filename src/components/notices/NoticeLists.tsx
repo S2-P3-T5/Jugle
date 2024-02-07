@@ -81,13 +81,18 @@ export default function NoticesLists() {
           <NoticeListPopover />
           <div className="flex w-[35.1rem] flex-wrap justify-between gap-x-[0.9rem] gap-y-[1.6rem] tablet:w-[67.8rem] tablet:gap-y-[3.2rem] desktop:w-[96.4rem]">
             {noticesList &&
-              noticesList.map((item: any) => (
+              noticesList.map((data: any) => (
                 <>
-                  <Link href={PAGE_ROUTES.parseNotciesApplyURL(item.item.id)}>
-                    <li key={item.item.id}>
+                  <Link
+                    href={PAGE_ROUTES.parseNotciesApplyURL(
+                      data.item.shop.item.id,
+                      data.item.id,
+                    )}
+                  >
+                    <li key={data.item.id}>
                       <ShopsNoticesListItem
-                        item={item.item}
-                        shopData={item.item.shop.item}
+                        item={data.item}
+                        shopData={data.item.shop.item}
                       />
                     </li>
                   </Link>
