@@ -31,6 +31,7 @@ function getCurrentDateTime() {
   return rfc3339DateTime;
 }
 
+//TODO : data get 할 시 쿼리 파라미터 옵션 객체로 변경(다음 필터 이슈에서 설정)
 export default function NoticesLists() {
   const user = useContext<any>(UserContext);
   const [page, setPage] = useState(1);
@@ -54,6 +55,7 @@ export default function NoticesLists() {
       );
       const resultCustomNotices: any = await getCustomNoticesListData(
         user?.address,
+        startsAtGte,
       );
       setCustomNoticesList(resultCustomNotices.items);
       setNoticesList(resultAllNotices.items);

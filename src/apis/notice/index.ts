@@ -92,10 +92,13 @@ export const getNoticesListData = async (
   }
 };
 
-export const getCustomNoticesListData = async (address = "") => {
+export const getCustomNoticesListData = async (address = "", startsAt = "") => {
+  const startsAtGte = startsAt ? `&startsAtGte=${startsAt}` : "";
   try {
     const response = await fetcher.get(
-      apiRouteUtils.NOTICES + `?offset=0&limit=10&address=${address}`,
+      apiRouteUtils.NOTICES +
+        `?offset=0&limit=10&address=${address}` +
+        startsAtGte,
     );
     const result = await response.json();
     return result;
