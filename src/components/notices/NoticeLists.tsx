@@ -3,8 +3,8 @@ import { Fragment, useContext, useEffect, useState } from "react";
 
 import { getCustomNoticesListData, getNoticesListData } from "@/apis/notice";
 import NoticeListDropdownMenu from "@/components/notices/NoticeListDropDownMenu";
+import NoticeListFilter from "@/components/notices/NoticeListFilter";
 import NoticeListPagination from "@/components/notices/NoticeListPagination";
-import NoticeListPopover from "@/components/notices/NoticeListPopover";
 import ShopsNoticesListItem from "@/components/shop/ShopsNoticesListItem";
 import {
   Carousel,
@@ -149,7 +149,7 @@ export default function NoticesLists() {
             전체 공고
           </span>
           <NoticeListDropdownMenu handleOrderBy={handleOrderBy} />
-          <NoticeListPopover />
+          <NoticeListFilter />
           <div className="flex w-[35.1rem] flex-wrap justify-between gap-x-[0.9rem] gap-y-[1.6rem] tablet:w-[67.8rem] tablet:gap-y-[3.2rem] desktop:w-[96.4rem]">
             {noticesList &&
               noticesList.map((data: any) => (
