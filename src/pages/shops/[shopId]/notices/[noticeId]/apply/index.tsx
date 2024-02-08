@@ -81,37 +81,42 @@ function NoticeDetailApply() {
   }
 
   useEffect(() => {
-    if (!getAccessTokenInStorage()) {
-      router.push(PAGE_ROUTES.SIGNIN);
-      return;
+    if (typeof window !== "undefined") {
+      if (!getAccessTokenInStorage()) {
+        router.push(PAGE_ROUTES.SIGNIN);
+        return;
+      }
+
+      if (!noticeId || !shopNoticeData) {
+        return; // noticeId 또는 shopNoticeData가 없는 경우에는 더 이상 처리하지 않음
+      }
+
+      // 이전에 저장된 최근에 본 공고 목록을 로컬 스토리지에서 가져옴
+      const storedRecentNotices = JSON.parse(
+        localStorage.getItem("recentNotices") || "[]",
+      );
+
+      // 클릭한 공고를 최근에 본 공고 목록에 추가
+      const updatedRecentNotices = [
+        {
+          id: noticeId as string,
+          noticedata: shopNoticeData,
+          shopdata: shopOriginalData,
+        },
+        ...storedRecentNotices
+          .filter((item: any) => item.id !== noticeId)
+          .slice(0, 5), // 최근 6개만 유지하도록 수정
+      ];
+
+      // 최근에 본 공고 목록을 로컬 스토리지에 저장
+      localStorage.setItem(
+        "recentNotices",
+        JSON.stringify(updatedRecentNotices),
+      );
+
+      // 최근에 본 공고 목록 상태 업데이트
+      setRecentNotices(updatedRecentNotices);
     }
-
-    if (!noticeId || !shopNoticeData) {
-      return; // noticeId 또는 shopNoticeData가 없는 경우에는 더 이상 처리하지 않음
-    }
-
-    // 이전에 저장된 최근에 본 공고 목록을 로컬 스토리지에서 가져옴
-    const storedRecentNotices = JSON.parse(
-      localStorage.getItem("recentNotices") || "[]",
-    );
-
-    // 클릭한 공고를 최근에 본 공고 목록에 추가
-    const updatedRecentNotices = [
-      {
-        id: noticeId as string,
-        noticedata: shopNoticeData,
-        shopdata: shopOriginalData,
-      },
-      ...storedRecentNotices
-        .filter((item: any) => item.id !== noticeId)
-        .slice(0, 5), // 최근 6개만 유지하도록 수정
-    ];
-
-    // 최근에 본 공고 목록을 로컬 스토리지에 저장
-    localStorage.setItem("recentNotices", JSON.stringify(updatedRecentNotices));
-
-    // 최근에 본 공고 목록 상태 업데이트
-    setRecentNotices(updatedRecentNotices);
   }, [noticeId, shopNoticeData, router, shopOriginalData]);
 
   const storedRecentNotices = JSON.parse(
