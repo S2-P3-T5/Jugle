@@ -71,11 +71,20 @@ export const putNoticeRegistration = async (
     });
 };
 
-export const getNoticesListData = async (offset = 0) => {
+export const getNoticesListData = async (
+  offset = 0,
+  sort = "",
+  startsAt = "",
+) => {
+  const sortOption = sort ? `&sort=${sort}` : "";
+  const startsAtGte = startsAt ? `&startsAtGte=${startsAt}` : "";
+  const apiURL =
+    apiRouteUtils.NOTICES +
+    `?offset=${offset}&limit=6` +
+    sortOption +
+    startsAtGte;
   try {
-    const response = await fetcher.get(
-      apiRouteUtils.NOTICES + `?offset=${offset}&limit=6`,
-    );
+    const response = await fetcher.get(apiURL);
     const result = await response.json();
     return result;
   } catch (err: any) {
