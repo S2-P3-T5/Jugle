@@ -1,10 +1,13 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { getAllNoticesListData, getCustomNoticesListData } from "@/apis/notice";
+import NoticeApplyItem from "@/components/noticeDetail/NoticeApplyItem";
 import NoticeListDropdownMenu from "@/components/notices/NoticeListDropDownMenu";
 import NoticeListPagination from "@/components/notices/NoticeListPagination";
 import NoticeListPopover from "@/components/notices/NoticeListPopover";
 import ShopsNoticesListItem from "@/components/shop/ShopsNoticesListItem";
+import { PAGE_ROUTES } from "@/routes";
 
 export default function NoticesLists() {
   const [allNoticesList, setAllNoticesList] = useState<any>("");
@@ -53,10 +56,17 @@ export default function NoticesLists() {
             {allNoticesList &&
               allNoticesList.items.map((item: any) => (
                 <li key={item.item.id}>
-                  <ShopsNoticesListItem
-                    item={item.item}
-                    shopData={item.item.shop.item}
-                  />
+                  <Link
+                    href={PAGE_ROUTES.parseShopNoticeApplicationsURL(
+                      item.item.shop.item.id,
+                      item.item.id,
+                    )}
+                  >
+                    <NoticeApplyItem
+                      item={item.item}
+                      shopData={item.item.shop.item}
+                    />
+                  </Link>
                 </li>
               ))}
           </div>

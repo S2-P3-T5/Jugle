@@ -5,27 +5,25 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { fetcher } from "@/apis/fetcher";
 import EmployeeLayout from "@/components/common/EmployeeLayout";
-import ApplicationList from "@/components/noticeDetail/ApplicationList";
 import { HighHourlyWageBadge } from "@/components/noticeDetail/Badge";
 import { ApplyNoticeButton } from "@/components/noticeDetail/Buttons";
 import { useTimeCalculate } from "@/components/noticeDetail/Hooks";
-import ShopsNoticesListItem from "@/components/shop/ShopsNoticesListItem";
+import NoticeApplyItem from "@/components/noticeDetail/NoticeApplyItem";
 import { getAccessTokenInStorage } from "@/helpers/auth";
 import { UserContext } from "@/providers/UserProvider";
 import { apiRouteUtils, PAGE_ROUTES } from "@/routes";
 
-function NoticeDetail() {
+function NoticeDetailApply() {
   const [recentNotices, setRecentNotices] = useState<
     { id: string; data: any }[]
   >([]);
   const user = useContext(UserContext);
   const router = useRouter();
-  const [offset, setOffset] = useState(1);
   const { shopId, noticeId } = router.query;
   const normalizedShopId = String(shopId);
   const normalizedNoticeId = String(noticeId);
   const { data } = useQuery<any>({
-    queryKey: ["notice", noticeId],
+    queryKey: ["notices", noticeId],
     queryFn: async () => {
       const response = await fetcher.get(
         apiRouteUtils.parseShopNoticeDetail(
@@ -40,11 +38,12 @@ function NoticeDetail() {
     },
   });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const shopOriginalData = data?.item?.shop?.item ?? {};
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const shopNoticeData = data?.item ?? {};
   const startsAt = shopNoticeData.startsAt;
   const workhour = shopNoticeData.workhour;
-  const applicationData = ApplicationList(offset);
   const [startDay, startTime, minute, endTime] = useTimeCalculate(
     startsAt,
     workhour,
@@ -83,37 +82,6 @@ function NoticeDetail() {
     }
   }
 
-  //TODO: 가게의 특정 공고의 지원 목록 조회하는 api를 구성하면 username과 status를 수정할 예정
-  //신청자 이름, 상태 data
-  const initialApplicants = applicationData?.items?.[0]?.item?.map(
-    (item: { user: { name: string | undefined }; status: any }) => ({
-      name: item.user.name,
-      status: item.status,
-    }),
-  );
-  const [applicants, setApplicants] = useState(initialApplicants);
-  const handleApprove = (applicationId: number) => {
-    const updatedApplicants = [...applicants];
-    updatedApplicants[applicationId].status = "accepted";
-    setApplicants(updatedApplicants);
-  };
-
-  const handleReject = (applicationId: number) => {
-    const updatedApplicants = [...applicants];
-    updatedApplicants[applicationId].status = "rejected";
-    setApplicants(updatedApplicants);
-  };
-
-  useEffect(() => {
-    if (router.query.offset) {
-      if (Array.isArray(router.query.offset)) {
-        setOffset(parseInt(router.query.offset[0]));
-      } else {
-        setOffset(parseInt(router.query.offset));
-      }
-    }
-  }, [router.query.offset]);
-
   useEffect(() => {
     if (!getAccessTokenInStorage()) {
       router.push(PAGE_ROUTES.SIGNIN);
@@ -124,20 +92,33 @@ function NoticeDetail() {
       return; // noticeId 또는 shopNoticeData가 없는 경우에는 더 이상 처리하지 않음
     }
 
-    // 공고 정보를 JSON 형태로 문자열화하여 세션 스토리지에 저장
-    setRecentNotices((prevRecentNotices) => {
-      const updatedRecentNotices = [
-        ...prevRecentNotices.slice(0, 5), // 최근 5개만 유지하고
-        { id: noticeId as string, data: shopNoticeData }, // 새로운 공고 추가
-      ];
-      localStorage.setItem(
-        "recentNotices",
-        JSON.stringify(updatedRecentNotices),
-      );
-      return updatedRecentNotices;
-    });
-  }, [user, noticeId, shopNoticeData, router, setRecentNotices]); // setRecentNotices를 의존성 배열에 추가
+    // 이전에 저장된 최근에 본 공고 목록을 로컬 스토리지에서 가져옴
+    const storedRecentNotices = JSON.parse(
+      localStorage.getItem("recentNotices") || "[]",
+    );
 
+    // 클릭한 공고를 최근에 본 공고 목록에 추가
+    const updatedRecentNotices = [
+      {
+        id: noticeId as string,
+        noticedata: shopNoticeData,
+        shopdata: shopOriginalData,
+      },
+      ...storedRecentNotices
+        .filter((item: any) => item.id !== noticeId)
+        .slice(0, 5), // 최근 6개만 유지하도록 수정
+    ];
+
+    // 최근에 본 공고 목록을 로컬 스토리지에 저장
+    localStorage.setItem("recentNotices", JSON.stringify(updatedRecentNotices));
+
+    // 최근에 본 공고 목록 상태 업데이트
+    setRecentNotices(updatedRecentNotices);
+  }, [noticeId, shopNoticeData, setRecentNotices, router, shopOriginalData]);
+
+  const storedRecentNotices = JSON.parse(
+    localStorage.getItem("recentNotices") || "[]",
+  );
   return (
     <EmployeeLayout>
       <div className="flex w-full flex-col items-center justify-center tablet:w-[74.4rem] desktop:w-[144rem]">
@@ -229,11 +210,11 @@ function NoticeDetail() {
             최근에 본 공고
           </h1>
           <div className="grid grid-cols-2 gap-x-[0.8rem] gap-y-[1.6rem]">
-            {recentNotices.map((notice) => (
+            {storedRecentNotices.map((notice: any) => (
               <div key={notice.id}>
-                <ShopsNoticesListItem
-                  item={shopNoticeData}
-                  shopData={shopOriginalData}
+                <NoticeApplyItem
+                  item={notice.noticedata}
+                  shopData={notice.shopdata}
                 />
               </div>
             ))}
@@ -244,4 +225,4 @@ function NoticeDetail() {
   );
 }
 
-export default NoticeDetail;
+export default NoticeDetailApply;
