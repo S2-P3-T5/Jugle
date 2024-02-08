@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { getCustomNoticesListData, getNoticesListData } from "@/apis/notice";
 import NoticeListDropdownMenu from "@/components/notices/NoticeListDropDownMenu";
@@ -36,20 +36,16 @@ export default function NoticesLists() {
   const user = useContext<any>(UserContext);
   const [page, setPage] = useState(1);
   const [noticesList, setNoticesList] = useState([]);
-  const [options, setOptions] = useState({
-    address: [],
-    count: 0,
-    limit: 6,
-    offset: 0,
-  });
   const [customNoticesList, setCustomNoticesList] = useState([]);
+
+  const [count, setCount] = useState(0);
   const [orderBy, setOrderBy] = useState("");
 
   useEffect(() => {
     const getData = async () => {
       const startsAtGte = getCurrentDateTime();
       const resultAllNotices: any = await getNoticesListData(
-        options.offset,
+        0,
         orderBy,
         startsAtGte,
       );
@@ -59,12 +55,7 @@ export default function NoticesLists() {
       );
       setCustomNoticesList(resultCustomNotices.items);
       setNoticesList(resultAllNotices.items);
-      setOptions({
-        address: resultAllNotices.address,
-        count: resultAllNotices.count,
-        limit: 6,
-        offset: resultAllNotices.offset,
-      });
+      setCount(resultAllNotices.count);
     };
     getData();
   }, []);
@@ -87,7 +78,7 @@ export default function NoticesLists() {
     const startsAtGte = getCurrentDateTime();
     const getData = async () => {
       const resultAllNotices: any = await getNoticesListData(
-        options.offset,
+        0,
         orderBy,
         startsAtGte,
       );
@@ -170,11 +161,7 @@ export default function NoticesLists() {
           </div>
         </ul>
       </div>
-      <NoticeListPagination
-        handlePage={handlePage}
-        count={options.count}
-        page={page}
-      />
+      <NoticeListPagination handlePage={handlePage} count={count} page={page} />
     </>
   );
 }

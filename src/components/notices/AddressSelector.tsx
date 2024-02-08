@@ -1,4 +1,4 @@
-import AddressSelectorsItem from "@/components/notices/AddressSelectorsItem";
+import AddressList from "@/components/notices/AddressList";
 
 const ADDRESS = [
   "서울시 강남구",
@@ -28,18 +28,33 @@ const ADDRESS = [
   "서울시 중랑구",
 ];
 
-export default function AddressSelector() {
+interface AddressSelectorProps {
+  address: string[];
+  setAddress: (value: string[]) => void;
+}
+
+export default function AddressSelector({
+  address,
+  setAddress,
+}: AddressSelectorProps) {
+  const handleAddAddress = (value: string) => {
+    const newSet = new Set(address);
+    newSet.add(value);
+    setAddress(Array.from(newSet));
+  };
+
   return (
     <div>
-      <ul>
+      <ul className="border-[1px] border-solid">
         {ADDRESS.map((item) => {
           return (
-            <li key={item}>
-              <AddressSelectorsItem>{item}</AddressSelectorsItem>
+            <li onClick={() => handleAddAddress(item)} key={item}>
+              {item}
             </li>
           );
         })}
       </ul>
+      <AddressList address={address} setAddress={setAddress} />
     </div>
   );
 }
