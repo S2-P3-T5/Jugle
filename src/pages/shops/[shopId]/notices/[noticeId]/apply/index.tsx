@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
@@ -213,10 +214,17 @@ function NoticeDetailApply() {
           <div className="grid grid-cols-2 gap-x-[0.8rem] gap-y-[1.6rem]">
             {storedRecentNotices.map((notice: any) => (
               <div key={notice.id}>
-                <NoticeApplyItem
-                  item={notice.noticedata}
-                  shopData={notice.shopdata}
-                />
+                <Link
+                  href={PAGE_ROUTES.parseShopNoticeDetailsURL(
+                    notice.shopdata.id,
+                    notice.noticedata.id,
+                  )}
+                >
+                  <NoticeApplyItem
+                    item={notice.noticedata}
+                    shopData={notice.shopdata}
+                  />
+                </Link>
               </div>
             ))}
           </div>
