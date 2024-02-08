@@ -13,7 +13,7 @@ export default function AddressList({ address, setAddress }: AddressListProps) {
     <div>
       <ul>
         {address.map((address: string) => (
-          <li key={address}>
+          <li className="w-[10rem] bg-red-10" key={address}>
             {address}
             <button onClick={() => handleAddress(address)}>{"X"}</button>
           </li>
