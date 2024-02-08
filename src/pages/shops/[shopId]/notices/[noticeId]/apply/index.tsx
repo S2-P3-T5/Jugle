@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { fetcher } from "@/apis/fetcher";
 import EmployeeLayout from "@/components/common/EmployeeLayout";
@@ -10,14 +10,12 @@ import { ApplyNoticeButton } from "@/components/noticeDetail/Buttons";
 import { useTimeCalculate } from "@/components/noticeDetail/Hooks";
 import NoticeApplyItem from "@/components/noticeDetail/NoticeApplyItem";
 import { getAccessTokenInStorage } from "@/helpers/auth";
-import { UserContext } from "@/providers/UserProvider";
 import { apiRouteUtils, PAGE_ROUTES } from "@/routes";
 
 function NoticeDetailApply() {
   const [recentNotices, setRecentNotices] = useState<
     { id: string; data: any }[]
   >([]);
-  const user = useContext(UserContext);
   const router = useRouter();
   const { shopId, noticeId } = router.query;
   const normalizedShopId = String(shopId);
@@ -114,7 +112,7 @@ function NoticeDetailApply() {
 
     // 최근에 본 공고 목록 상태 업데이트
     setRecentNotices(updatedRecentNotices);
-  }, [noticeId, shopNoticeData, setRecentNotices, router, shopOriginalData]);
+  }, [noticeId, shopNoticeData, router, shopOriginalData]);
 
   const storedRecentNotices = JSON.parse(
     localStorage.getItem("recentNotices") || "[]",
