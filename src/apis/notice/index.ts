@@ -80,9 +80,7 @@ export const getNoticesListData = async (options: any, offset = 0) => {
     ? `&hourlyPayGte=${options.hourlyPayGte}`
     : "";
   const addressOption = options.address
-    ? options.address.reduce((acc: string, item: string) => {
-        return acc + `&address=${item}`;
-      }, "")
+    ? "&address=" + options.address.join("&address=")
     : "";
   const apiURL =
     apiRouteUtils.NOTICES +
