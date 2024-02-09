@@ -71,12 +71,20 @@ export const putNoticeRegistration = async (
     });
 };
 
-export const getAllNoticesListData = async () => {
+export const getNoticesListData = async (
+  offset = 0,
+  sort = "",
+  startsAt = "",
+) => {
+  const sortOption = sort ? `&sort=${sort}` : "";
+  const startsAtGte = startsAt ? `&startsAtGte=${startsAt}` : "";
+  const apiURL =
+    apiRouteUtils.NOTICES +
+    `?offset=${offset}&limit=6` +
+    sortOption +
+    startsAtGte;
   try {
-    //TODO: 페이지네이션에 맞게 offset 변경예정
-    const response = await fetcher.get(
-      apiRouteUtils.NOTICES + "?offset=46&limit=6",
-    );
+    const response = await fetcher.get(apiURL);
     const result = await response.json();
     return result;
   } catch (err: any) {
@@ -84,11 +92,13 @@ export const getAllNoticesListData = async () => {
   }
 };
 
-export const getCustomNoticesListData = async () => {
+export const getCustomNoticesListData = async (address = "", startsAt = "") => {
+  const startsAtGte = startsAt ? `&startsAtGte=${startsAt}` : "";
   try {
-    //TODO : query 사용자의 주소에 맞게 수정 해야함
     const response = await fetcher.get(
-      apiRouteUtils.NOTICES + `?offset=0&limit=6&address=${"서울시 중구"}`,
+      apiRouteUtils.NOTICES +
+        `?offset=0&limit=10&address=${address}` +
+        startsAtGte,
     );
     const result = await response.json();
     return result;

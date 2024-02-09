@@ -15,7 +15,7 @@ export const PAGE_ROUTES = {
     `/shops/${shopId}/notices/register`,
   parseShopNoticeDetailsURL: (shopId: string, noticeId: string) =>
     `/shops/${shopId}/notices/${noticeId}`,
-  parseShopNoticeApplicationsURL: (shopId: string, noticeId: string) =>
+  parseNotciesApplyURL: (shopId: string, noticeId: string) =>
     `/shops/${shopId}/notices/${noticeId}/apply`,
 };
 
