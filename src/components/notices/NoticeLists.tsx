@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 
 import { getCustomNoticesListData, getNoticesListData } from "@/apis/notice";
@@ -27,6 +28,8 @@ function getCurrentDateTime() {
 
 export default function NoticesLists() {
   const user = useContext<any>(UserContext);
+  const router = useRouter();
+  const { search } = router.query;
   const [page, setPage] = useState(1);
   const [noticesList, setNoticesList] = useState([]);
   const [customNoticesList, setCustomNoticesList] = useState([]);
@@ -39,7 +42,6 @@ export default function NoticesLists() {
     hourlyPayGte: 0,
     keyword: "",
   });
-
   useEffect(() => {
     const getData = async () => {
       const startsAtGte = getCurrentDateTime();
@@ -89,6 +91,14 @@ export default function NoticesLists() {
     getData();
   }, [options]);
 
+  useEffect(() => {
+    if (search) {
+      setOptions({ ...options, keyword: search as string });
+    } else {
+      setOptions({ ...options, keyword: "" });
+    }
+  }, [search]);
+
   const handlePage = (num: number) => {
     setPage(num);
   };
@@ -99,11 +109,20 @@ export default function NoticesLists() {
 
   return (
     <>
-      <CustomNotice customNoticesList={customNoticesList} />
+      {!options.keyword && (
+        <CustomNotice customNoticesList={customNoticesList} />
+      )}
       <div>
         <ul className="mx-auto flex w-[35.1rem] flex-col gap-[1.6rem] pb-[8rem] pt-[4rem] tablet:w-[67.8rem] tablet:gap-[3.2rem] tablet:pb-[12rem] tablet:pt-[6rem] desktop:w-[96.4rem]">
           <span className="text-[2rem] font-bold tablet:text-[2.8rem]">
-            전체 공고
+            {options.keyword ? (
+              <>
+                <span className="text-primary">{options.keyword}</span>에 대한
+                공고 목록
+              </>
+            ) : (
+              "전체 공고"
+            )}
           </span>
           <NoticeListDropdownMenu handleSort={handleSort} />
           <NoticeListFilter setOptions={setOptions} />
