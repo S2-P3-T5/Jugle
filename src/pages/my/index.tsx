@@ -1,11 +1,19 @@
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+
 import EmployeeLayout from "@/components/common/EmployeeLayout";
 import EmptyProfileCard from "@/components/my/EmptyProfileCard";
 import ProfileCard from "@/components/my/ProfileCard";
 import { useUserQuery } from "@/queries/user";
+import { PAGE_ROUTES } from "@/routes";
 
 export default function My() {
+  const router = useRouter();
   const { user } = useUserQuery();
-  if (!user) return;
+
+  useEffect(() => {
+    if (!user?.id) router.push(PAGE_ROUTES.SIGNIN);
+  }, [user?.id, router]);
 
   const profile =
     user && user.name && user.phone && user.address
