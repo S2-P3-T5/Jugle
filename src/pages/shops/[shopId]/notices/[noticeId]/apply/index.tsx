@@ -6,7 +6,6 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { fetcher } from "@/apis/fetcher";
 import EmployeeLayout from "@/components/common/EmployeeLayout";
-import EmployerLayout from "@/components/common/EmployerLayout";
 import { HighHourlyWageBadge } from "@/components/noticeDetail/Badge";
 import { ApplyNoticeButton } from "@/components/noticeDetail/Buttons";
 import { useTimeCalculate } from "@/components/noticeDetail/Hooks";
@@ -24,6 +23,13 @@ function NoticeDetailApply() {
   const { shopId, noticeId } = router.query;
   const normalizedShopId = String(shopId);
   const normalizedNoticeId = String(noticeId);
+
+  useEffect(() => {
+    if (user?.type === "employer") {
+      router.push("/shops");
+    }
+  }, [user, router]);
+
   const { data } = useQuery<any>({
     queryKey: ["notices", noticeId],
     queryFn: async () => {
@@ -115,13 +121,9 @@ function NoticeDetailApply() {
     const notices = localStorage.getItem("recentNotices");
     if (notices) storedRecentNotices = JSON.parse(notices);
   }
-  let LayoutComponent = EmployeeLayout; // 기본값으로 EmployeeLayout을 사용
-  if (user?.type === "employer") {
-    LayoutComponent = EmployerLayout; // user의 type이 'employer'일 때는 EmployerLayout을 사용
-  }
 
   return (
-    <LayoutComponent>
+    <EmployeeLayout>
       <div className="flex w-full flex-col items-center justify-center tablet:w-[74.4rem] desktop:w-[144rem]">
         <div className="flex w-full flex-col items-start gap-[1.2rem] bg-[#fafafa] px-[1.2rem] py-[4rem] tablet:w-full tablet:px-[3.2rem] tablet:py-[6rem] desktop:px-[23.8rem]">
           <div className="flex w-full flex-col gap-[1.6rem] tablet:w-full">
@@ -229,7 +231,7 @@ function NoticeDetailApply() {
           </div>
         </div>
       </div>
-    </LayoutComponent>
+    </EmployeeLayout>
   );
 }
 
