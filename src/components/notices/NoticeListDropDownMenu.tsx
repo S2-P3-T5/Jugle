@@ -49,7 +49,7 @@ export default function NoticeListDropdownMenu({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[auto] justify-between bg-gray-10 text-[1.2rem] font-bold "
+          className="h-[3rem] rounded-[0.5rem] bg-gray-10 p-[1.2rem] text-[1.4rem] font-semibold"
         >
           {value
             ? frameworks.find((framework) => framework.value === value)?.label

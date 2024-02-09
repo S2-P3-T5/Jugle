@@ -47,10 +47,7 @@ export default function NoticeListFilter({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          className="w-[auto] bg-red-30 text-[1.2rem] font-semibold text-white"
-          variant="outline"
-        >
+        <Button className="h-[3rem] rounded-[0.5rem] bg-red-30 p-[1.2rem] text-[1.4rem] font-semibold text-white">
           상세 필터 {`(${optionCount})`}
         </Button>
       </PopoverTrigger>
