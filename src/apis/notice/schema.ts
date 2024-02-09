@@ -31,7 +31,7 @@ export type ApplicationPostResponse = z.infer<typeof applyPostResponseSchema>;
 export type ApplicationPostRequestBody = {
   name: string;
   phone: string;
-  bio: string;
+  bio?: string;
 };
 
 export const noticesGetResponseSchema = z

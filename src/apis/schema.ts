@@ -4,10 +4,10 @@ export const userSchema = z.object({
   id: z.string(),
   email: z.string().email(),
   type: z.enum(["employee", "employer"]),
-  name: z.string().optional(),
-  phone: z.string().optional(),
-  address: z.string().optional(),
-  bio: z.string().optional(),
+  name: z.string(),
+  phone: z.string(),
+  address: z.string(),
+  bio: z.string(),
 });
 export type User = z.infer<typeof userSchema>;
 
