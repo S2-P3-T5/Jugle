@@ -56,30 +56,22 @@ function NoticeDetailApply() {
       ((hourlyPay - originalHourlyPay) / originalHourlyPay) * 100,
     );
   }
-  let badgeProps = {};
-  if (increasePercentage !== undefined) {
-    if (increasePercentage >= 50) {
-      badgeProps = {
-        className: "bg-red-40",
-        increasePercentage: increasePercentage.toFixed(0),
-      };
-    } else if (increasePercentage >= 40) {
-      badgeProps = {
-        className: "bg-red-30",
-        increasePercentage: increasePercentage.toFixed(0),
-      };
-    } else if (increasePercentage >= 30) {
-      badgeProps = {
-        className: "bg-red-20",
-        increasePercentage: increasePercentage.toFixed(0),
-      };
-    } else if (increasePercentage > 20) {
-      badgeProps = {
-        className: "bg-red-10",
-        increasePercentage: increasePercentage.toFixed(0),
-      };
-    }
-  }
+  let badgeProps =
+    increasePercentage !== undefined
+      ? {
+          className:
+            increasePercentage >= 50
+              ? "bg-red-40"
+              : increasePercentage >= 40
+                ? "bg-red-30"
+                : increasePercentage >= 30
+                  ? "bg-red-20"
+                  : increasePercentage > 20
+                    ? "bg-red-10"
+                    : "",
+          increasePercentage: Number(increasePercentage.toFixed(0)),
+        }
+      : {};
 
   useEffect(() => {
     if (!getAccessTokenInStorage()) {
