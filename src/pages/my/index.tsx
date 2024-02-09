@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 import EmployeeLayout from "@/components/common/EmployeeLayout";
+import EmptyApplicationCard from "@/components/my/EmptyApplicationCard";
 import EmptyProfileCard from "@/components/my/EmptyProfileCard";
 import ProfileCard from "@/components/my/ProfileCard";
 import { useUserQuery } from "@/queries/user";
@@ -28,13 +29,19 @@ export default function My() {
   return (
     <EmployeeLayout>
       <section className="w-full px-[16px] py-[40px]">
-        <div>
-          <header>
-            <h2 className="text-[2rem] font-bold">내 프로필</h2>
-          </header>
-          <div className="mt-[16px]">
-            {profile ? <ProfileCard profile={profile} /> : <EmptyProfileCard />}
-          </div>
+        <header>
+          <h2 className="text-[2rem] font-bold">내 프로필</h2>
+        </header>
+        <div className="mt-[16px]">
+          {profile ? <ProfileCard profile={profile} /> : <EmptyProfileCard />}
+        </div>
+      </section>
+      <section className="w-full px-[16px] py-[40px]">
+        <header>
+          <h2 className="text-[2rem] font-bold">신청 내역</h2>
+        </header>
+        <div className="mt-[16px]">
+          <EmptyApplicationCard />
         </div>
       </section>
     </EmployeeLayout>
