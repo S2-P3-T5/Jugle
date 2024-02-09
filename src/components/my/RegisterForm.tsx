@@ -132,7 +132,7 @@ export default function RegisterForm() {
                 <FormControl>
                   <Textarea
                     placeholder="간단한 소개를 입력해주세요"
-                    className="mt-[8px] h-[156px] resize-none p-[16px] focus-visible:ring-gray-40"
+                    className="mt-[8px] h-[156px] resize-none rounded-[8px] p-[16px] focus-visible:ring-gray-40"
                     {...field}
                   />
                 </FormControl>
