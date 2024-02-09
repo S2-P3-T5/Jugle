@@ -2,15 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { fetcher } from "@/apis/fetcher";
 import EmployeeLayout from "@/components/common/EmployeeLayout";
+import EmployerLayout from "@/components/common/EmployerLayout";
 import { HighHourlyWageBadge } from "@/components/noticeDetail/Badge";
 import { ApplyNoticeButton } from "@/components/noticeDetail/Buttons";
 import { useTimeCalculate } from "@/components/noticeDetail/Hooks";
 import NoticeApplyItem from "@/components/noticeDetail/NoticeApplyItem";
 import { getAccessTokenInStorage } from "@/helpers/auth";
+import { UserContext } from "@/providers/UserProvider";
 import { apiRouteUtils, PAGE_ROUTES } from "@/routes";
 
 function NoticeDetailApply() {
@@ -18,6 +20,7 @@ function NoticeDetailApply() {
     { id: string; data: any }[]
   >([]);
   const router = useRouter();
+  const user = useContext(UserContext);
   const { shopId, noticeId } = router.query;
   const normalizedShopId = String(shopId);
   const normalizedNoticeId = String(noticeId);
@@ -112,9 +115,13 @@ function NoticeDetailApply() {
     const notices = localStorage.getItem("recentNotices");
     if (notices) storedRecentNotices = JSON.parse(notices);
   }
+  let LayoutComponent = EmployeeLayout; // 기본값으로 EmployeeLayout을 사용
+  if (user?.type === "employer") {
+    LayoutComponent = EmployerLayout; // user의 type이 'employer'일 때는 EmployerLayout을 사용
+  }
 
   return (
-    <EmployeeLayout>
+    <LayoutComponent>
       <div className="flex w-full flex-col items-center justify-center tablet:w-[74.4rem] desktop:w-[144rem]">
         <div className="flex w-full flex-col items-start gap-[1.2rem] bg-[#fafafa] px-[1.2rem] py-[4rem] tablet:w-full tablet:px-[3.2rem] tablet:py-[6rem] desktop:px-[23.8rem]">
           <div className="flex w-full flex-col gap-[1.6rem] tablet:w-full">
@@ -222,7 +229,7 @@ function NoticeDetailApply() {
           </div>
         </div>
       </div>
-    </EmployeeLayout>
+    </LayoutComponent>
   );
 }
 
