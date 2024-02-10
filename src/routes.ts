@@ -41,6 +41,11 @@ export const apiRouteUtils = {
     `shops/${shopId}/notices?offset=${options.offset}&limit=${options.limit}`,
   parseNoticeApply: (shopId: string, noticeId: string) =>
     `shops/${shopId}/notices/${noticeId}/applications`,
+  parseNoticePutApply: (
+    shopId: string,
+    noticeId: string,
+    applicationId: string,
+  ) => `shops/${shopId}/notices/${noticeId}/applications/${applicationId}`,
 };
 type OptionsType = {
   offset: number;

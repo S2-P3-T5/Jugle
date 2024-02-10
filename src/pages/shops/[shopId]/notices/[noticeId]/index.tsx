@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 
 import { fetcher } from "@/apis/fetcher";
+import { putNoticeApplication } from "@/apis/notice";
 import EmployerLayout from "@/components/common/EmployerLayout";
 import ApproveDialog from "@/components/noticeDetail/ApproveDialog";
 import {
@@ -22,10 +23,14 @@ import { apiRouteUtils, PAGE_ROUTES } from "@/routes";
 function NoticeDetail() {
   const user = useContext(UserContext);
   const router = useRouter();
-  const [offset, setOffset] = useState(1);
+  const [offset, setOffset] = useState(0);
   const { shopId, noticeId } = router.query;
   const normalizedShopId = String(shopId);
   const normalizedNoticeId = String(noticeId);
+  const [applicants, setApplicants] = useState<any[]>([]);
+  const [applicantStatus, setApplicantStatus] = useState<{
+    [id: string]: string;
+  }>({});
   const { data } = useQuery<any>({
     queryKey: ["notice", noticeId],
     queryFn: async () => {
@@ -105,35 +110,28 @@ function NoticeDetail() {
     }
   }
 
-  const initialApplicants = applicationData?.items.map(
-    (item: {
-      item: {
-        id: string;
-        user: {
-          item: {
-            phone: string;
-            bio: string;
-            name: string;
-          };
-        };
-        status: string;
-      };
-    }) => ({
-      name: item.item.user.item.name,
-      bio: item.item.user.item.bio,
-      phone: item.item.user.item.phone,
-      status: item.item.status,
-      id: item.item.id,
-    }),
-  );
   const nextData: boolean = applicationData?.hasNext;
 
-  const handleApprove = () => {
-    alert("신청 승인");
+  const handleApprove = async (id: string) => {
+    try {
+      await putNoticeApplication(
+        { status: "accepted" },
+        normalizedShopId,
+        normalizedNoticeId,
+        id,
+      );
+    } catch (error) {}
   };
 
-  const handleReject = () => {
-    alert("신청 거절");
+  const handleReject = async (id: string) => {
+    try {
+      await putNoticeApplication(
+        { status: "rejected" },
+        normalizedShopId,
+        normalizedNoticeId,
+        id,
+      );
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -156,7 +154,42 @@ function NoticeDetail() {
   function handleSetOffset(newOffset: number): void {
     throw new Error("Function not implemented.");
   }
-
+  useEffect(() => {
+    if (applicationData?.items) {
+      const newApplicants = applicationData.items.map(
+        (item: {
+          item: {
+            id: string;
+            user: {
+              item: {
+                phone: string;
+                bio: string;
+                name: string;
+              };
+            };
+            status: string;
+          };
+        }) => ({
+          name: item.item.user.item.name,
+          bio: item.item.user.item.bio,
+          phone: item.item.user.item.phone,
+          status: item.item.status,
+          id: item.item.id,
+        }),
+      );
+      setApplicants(newApplicants);
+      const newStatuses: { [id: string]: string } = {};
+      newApplicants.forEach(
+        (applicant: { id: string | number; status: string }) => {
+          newStatuses[applicant.id] = applicant.status;
+        },
+      );
+      setApplicantStatus((prevStatus) => ({
+        ...prevStatus,
+        ...newStatuses,
+      }));
+    }
+  }, [applicationData]);
   return (
     <EmployerLayout>
       <div className="flex w-[35.1rem] flex-col items-center justify-center tablet:w-[74.4rem] desktop:w-[144rem]">
@@ -272,52 +305,39 @@ function NoticeDetail() {
                   상태
                 </span>
               </div>
-              {initialApplicants?.map(
-                (
-                  applicant: {
-                    name: string | undefined;
-                    status: string;
-                    bio: string | undefined;
-                    phone: string | undefined;
-                  },
-                  id: string | undefined,
-                ) => (
-                  <React.Fragment key={id}>
-                    <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-r-[0.1rem] border-t-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]">
-                      <span className="text-black-50 scroll-auto text-[1.4rem] font-normal not-italic leading-[2.2rem] tablet:text-[1.6rem]">
-                        {applicant.name}
-                      </span>
-                    </div>
-                    <div className="hidden items-center gap-[1.2rem] border-b-[0.1rem] border-r-[0.1rem] bg-white px-[0.8rem] py-[1.2rem] tablet:col-span-1 tablet:block">
-                      <span className="text-black-50 scroll-auto truncate text-[1.6rem] font-normal not-italic leading-[2.6rem]">
-                        {applicant.bio}
-                      </span>
-                    </div>
-                    <div className="hidden items-center gap-[1.2rem] border-b-[0.1rem] border-r-[0.1rem] bg-white px-[0.8rem] py-[1.2rem] desktop:col-span-1 desktop:block">
-                      <span className="text-black-50 scroll-auto truncate text-[1.6rem] font-normal not-italic leading-[2.6rem]">
-                        {applicant.phone}
-                      </span>
-                    </div>
-                    <div className="col-span-1 flex items-center gap-[0.8rem] self-stretch border-b-[0.1rem] border-t-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem] tablet:gap-[1.2rem]">
-                      {applicant.status === "pending" && (
-                        <ApproveDialog
-                          applicationId={id}
-                          handleApprove={handleApprove}
-                        />
-                      )}
-                      {applicant.status === "pending" && (
-                        <RejectDialog
-                          applicationId={id}
-                          handleReject={handleReject}
-                        />
-                      )}
-
-                      {applicant.status === "accepted" && <ApproveBadge />}
-                      {applicant.status === "rejected" && <RejectBadge />}
-                    </div>
-                  </React.Fragment>
-                ),
-              )}
+              {applicants.map((applicant) => (
+                <React.Fragment key={applicant.id}>
+                  <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-r-[0.1rem] border-t-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]">
+                    <span className="text-black-50 scroll-auto text-[1.4rem] font-normal not-italic leading-[2.2rem] tablet:text-[1.6rem]">
+                      {applicant.name}
+                    </span>
+                  </div>
+                  <div className="hidden items-center gap-[1.2rem] border-b-[0.1rem] border-r-[0.1rem] bg-white px-[0.8rem] py-[1.2rem] tablet:col-span-1 tablet:block">
+                    <span className="text-black-50 scroll-auto truncate text-[1.6rem] font-normal not-italic leading-[2.6rem]">
+                      {applicant.bio}
+                    </span>
+                  </div>
+                  <div className="hidden items-center gap-[1.2rem] border-b-[0.1rem] border-r-[0.1rem] bg-white px-[0.8rem] py-[1.2rem] desktop:col-span-1 desktop:block">
+                    <span className="text-black-50 scroll-auto truncate text-[1.6rem] font-normal not-italic leading-[2.6rem]">
+                      {applicant.phone}
+                    </span>
+                  </div>
+                  <div className="col-span-1 flex items-center gap-[0.8rem] self-stretch border-b-[0.1rem] border-t-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem] tablet:gap-[1.2rem]">
+                    {applicant.status === "pending" && (
+                      <ApproveDialog
+                        handleApprove={() => handleApprove(applicant.id)}
+                      />
+                    )}
+                    {applicant.status === "pending" && (
+                      <RejectDialog
+                        handleReject={() => handleReject(applicant.id)}
+                      />
+                    )}
+                    {applicant.status === "accepted" && <ApproveBadge />}
+                    {applicant.status === "rejected" && <RejectBadge />}
+                  </div>
+                </React.Fragment>
+              ))}
             </div>
             <div className="flex h-[5.6rem] w-full items-center justify-center">
               <ApplyListPagination
