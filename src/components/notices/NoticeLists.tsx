@@ -97,7 +97,7 @@ export default function NoticesLists() {
     } else {
       setOptions({ ...options, keyword: "" });
     }
-  }, [options, search]);
+  }, [search]);
 
   const handlePage = (num: number) => {
     setPage(num);
