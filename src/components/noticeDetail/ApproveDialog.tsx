@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface ApproveDialogProps {
-  applicationId: number | undefined;
-  handleApprove: (applicationId: number) => void;
+  applicationId: string | undefined;
+  handleApprove: (applicationId: string) => void;
 }
 
 const ApproveDialog: React.FC<ApproveDialogProps> = ({

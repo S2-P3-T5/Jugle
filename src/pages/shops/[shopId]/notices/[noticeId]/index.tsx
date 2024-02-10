@@ -5,7 +5,6 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { fetcher } from "@/apis/fetcher";
 import EmployerLayout from "@/components/common/EmployerLayout";
-import ApplicationList from "@/components/noticeDetail/ApplicationList";
 import ApproveDialog from "@/components/noticeDetail/ApproveDialog";
 import {
   ApproveBadge,
@@ -31,7 +30,10 @@ function NoticeDetail() {
     queryKey: ["notice", noticeId],
     queryFn: async () => {
       const response = await fetcher.get(
-        apiRouteUtils.parseNoticeApply(normalizedShopId, normalizedNoticeId),
+        apiRouteUtils.parseShopNoticeDetail(
+          normalizedShopId,
+          normalizedNoticeId,
+        ),
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -39,15 +41,32 @@ function NoticeDetail() {
       return response.json();
     },
   });
+
+  const { data: applicationData, refetch } = useQuery<any>({
+    queryKey: ["noticeApply", normalizedShopId, normalizedNoticeId, { offset }],
+    queryFn: async () => {
+      const response = await fetcher.get(
+        apiRouteUtils.parseShopNoticeApplications(
+          normalizedShopId,
+          normalizedNoticeId,
+          offset,
+        ),
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    },
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [offset, refetch]);
+
   const shopOriginalData = data?.item?.shop?.item ?? {};
   const shopNoticeData = data?.item ?? {};
   const startsAt = shopNoticeData.startsAt;
   const workhour = shopNoticeData.workhour;
-  const applicationData = ApplicationList(
-    normalizedShopId,
-    normalizedNoticeId,
-    offset,
-  );
   const [startDay, startTime, minute, endTime] = useTimeCalculate(
     startsAt,
     workhour,
@@ -86,26 +105,37 @@ function NoticeDetail() {
     }
   }
 
-  //TODO: 가게의 특정 공고의 지원 목록 조회하는 api를 구성하면 username과 status를 수정할 예정
-  //신청자 이름, 상태 data
-  const initialApplicants = applicationData?.items?.[0]?.item?.map(
-    (item: { user: { name: string | undefined }; status: any }) => ({
-      name: item.user.name,
-      status: item.status,
+  const initialApplicants = applicationData?.items.map(
+    (item: {
+      item: {
+        id: string;
+        user: {
+          item: {
+            phone: string;
+            bio: string;
+            name: string;
+          };
+        };
+        status: string;
+      };
+    }) => ({
+      name: item.item.user.item.name,
+      bio: item.item.user.item.bio,
+      phone: item.item.user.item.phone,
+      status: item.item.status,
+      id: item.item.id,
     }),
   );
-  const [applicants, setApplicants] = useState(initialApplicants);
-  const handleApprove = (applicationId: number) => {
-    const updatedApplicants = [...applicants];
-    updatedApplicants[applicationId].status = "accepted";
-    setApplicants(updatedApplicants);
+  const nextData: boolean = applicationData?.hasNext;
+
+  const handleApprove = () => {
+    alert("신청 승인");
   };
 
-  const handleReject = (applicationId: number) => {
-    const updatedApplicants = [...applicants];
-    updatedApplicants[applicationId].status = "rejected";
-    setApplicants(updatedApplicants);
+  const handleReject = () => {
+    alert("신청 거절");
   };
+
   useEffect(() => {
     if (router.query.offset) {
       if (Array.isArray(router.query.offset)) {
@@ -122,6 +152,10 @@ function NoticeDetail() {
       return;
     }
   }, [user]);
+
+  function handleSetOffset(newOffset: number): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <EmployerLayout>
@@ -238,7 +272,7 @@ function NoticeDetail() {
                   상태
                 </span>
               </div>
-              {applicants?.map(
+              {initialApplicants?.map(
                 (
                   applicant: {
                     name: string | undefined;
@@ -246,20 +280,20 @@ function NoticeDetail() {
                     bio: string | undefined;
                     phone: string | undefined;
                   },
-                  applicationId: number | undefined,
+                  id: string | undefined,
                 ) => (
-                  <React.Fragment key={applicationId}>
+                  <React.Fragment key={id}>
                     <div className="col-span-1 flex items-center gap-[1.2rem] self-stretch border-b-[0.1rem] border-r-[0.1rem] border-t-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem]">
                       <span className="text-black-50 scroll-auto text-[1.4rem] font-normal not-italic leading-[2.2rem] tablet:text-[1.6rem]">
                         {applicant.name}
                       </span>
                     </div>
-                    <div className="hidden items-center gap-[1.2rem] border-b-[0.1rem] border-r-[0.1rem] bg-red-10 px-[0.8rem] py-[1.2rem] tablet:col-span-1 tablet:block">
+                    <div className="hidden items-center gap-[1.2rem] border-b-[0.1rem] border-r-[0.1rem] bg-white px-[0.8rem] py-[1.2rem] tablet:col-span-1 tablet:block">
                       <span className="text-black-50 scroll-auto truncate text-[1.6rem] font-normal not-italic leading-[2.6rem]">
                         {applicant.bio}
                       </span>
                     </div>
-                    <div className="hidden items-center gap-[1.2rem] border-b-[0.1rem] border-r-[0.1rem] bg-red-10 px-[0.8rem] py-[1.2rem] desktop:col-span-1 desktop:block">
+                    <div className="hidden items-center gap-[1.2rem] border-b-[0.1rem] border-r-[0.1rem] bg-white px-[0.8rem] py-[1.2rem] desktop:col-span-1 desktop:block">
                       <span className="text-black-50 scroll-auto truncate text-[1.6rem] font-normal not-italic leading-[2.6rem]">
                         {applicant.phone}
                       </span>
@@ -267,13 +301,13 @@ function NoticeDetail() {
                     <div className="col-span-1 flex items-center gap-[0.8rem] self-stretch border-b-[0.1rem] border-t-[0.1rem] border-gray-20 bg-white px-[0.8rem] py-[1.2rem] tablet:gap-[1.2rem]">
                       {applicant.status === "pending" && (
                         <ApproveDialog
-                          applicationId={applicationId}
+                          applicationId={id}
                           handleApprove={handleApprove}
                         />
                       )}
                       {applicant.status === "pending" && (
                         <RejectDialog
-                          applicationId={applicationId}
+                          applicationId={id}
                           handleReject={handleReject}
                         />
                       )}
@@ -290,6 +324,8 @@ function NoticeDetail() {
                 offset={offset}
                 shopId={normalizedShopId}
                 noticeId={normalizedNoticeId}
+                setOffset={handleSetOffset}
+                nextData={nextData}
               />
             </div>
           </div>

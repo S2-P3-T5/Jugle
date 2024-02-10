@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface RejectDialogProps {
-  applicationId: number | undefined;
-  handleReject: (applicationId: number) => void;
+  applicationId: string | undefined;
+  handleReject: (applicationId: string) => void;
 }
 
 const RejectDialog: React.FC<RejectDialogProps> = ({
