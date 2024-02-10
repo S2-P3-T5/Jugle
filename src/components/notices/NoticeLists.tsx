@@ -57,7 +57,7 @@ export default function NoticesLists() {
       setCount(resultAllNotices.count);
     };
     getData();
-  }, []);
+  }, [user?.address]);
 
   useEffect(() => {
     const getData = async () => {
@@ -74,7 +74,7 @@ export default function NoticesLists() {
       setNoticesList(resultAllNotices.items);
     };
     getData();
-  }, [page]);
+  }, [options, page]);
 
   useEffect(() => {
     const startsAtGte = getCurrentDateTime();
@@ -97,7 +97,7 @@ export default function NoticesLists() {
     } else {
       setOptions({ ...options, keyword: "" });
     }
-  }, [search]);
+  }, [options, search]);
 
   const handlePage = (num: number) => {
     setPage(num);

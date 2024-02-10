@@ -40,7 +40,7 @@ export default function NoticeListDropdownMenu({
   const [value, setValue] = React.useState("");
   React.useEffect(() => {
     handleSort(value);
-  }, [value]);
+  }, [handleSort, value]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
