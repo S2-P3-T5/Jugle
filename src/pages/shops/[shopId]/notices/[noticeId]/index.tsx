@@ -22,6 +22,8 @@ import { apiRouteUtils, PAGE_ROUTES } from "@/routes";
 
 function NoticeDetail() {
   const user = useContext(UserContext);
+  const [showApproveBadge, setShowApproveBadge] = useState(true);
+  const [showRejectBadge, setShowRejectBadge] = useState(true);
   const router = useRouter();
   const [offset, setOffset] = useState(0);
   const { shopId, noticeId } = router.query;
@@ -66,7 +68,7 @@ function NoticeDetail() {
 
   useEffect(() => {
     refetch();
-  }, [offset, refetch]);
+  }, [offset, refetch, showApproveBadge, showRejectBadge]);
 
   const shopOriginalData = data?.item?.shop?.item ?? {};
   const shopNoticeData = data?.item ?? {};
@@ -120,6 +122,7 @@ function NoticeDetail() {
         normalizedNoticeId,
         id,
       );
+      setShowApproveBadge(!showApproveBadge);
     } catch (error) {}
   };
 
@@ -131,6 +134,7 @@ function NoticeDetail() {
         normalizedNoticeId,
         id,
       );
+      setShowRejectBadge(!showRejectBadge);
     } catch (error) {}
   };
 
@@ -149,7 +153,7 @@ function NoticeDetail() {
       router.push(PAGE_ROUTES.SIGNIN);
       return;
     }
-  }, [user]);
+  }, [router, user]);
 
   function handleSetOffset(newOffset: number): void {
     throw new Error("Function not implemented.");

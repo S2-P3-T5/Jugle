@@ -58,6 +58,13 @@ function NoticeDetailApply() {
     }
   }, [user, router]);
 
+  useEffect(() => {
+    if (!getAccessTokenInStorage()) {
+      router.push(PAGE_ROUTES.SIGNIN);
+      return;
+    }
+  }, [router, user]);
+
   const { data } = useQuery<any>({
     queryKey: ["notices", noticeId],
     queryFn: async () => {
