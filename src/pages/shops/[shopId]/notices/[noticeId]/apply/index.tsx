@@ -13,7 +13,6 @@ import { useTimeCalculate } from "@/components/noticeDetail/Hooks";
 import NoticeApplyItem from "@/components/noticeDetail/NoticeApplyItem";
 import { getAccessTokenInStorage } from "@/helpers/auth";
 import { useUserQuery } from "@/queries/user";
-// import { UserContext } from "@/providers/UserProvider";
 import { apiRouteUtils, PAGE_ROUTES } from "@/routes";
 
 function NoticeDetailApply() {
@@ -21,7 +20,6 @@ function NoticeDetailApply() {
     { id: string; data: any }[]
   >([]);
   const router = useRouter();
-  // const user = useContext(UserContext);
   const { shopId, noticeId } = router.query;
   const normalizedShopId = String(shopId);
   const normalizedNoticeId = String(noticeId);
