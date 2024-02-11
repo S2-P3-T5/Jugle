@@ -1,6 +1,11 @@
 import { z } from "zod";
 
-import { linksSchema, shopSchema, userSchema } from "@/apis/schema";
+import {
+  applicationSchema,
+  linksSchema,
+  shopSchema,
+  userSchema,
+} from "@/apis/schema";
 import { Address } from "@/types/user";
 
 export const requiredUserSchema = userSchema.pick({
@@ -10,11 +15,33 @@ export const requiredUserSchema = userSchema.pick({
 });
 export type RequiredUser = z.infer<typeof requiredUserSchema>;
 
+export const requiredApplyUserSchema = userSchema.pick({
+  name: true,
+  phone: true,
+});
+
+export const requiredApplyStatusSchema = applicationSchema.pick({
+  status: true,
+});
+
+export const applyPutResponseSchema = z
+  .object({
+    item: requiredApplyStatusSchema,
+  })
+  .merge(linksSchema);
+
+export const applyPostResponseSchema = z
+  .object({
+    item: requiredApplyUserSchema,
+  })
+  .merge(linksSchema);
+
 export const usersPostResponseSchema = z
   .object({
     item: requiredUserSchema,
   })
   .merge(linksSchema);
+
 export type UsersPostResponse = z.infer<typeof usersPostResponseSchema>;
 
 export type UsersPostRequestBody = {
