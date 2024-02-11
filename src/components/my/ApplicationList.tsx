@@ -33,10 +33,7 @@ export default function ApplicationList() {
   if (!data) return;
 
   const maxPaginationLength = 7;
-  const totalPageLength =
-    data.count % maxPaginationLength
-      ? data.count / maxPaginationLength + 1
-      : data.count / maxPaginationLength;
+  const totalPageLength = Math.ceil(data.count / maxPaginationLength);
   const paginationLength = Math.min(totalPageLength, maxPaginationLength);
   const isFirstPagination = currentPage <= paginationLength;
   const isLastPagination =
