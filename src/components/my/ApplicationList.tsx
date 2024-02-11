@@ -22,19 +22,22 @@ import { useApplicationListQuery } from "@/queries/application";
 import { PAGE_ROUTES } from "@/routes";
 
 export default function ApplicationList() {
-  const { data } = useApplicationListQuery();
-  const applicationList = data?.items ?? [];
+  const pageLength = 4;
   const router = useRouter();
+  const currentPage = Number(router.query.page || "1");
+  const { data } = useApplicationListQuery({
+    offset: (currentPage - 1) * pageLength,
+    limit: pageLength,
+  });
+  const applicationList = data?.items ?? [];
   if (!data) return;
 
-  const currentPage = Number(router.query.page || "1");
   const maxPaginationLength = 7;
   const totalPageLength =
     data.count % maxPaginationLength
       ? data.count / maxPaginationLength + 1
       : data.count / maxPaginationLength;
   const paginationLength = Math.min(totalPageLength, maxPaginationLength);
-  const pageLength = 4;
   const isFirstPagination = currentPage <= paginationLength;
   const isLastPagination =
     currentPage > data.count / pageLength + 1 - paginationLength;

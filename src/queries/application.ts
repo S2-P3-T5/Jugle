@@ -4,11 +4,19 @@ import { useContext } from "react";
 import { getApplicationList } from "@/apis/application";
 import { UserContext } from "@/providers/UserProvider";
 
-export const useApplicationListQuery = () => {
+interface ApplicationListQueryProps {
+  offset?: number;
+  limit?: number;
+}
+
+export const useApplicationListQuery = ({
+  offset = 0,
+  limit = 4,
+}: ApplicationListQueryProps) => {
   const user = useContext(UserContext);
   const { data, isLoading, error } = useQuery({
     queryKey: ["application", user?.id],
-    queryFn: () => getApplicationList(user!.id),
+    queryFn: () => getApplicationList(user!.id, { offset, limit }),
     enabled: !!user,
   });
 
