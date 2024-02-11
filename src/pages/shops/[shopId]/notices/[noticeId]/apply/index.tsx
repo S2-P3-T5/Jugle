@@ -2,16 +2,19 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { fetcher } from "@/apis/fetcher";
-import { postNoticeApplication } from "@/apis/notice";
+import { postNoticeApplication, putNoticeApplication } from "@/apis/notice";
 import EmployeeLayout from "@/components/common/EmployeeLayout";
+import CancelDialog from "@/components/noticeApply/CancelDialog";
+import ProfileRegistDialog from "@/components/noticeApply/ProfileRegistDialog";
+import ApplicationList from "@/components/noticeDetail/ApplicationList";
 import { HighHourlyWageBadge } from "@/components/noticeDetail/Badge";
-import { ApplyNoticeButton } from "@/components/noticeDetail/Buttons";
 import { useTimeCalculate } from "@/components/noticeDetail/Hooks";
 import NoticeApplyItem from "@/components/noticeDetail/NoticeApplyItem";
 import { getAccessTokenInStorage } from "@/helpers/auth";
+import { UserContext } from "@/providers/UserProvider";
 import { useUserQuery } from "@/queries/user";
 import { apiRouteUtils, PAGE_ROUTES } from "@/routes";
 
@@ -25,6 +28,8 @@ function NoticeDetailApply() {
   const normalizedNoticeId = String(noticeId);
 
   const { user } = useUserQuery();
+  const userProfile = useContext(UserContext);
+  const userId = userProfile?.id;
 
   useEffect(() => {
     if (!user?.id) router.push(PAGE_ROUTES.SIGNIN);
@@ -40,11 +45,22 @@ function NoticeDetailApply() {
         }
       : undefined;
 
+  const applyList = ApplicationList(normalizedShopId, normalizedNoticeId);
+
+  const canceledItem = applyList?.items.find(
+    (cancelItem: { item: { user: { item: { id: string | undefined } } } }) => {
+      return cancelItem.item.user.item.id === userId;
+    },
+  );
+  const applyStatus = canceledItem?.item.status;
+
+  const cancelId = canceledItem?.item.id;
+  const pagingProfileRegist = () => {
+    router.push("/my");
+  };
+
   const handleApply = async () => {
-    if (!profile) {
-      alert("내 프로필을 먼저 등록해 주세요.");
-      router.push("/my");
-    } else {
+    if (profile) {
       try {
         await postNoticeApplication(
           profile,
@@ -58,22 +74,13 @@ function NoticeDetailApply() {
     }
   };
 
-  useEffect(() => {
-    if (user?.type === "employer") {
-      router.push("/shops");
-    }
-  }, [user, router]);
-
-  useEffect(() => {
-    if (!getAccessTokenInStorage()) {
-      router.push(PAGE_ROUTES.SIGNIN);
-      return;
-    }
-  }, [router, user]);
-
-  const { data } = useQuery<any>({
+  const { data, refetch } = useQuery<any>({
     queryKey: ["notices", noticeId],
     queryFn: async () => {
+      if (!noticeId || !shopNoticeData) {
+        return; // 또는 적절한 기본값을 반환할 수 있도록 수정
+      }
+
       const response = await fetcher.get(
         apiRouteUtils.parseShopNoticeDetail(
           normalizedShopId,
@@ -86,7 +93,7 @@ function NoticeDetailApply() {
       return response.json();
     },
   });
-
+  const applicationStatus = data?.item?.currentUserApplication?.item.status;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const shopOriginalData = data?.item?.shop?.item ?? {};
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -163,6 +170,27 @@ function NoticeDetailApply() {
     if (notices) storedRecentNotices = JSON.parse(notices);
   }
 
+  const handleCancel = async () => {
+    try {
+      await putNoticeApplication(
+        { status: "canceled" },
+        normalizedShopId,
+        normalizedNoticeId,
+        cancelId,
+      );
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    if (user?.type === "employer") {
+      router.push("/shops");
+    }
+  }, [user, router]);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch, applyStatus, applicationStatus]);
+
   return (
     <EmployeeLayout>
       <div className="flex w-full flex-col items-center justify-center tablet:w-[74.4rem] desktop:w-[144rem]">
@@ -236,7 +264,15 @@ function NoticeDetailApply() {
                     {shopOriginalData?.description}
                   </span>
                 </div>
-                <ApplyNoticeButton handleApply={handleApply} />
+                {applyStatus === "pending" ? (
+                  <CancelDialog handleCancel={handleCancel} />
+                ) : (
+                  <ProfileRegistDialog
+                    handleApply={handleApply}
+                    profile={profile}
+                    pagingProfileRegist={pagingProfileRegist}
+                  />
+                )}
               </div>
             </div>
             <div className="flex h-[15.3rem] w-full flex-col items-start gap-[0.8rem] rounded-[1.2rem] bg-gray-10 p-[2rem] tablet:h-[14.8rem]">
