@@ -129,7 +129,6 @@ function NoticeDetail() {
       return;
     }
   }, [router, user]);
-
   return (
     <EmployerLayout>
       {isLoading ? (
@@ -142,16 +141,16 @@ function NoticeDetail() {
             <div className="flex w-full flex-col gap-[1.6rem] tablet:w-full">
               <div className="inline-flex flex-col items-start gap-[0.8rem]">
                 <span className="text-[1.4rem] font-bold not-italic leading-normal text-primary tablet:text-[1.6rem]  ">
-                  {shopOriginalData?.category}
+                  {shopOriginalData.category}
                 </span>
                 <span className="text-[2rem] font-bold not-italic leading-normal text-black tablet:text-[2.8rem]">
-                  {shopOriginalData?.name}
+                  {shopOriginalData.name}
                 </span>
               </div>
               <div className="flex w-full flex-col items-start gap-[1.2rem] rounded-[1.2rem] border border-gray-20 bg-white p-[2rem] tablet:gap-[1.6rem] tablet:p-[2.4rem] desktop:h-[35.6rem] desktop:flex-row desktop:gap-[3.5rem]">
                 <div className="relative flex h-[15.8rem] w-full items-center justify-center overflow-hidden rounded-[1.2rem] tablet:h-[33.2rem] desktop:h-[30.8rem]">
                   <Image
-                    src={shopOriginalData?.imageUrl}
+                    src={shopOriginalData.imageUrl}
                     layout="fill"
                     objectFit="cover"
                     alt="로고이미지"
@@ -165,7 +164,7 @@ function NoticeDetail() {
                       </span>
                       <div className="flex w-full items-center gap-[0.4rem]">
                         <span className="text-[2.4rem] font-bold not-italic leading-normal tracking-[0.048rem] text-black tablet:text-[2.8rem]">
-                          {shopNoticeData?.hourlyPay}원
+                          {shopNoticeData.hourlyPay}원
                         </span>
                         {hourlyPay > originalHourlyPay && (
                           <HighHourlyWageBadge
@@ -187,7 +186,7 @@ function NoticeDetail() {
                       </div>
                       <span className="text-[1.4rem] font-normal not-italic leading-[2.2rem] text-gray-50 tablet:text-[1.6rem]">
                         {startDay} {startTime}:{minute}~{endTime}:{minute}(
-                        {shopOriginalData?.workhour}
+                        {shopNoticeData.workhour}
                         시간)
                       </span>
                     </div>
@@ -220,7 +219,7 @@ function NoticeDetail() {
                   공고 설명
                 </span>
                 <span className="text-black-50 scroll-auto text-[1.4rem] font-normal not-italic leading-[2.2rem] tablet:text-[1.6rem]">
-                  {shopNoticeData?.description}
+                  {shopNoticeData.description}
                 </span>
               </div>
             </div>
