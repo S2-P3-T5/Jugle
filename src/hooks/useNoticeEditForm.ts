@@ -10,13 +10,17 @@ export default function useNoticeEditForm(
   noticeId: string,
   currentNoticeData: any,
 ) {
-  const form = useForm<NoticeRegistFormField>({
-    values: {
-      hourlyPay: currentNoticeData.hourlyPay,
-      startsAt: currentNoticeData.startsAt,
-      workhour: currentNoticeData.workhour,
-      description: currentNoticeData.description,
-    },
+  const formValues = currentNoticeData
+    ? {
+        hourlyPay: currentNoticeData.hourlyPay,
+        startsAt: currentNoticeData.startsAt,
+        workhour: currentNoticeData.workhour,
+        description: currentNoticeData.description,
+      }
+    : {};
+
+  const form = useForm<any>({
+    values: formValues,
   });
   const { mutate } = useNoticeEdit(shopId, noticeId);
 

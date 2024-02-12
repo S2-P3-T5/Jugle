@@ -40,7 +40,7 @@ function NoticeEdit() {
       return response.json();
     },
   });
-  const currentNoticeData = data.item;
+  const currentNoticeData = data?.item;
   const { form, onSubmit, rules, handlers } = useNoticeEditForm(
     parsedShopId,
     parsedNoticeId,
@@ -203,7 +203,7 @@ function NoticeEdit() {
                         />
                       </div>
                     </div>
-                    <RegisterModal form={form} parsedShopId={parsedShopId} />
+                    <RegisterModal form={form} />
                   </div>
                 </div>
               </div>
