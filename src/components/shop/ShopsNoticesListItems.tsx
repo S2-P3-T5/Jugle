@@ -1,4 +1,6 @@
 import AbleShopsNoticeItem from "@/components/shop/AbleShopsNoticeItem";
+import UnableShopsNoticeItem from "@/components/shop/UnableShopsNoticeItem";
+import { getCurrentDateTime } from "@/helpers/date";
 
 interface ShopsNoticesListItemProps {
   shopData: {
@@ -51,14 +53,36 @@ export default function ShopsNoticesListItem({
     item.startsAt,
     item.workhour,
   );
+
+  const currentTime = getCurrentDateTime()
+    .split(/[T:\-Z]/)
+    .join("");
+  const startAtTime = item.startsAt.split(/[T:\-Z]/).join("");
+
   const color = calculateColor(riseRate);
-  return (
+  let unableOption = "";
+  if (item.closed) {
+    unableOption = "closed";
+  } else if (currentTime > startAtTime) {
+    unableOption = "overdue";
+  }
+
+  return !unableOption ? (
     <AbleShopsNoticeItem
       times={{ startDay, startTime, minute, endTime }}
       shopData={shopData}
       riseRate={riseRate}
       color={color}
       item={item}
+    />
+  ) : (
+    <UnableShopsNoticeItem
+      times={{ startDay, startTime, minute, endTime }}
+      shopData={shopData}
+      riseRate={riseRate}
+      color={color}
+      item={item}
+      unableOption={unableOption}
     />
   );
 }
