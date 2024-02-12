@@ -51,7 +51,10 @@ export default function NoticeListFilter({
           상세 필터 {`(${optionCount})`}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="flex w-[37.1rem] flex-col gap-[1.2rem] tablet:absolute tablet:right-[-50px]">
+      <PopoverContent
+        avoidCollisions={false}
+        className="flex w-[37.1rem] flex-col gap-[1.2rem] tablet:absolute tablet:right-[-50px]"
+      >
         <div className="mb-[2.4rem] flex flex-col gap-[1.2rem]">
           <span className="text-[1.6rem] leading-[2.6rem]">위치</span>
           <AddressSelector address={address} setAddress={setAddress} />
