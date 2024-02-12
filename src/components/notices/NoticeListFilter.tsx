@@ -11,25 +11,36 @@ import {
 } from "@/components/ui/popover";
 
 interface NoticeListFilterProps {
+  options: {
+    sort: string;
+    address: string[];
+    startsAtGte: string;
+    hourlyPayGte: number;
+  };
   setOptions: (value: any) => void;
 }
 
 export default function NoticeListFilter({
   setOptions,
+  options,
 }: NoticeListFilterProps) {
-  const [address, setAddress] = useState<string[]>([]);
-  const [startsAtDate, setStartAtDate] = useState("");
-  const [hourlyPayGte, setHourlyPayGte] = useState(0);
+  const [address, setAddress] = useState(options.address);
+  let startsAtDate = "";
+  let hourlyPayGte = 0;
   const [optionCount, setOptionCount] = useState(0);
 
   const handleStartAtDate = (e: any) => {
     if (e.target.value) {
-      setStartAtDate(e.target.value);
+      startsAtDate = e.target.value;
     }
   };
 
+  const handleResetAddress = () => {
+    setAddress(options.address);
+  };
+
   const handlePay = (e: any) => {
-    setHourlyPayGte(e.target.value);
+    hourlyPayGte = e.target.value;
   };
 
   const handleDecideButton = () => {
@@ -45,7 +56,7 @@ export default function NoticeListFilter({
   };
 
   return (
-    <Popover>
+    <Popover onOpenChange={handleResetAddress}>
       <PopoverTrigger asChild>
         <Button className="h-[3rem] rounded-[0.5rem] bg-red-30 p-[1.2rem] text-[1.4rem] font-semibold text-white">
           상세 필터 {`(${optionCount})`}
@@ -62,7 +73,7 @@ export default function NoticeListFilter({
         <div className="mb-[2.4rem] flex flex-col gap-[1.2rem]">
           <span className="text-[1.6rem] leading-[2.6rem]">시작일</span>
           <Input
-            defaultValue={startsAtDate}
+            defaultValue={options.startsAtGte}
             onBlur={handleStartAtDate}
             type="date"
           />
@@ -72,7 +83,7 @@ export default function NoticeListFilter({
           <div className="flex items-center gap-[1.2rem]">
             <div className="relative w-[50%]">
               <Input
-                defaultValue={hourlyPayGte}
+                defaultValue={options.hourlyPayGte}
                 onBlur={handlePay}
                 type="number"
               />
