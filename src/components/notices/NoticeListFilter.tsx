@@ -55,6 +55,15 @@ export default function NoticeListFilter({
     );
   };
 
+  const handleResetButton = () => {
+    setOptions({
+      address: [],
+      startsAtGte: "",
+      hourlyPayGte: "",
+    });
+    setOptionCount(0);
+  };
+
   return (
     <Popover onOpenChange={handleResetAddress}>
       <PopoverTrigger asChild>
@@ -95,8 +104,11 @@ export default function NoticeListFilter({
           </div>
         </div>
         <div className="flex justify-between py-[1.6rem]">
-          <PopoverClose className="flex w-[8.2rem] items-center justify-center rounded-[0.6rem] border border-primary py-[1.4rem] text-[1.6rem] font-bold text-primary ">
-            취소
+          <PopoverClose
+            onClick={handleResetButton}
+            className="flex w-[8.2rem] items-center justify-center rounded-[0.6rem] border border-primary py-[1.4rem] text-[1.6rem] font-bold text-primary "
+          >
+            초기화
           </PopoverClose>
           <PopoverClose
             onClick={handleDecideButton}
