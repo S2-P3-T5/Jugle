@@ -38,24 +38,6 @@ function NoticeDetail() {
       return response.json();
     },
   });
-  const limit = 5;
-  const { data: applicationData } = useQuery<any>({
-    queryKey: ["noticeApply", normalizedShopId, normalizedNoticeId, { offset }],
-    queryFn: async () => {
-      const response = await fetcher.get(
-        apiRouteUtils.parseShopNoticeApplications(
-          normalizedShopId,
-          normalizedNoticeId,
-          limit,
-          offset,
-        ),
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    },
-  });
 
   const shopOriginalData = data?.item?.shop?.item ?? {};
   const shopNoticeData = data?.item ?? {};
@@ -137,7 +119,7 @@ function NoticeDetail() {
         </div>
       ) : (
         <div className="flex w-full flex-col items-center justify-center">
-          <div className="flex w-full flex-col items-start gap-[1.2rem] px-[1.2rem] py-[4rem] tablet:w-full tablet:px-[3.2rem] tablet:py-[6rem] desktop:px-[23.8rem]">
+          <div className="flex w-full flex-col items-start gap-[1.2rem] px-[1.2rem] py-[4rem] tablet:w-[68rem] tablet:px-[3.2rem] tablet:py-[6rem] desktop:w-[144rem] desktop:px-[23.8rem]">
             <div className="flex w-full flex-col gap-[1.6rem] tablet:w-full">
               <div className="inline-flex flex-col items-start gap-[0.8rem]">
                 <span className="text-[1.4rem] font-bold not-italic leading-normal text-primary tablet:text-[1.6rem]  ">
@@ -148,7 +130,7 @@ function NoticeDetail() {
                 </span>
               </div>
               <div className="flex w-full flex-col items-start gap-[1.2rem] rounded-[1.2rem] border border-gray-20 bg-white p-[2rem] tablet:gap-[1.6rem] tablet:p-[2.4rem] desktop:h-[35.6rem] desktop:flex-row desktop:gap-[3.5rem]">
-                <div className="relative flex h-[15.8rem] w-full items-center justify-center overflow-hidden rounded-[1.2rem] tablet:h-[33.2rem] desktop:h-[30.8rem]">
+                <div className="relative flex h-[15.8rem] w-full items-center justify-center overflow-hidden rounded-[1.2rem] tablet:h-[33.2rem] desktop:h-[30.8rem] desktop:w-[54.8rem]">
                   <Image
                     src={shopOriginalData.imageUrl}
                     layout="fill"
@@ -156,8 +138,8 @@ function NoticeDetail() {
                     alt="로고이미지"
                   />
                 </div>
-                <div className="flex flex-col items-start gap-[2.4rem] self-stretch">
-                  <div className="flex flex-col items-start gap-[0.8rem] self-stretch tablet:gap-[1.2rem]">
+                <div className="flex flex-col items-start gap-[0.8rem] self-stretch tablet:gap-[1.2rem] desktop:w-[34.6rem]">
+                  <div className="flex flex-col items-start gap-[2.4rem] self-stretch">
                     <div className="flex flex-col items-start gap-[0.8rem]">
                       <span className="text-[1.4rem] font-bold not-italic leading-normal text-primary tablet:text-[1.6rem]  ">
                         시급
@@ -224,7 +206,7 @@ function NoticeDetail() {
               </div>
             </div>
           </div>
-          <div className="flex w-full flex-col gap-[1.6rem] px-[1.2rem] py-[4rem] tablet:w-full tablet:px-[3.2rem] tablet:py-[6rem] desktop:px-[23.8rem]">
+          <div className="flex w-full flex-col gap-[1.6rem] px-[1.2rem] py-[4rem] tablet:w-[68rem] tablet:px-[3.2rem] tablet:py-[6rem] desktop:w-[144rem] desktop:px-[23.8rem]">
             <span className="text-[2rem] font-bold not-italic leading-normal text-black tablet:text-[2.8rem]">
               신청자 목록
             </span>
