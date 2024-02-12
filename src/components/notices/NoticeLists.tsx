@@ -7,7 +7,7 @@ import ErrorDialog from "@/components/common/ErrorDialog";
 import NoticeListFilter from "@/components/notices/NoticeListFilter";
 import NoticeListPagination from "@/components/notices/NoticeListPagination";
 import NoticeListSortMenu from "@/components/notices/NoticeListSortMenu";
-import ShopsNoticesListItem from "@/components/shop/ShopsNoticesListItem";
+import ShopsNoticesListItem from "@/components/shop/ShopsNoticesListItems";
 import Loading from "@/components/ui/Loading";
 import { getCurrentDateTime } from "@/helpers/date";
 import { ErrorDialogActionContext } from "@/providers/ErrorDialogProvider";

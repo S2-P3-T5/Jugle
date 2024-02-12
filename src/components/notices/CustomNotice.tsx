@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { getCustomNoticesListData } from "@/apis/notice";
-import ShopsNoticesListItem from "@/components/shop/ShopsNoticesListItem";
+import ShopsNoticesListItem from "@/components/shop/ShopsNoticesListItems";
 import {
   Carousel,
   CarouselContent,
