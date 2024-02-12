@@ -1,7 +1,11 @@
 import { useRouter } from "next/router";
 
 import ApproveDialog from "@/components/noticeDetail/ApproveDialog";
-import { ApproveBadge, RejectBadge } from "@/components/noticeDetail/Badge";
+import {
+  ApproveBadge,
+  CancelBadge,
+  RejectBadge,
+} from "@/components/noticeDetail/Badge";
 import EmptyApplicationCard from "@/components/noticeDetail/EmptyApplicationCard";
 import RejectDialog from "@/components/noticeDetail/RejectDialog";
 import {
@@ -96,6 +100,7 @@ export default function ApplicationPagination({
                 {application.user.item.phone}
               </TableCell>
               <TableCell className="flex w-full items-center px-[12px] py-[12px]">
+                {application.status === "canceled" && <CancelBadge />}
                 {application.status === "pending" && (
                   <ApproveDialog
                     handleApprove={() => handleApprove(application.id)}
@@ -106,8 +111,8 @@ export default function ApplicationPagination({
                     handleReject={() => handleReject(application.id)}
                   />
                 )}
-                {application.status === "accepted" && <ApproveBadge />}
                 {application.status === "rejected" && <RejectBadge />}{" "}
+                {application.status === "accepted" && <ApproveBadge />}
               </TableCell>
             </TableRow>
           ))}
