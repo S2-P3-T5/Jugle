@@ -250,7 +250,7 @@ function NoticeDetail({
                 </div>
                 <span className="text-[1.4rem] font-normal not-italic leading-[2.2rem] text-gray-50 tablet:text-[1.6rem]">
                   {startDay} {startTime}:{minute}~{endTime}:{minute}(
-                  {shop.workhour}
+                  {notice.workhour}
                   시간)
                 </span>
               </div>
