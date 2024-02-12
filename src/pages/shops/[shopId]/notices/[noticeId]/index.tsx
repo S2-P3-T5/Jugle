@@ -6,16 +6,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { fetcher } from "@/apis/fetcher";
 import { putNoticeApplication } from "@/apis/notice";
 import EmployerLayout from "@/components/common/EmployerLayout";
-import ApproveDialog from "@/components/noticeDetail/ApproveDialog";
-import {
-  ApproveBadge,
-  HighHourlyWageBadge,
-  RejectBadge,
-} from "@/components/noticeDetail/Badge";
+import ApplicationPagination from "@/components/noticeDetail/ApplicationPagination";
+import { HighHourlyWageBadge } from "@/components/noticeDetail/Badge";
 import { EditNoticeButton } from "@/components/noticeDetail/Buttons";
 import { timeCalculate } from "@/components/noticeDetail/NoticeApplyItem";
-import ApplyListPagination from "@/components/noticeDetail/Pagination";
-import RejectDialog from "@/components/noticeDetail/RejectDialog";
 import Loading from "@/components/ui/Loading";
 import { getAccessTokenInStorage } from "@/helpers/auth";
 import { UserContext } from "@/providers/UserProvider";
@@ -49,14 +43,15 @@ function NoticeDetail() {
       return response.json();
     },
   });
-
-  const { data: applicationData, refetch } = useQuery<any>({
+  const limit = 5;
+  const { data: applicationData } = useQuery<any>({
     queryKey: ["noticeApply", normalizedShopId, normalizedNoticeId, { offset }],
     queryFn: async () => {
       const response = await fetcher.get(
         apiRouteUtils.parseShopNoticeApplications(
           normalizedShopId,
           normalizedNoticeId,
+          limit,
           offset,
         ),
       );
@@ -67,9 +62,9 @@ function NoticeDetail() {
     },
   });
 
-  useEffect(() => {
-    refetch();
-  }, [offset, refetch, showApproveBadge, showRejectBadge]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [offset, refetch, showApproveBadge, showRejectBadge]);
 
   const shopOriginalData = data?.item?.shop?.item ?? {};
   const shopNoticeData = data?.item ?? {};
@@ -123,7 +118,8 @@ function NoticeDetail() {
         normalizedNoticeId,
         id,
       );
-      setShowApproveBadge(!showApproveBadge);
+      router.reload();
+      // setShowApproveBadge(!showApproveBadge);
     } catch (error) {}
   };
 
@@ -135,7 +131,8 @@ function NoticeDetail() {
         normalizedNoticeId,
         id,
       );
-      setShowRejectBadge(!showRejectBadge);
+      router.reload();
+      // setShowRejectBadge(!showRejectBadge);
     } catch (error) {}
   };
 
@@ -290,7 +287,15 @@ function NoticeDetail() {
               </div>
             </div>
           </div>
-          <div className="flex w-full flex-col items-start gap-[1.6rem] px-[1.2rem] pb-[8rem] pt-[4rem] tablet:px-[3.2rem] tablet:py-[6rem]">
+          <div className="w-full px-[1.2rem] py-[4rem] tablet:w-full tablet:px-[3.2rem] tablet:py-[6rem] desktop:px-[23.8rem]">
+            <ApplicationPagination
+              shopId={normalizedShopId}
+              noticeId={normalizedNoticeId}
+              handleApprove={handleApprove}
+              handleReject={handleReject}
+            />
+          </div>
+          {/* <div className="flex w-full flex-col items-start gap-[1.6rem] px-[1.2rem] pb-[8rem] pt-[4rem] tablet:px-[3.2rem] tablet:py-[6rem]">
             <span className="text-[2rem] font-bold not-italic leading-normal text-black tablet:text-[2.8rem]">
               신청자 목록
             </span>
@@ -362,7 +367,7 @@ function NoticeDetail() {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </EmployerLayout>
