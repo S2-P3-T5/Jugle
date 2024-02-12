@@ -40,7 +40,7 @@ function NoticeDetailApply() {
 
   useEffect(() => {
     if (!getAccessTokenInStorage()) router.push(PAGE_ROUTES.SIGNIN);
-  }, [router]);
+  }, [router, userProfile]);
 
   useEffect(() => {
     if (userProfile?.type === "employer") {
