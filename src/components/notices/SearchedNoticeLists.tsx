@@ -13,7 +13,7 @@ import { PAGE_ROUTES } from "@/routes";
 
 export default function SearchedNoticesLists() {
   const router = useRouter();
-  const { search } = router.query;
+  const { keyword } = router.query;
   const [page, setPage] = useState(1);
   const [noticeListResponse, setNoticeListResponse] = useState({
     offset: 0,
@@ -37,17 +37,17 @@ export default function SearchedNoticesLists() {
 
   useEffect(() => {
     const getData = async () => {
-      if (!search) return;
+      if (!keyword) return;
       const startsAtGte = getCurrentDateTime();
       const resultAllNotices: any = await getNoticesListData(
-        { ...options, keyword: search, startsAtGte: startsAtGte },
+        { ...options, keyword: keyword, startsAtGte: startsAtGte },
         offset,
       );
       setNoticeListResponse(resultAllNotices);
       setIsLoading(false);
     };
     getData();
-  }, [options, search, offset]);
+  }, [options, keyword, offset]);
 
   const handlePage = (num: number) => {
     setPage(num);
@@ -70,9 +70,9 @@ export default function SearchedNoticesLists() {
         <ul className="mx-auto flex w-[35.1rem] flex-col gap-[1.6rem] pb-[3rem] tablet:w-[67.8rem] tablet:gap-[3.2rem] tablet:pb-[4rem] tablet:pt-[6rem] desktop:w-[96.4rem]">
           <div className="flex flex-col gap-[1.6rem] tablet:flex-row tablet:items-center tablet:justify-between">
             <span className="text-[2rem] font-bold tablet:text-[2.8rem]">
-              {search ? (
+              {keyword ? (
                 <>
-                  <span className="text-primary">{search}</span>에 대한{" "}
+                  <span className="text-primary">{keyword}</span>에 대한{" "}
                   {noticeListResponse.count}개의 공고
                 </>
               ) : (
