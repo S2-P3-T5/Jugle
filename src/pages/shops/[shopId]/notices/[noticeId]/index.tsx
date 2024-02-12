@@ -137,7 +137,7 @@ function NoticeDetail() {
           <Loading />
         </div>
       ) : (
-        <div className="flex w-[35.1rem] flex-col items-center justify-center tablet:w-[74.4rem] desktop:w-[144rem]">
+        <div className="flex w-full flex-col items-center justify-center">
           <div className="flex w-full flex-col items-start gap-[1.2rem] px-[1.2rem] py-[4rem] tablet:w-full tablet:px-[3.2rem] tablet:py-[6rem] desktop:px-[23.8rem]">
             <div className="flex w-full flex-col gap-[1.6rem] tablet:w-full">
               <div className="inline-flex flex-col items-start gap-[0.8rem]">
@@ -148,8 +148,8 @@ function NoticeDetail() {
                   {shopOriginalData?.name}
                 </span>
               </div>
-              <div className="flex w-[35.1rem] flex-col items-start gap-[1.2rem] rounded-[1.2rem] border border-gray-20 bg-white p-[2rem] tablet:w-[68rem] tablet:gap-[1.6rem] tablet:p-[2.4rem] desktop:h-[35.6rem] desktop:w-[96.4rem] desktop:flex-row desktop:gap-[3.5rem]">
-                <div className="relative flex h-[15.8rem] w-[31.1rem] items-center justify-center overflow-hidden rounded-[1.2rem] tablet:h-[33.2rem] tablet:w-[63.2rem] desktop:h-[30.8rem] desktop:w-[55.4rem]">
+              <div className="flex w-full flex-col items-start gap-[1.2rem] rounded-[1.2rem] border border-gray-20 bg-white p-[2rem] tablet:gap-[1.6rem] tablet:p-[2.4rem] desktop:h-[35.6rem] desktop:flex-row desktop:gap-[3.5rem]">
+                <div className="relative flex h-[15.8rem] w-full items-center justify-center overflow-hidden rounded-[1.2rem] tablet:h-[33.2rem] desktop:h-[30.8rem]">
                   <Image
                     src={shopOriginalData?.imageUrl}
                     layout="fill"
@@ -225,7 +225,10 @@ function NoticeDetail() {
               </div>
             </div>
           </div>
-          <div className="w-full px-[1.2rem] py-[4rem] tablet:w-full tablet:px-[3.2rem] tablet:py-[6rem] desktop:px-[23.8rem]">
+          <div className="flex w-full flex-col gap-[1.6rem] px-[1.2rem] py-[4rem] tablet:w-full tablet:px-[3.2rem] tablet:py-[6rem] desktop:px-[23.8rem]">
+            <span className="text-[2rem] font-bold not-italic leading-normal text-black tablet:text-[2.8rem]">
+              신청자 목록
+            </span>
             <ApplicationPagination
               shopId={normalizedShopId}
               noticeId={normalizedNoticeId}
