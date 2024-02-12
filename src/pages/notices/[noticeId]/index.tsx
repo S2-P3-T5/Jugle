@@ -9,7 +9,7 @@ import EmployerLayout from "@/components/common/EmployerLayout";
 import ApplicationPagination from "@/components/noticeDetail/ApplicationPagination";
 import { HighHourlyWageBadge } from "@/components/noticeDetail/Badge";
 import { EditNoticeButton } from "@/components/noticeDetail/Buttons";
-import { timeCalculate } from "@/components/noticeDetail/NoticeApplyItem";
+import { calculateTime } from "@/components/shop/ShopsNoticesListItems";
 import Loading from "@/components/ui/Loading";
 import { getAccessTokenInStorage } from "@/helpers/auth";
 import { UserContext } from "@/providers/UserProvider";
@@ -42,7 +42,7 @@ function NoticeDetail() {
   const shopNoticeData = data?.item ?? {};
   const startsAt = shopNoticeData.startsAt;
   const workhour = shopNoticeData.workhour;
-  const [startDay, startTime, minute, endTime] = timeCalculate(
+  const [startDay, startTime, minute, endTime] = calculateTime(
     startsAt,
     workhour,
   );
