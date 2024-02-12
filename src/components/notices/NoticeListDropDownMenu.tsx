@@ -30,11 +30,11 @@ const frameworks = [
 ];
 
 interface NotcieListDropdownMenuProps {
-  handleSort: (value: string) => void;
+  onChangeSort: (value: string) => void;
 }
 
 export default function NoticeListDropdownMenu({
-  handleSort,
+  onChangeSort: handleSort,
 }: NotcieListDropdownMenuProps) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
