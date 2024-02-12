@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import EmployeeLayout from "@/components/common/EmployeeLayout";
 import EmployerLayout from "@/components/common/EmployerLayout";
-import SearchedNoticesLists from "@/components/notices/SearchedNoticeLists";
+import NoticesLists from "@/components/notices/NoticeLists";
 import { UserContext } from "@/providers/UserProvider";
 
 export default function Notices() {
@@ -12,7 +12,7 @@ export default function Notices() {
   return (
     <>
       <Layout>
-        <SearchedNoticesLists />
+        <NoticesLists />
       </Layout>
     </>
   );

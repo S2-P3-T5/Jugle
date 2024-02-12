@@ -29,13 +29,13 @@ const frameworks = [
   },
 ];
 
-interface NotcieListDropdownMenuProps {
+interface NotcieListSortMenuProps {
   onChangeSort: (value: string) => void;
 }
 
-export default function NoticeListDropdownMenu({
+export default function NoticeListSortMenu({
   onChangeSort: handleSort,
-}: NotcieListDropdownMenuProps) {
+}: NotcieListSortMenuProps) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   React.useEffect(() => {
