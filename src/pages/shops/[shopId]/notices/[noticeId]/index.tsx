@@ -6,7 +6,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { fetcher } from "@/apis/fetcher";
 import { putNoticeApplication } from "@/apis/notice";
 import EmployerLayout from "@/components/common/EmployerLayout";
-import ApplicationPagination from "@/components/noticeDetail/ApplicationPagination";
+import ApplicationList from "@/components/noticeDetail/ApplicationList";
 import { HighHourlyWageBadge } from "@/components/noticeDetail/Badge";
 import { EditNoticeButton } from "@/components/noticeDetail/Buttons";
 import { calculateTime } from "@/components/shop/ShopsNoticesListItems";
@@ -208,7 +208,7 @@ function NoticeDetail() {
             <span className="text-[2rem] font-bold not-italic leading-normal text-black tablet:text-[2.8rem]">
               신청자 목록
             </span>
-            <ApplicationPagination
+            <ApplicationList
               shopId={normalizedShopId}
               noticeId={normalizedNoticeId}
               handleApprove={handleApprove}
