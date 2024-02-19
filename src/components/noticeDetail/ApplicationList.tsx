@@ -28,7 +28,7 @@ import { cn } from "@/lib/utils";
 import { useNoticeApplicationListQuery } from "@/queries/noticeApplication";
 import { PAGE_ROUTES } from "@/routes";
 
-export default function ApplicationPagination({
+export default function ApplicationList({
   shopId,
   noticeId,
   handleApprove,
@@ -36,8 +36,8 @@ export default function ApplicationPagination({
 }: {
   shopId: string;
   noticeId: string;
-  handleApprove: any;
-  handleReject: any;
+  handleApprove: (id: string) => void;
+  handleReject: (id: string) => void;
 }) {
   const pageLength = 5;
   const router = useRouter();
